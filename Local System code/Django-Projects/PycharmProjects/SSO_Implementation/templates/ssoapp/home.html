@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% extends 'ssoapp/base.html' %}
+{% block content %}
+<div class="row">
+ <div class="col s12 m6 offset-m3">
+  <H3>Hi {{ user.email }}!</H3>
+     <h2>Yoo {{ user.first_name }} </h2>
+     <div id="mydiv">heloo weolcome=========== {{ user.first_name}}</div>
+     <h1>helllo I am from home page like our sarch portal page</h1>
+ </div>
+</div>
+{% endblock %}
+
+</body>
+</html>
+<style>
+   #mydiv{
+    width: 100px;
+    height: 100px;
+    background: #000;
+    color: #fff;
+    text-align: center;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script>
+setTimeout(function() {
+    $('#mydiv').fadeOut('fast');
+}, 1000);
+</script>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Portal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body style="background-image: url({% static 'images/prognos.jpg' %}); background-size: cover; background-repeat: no-repeat">
+
+    {% block content %}
+        <div>
+            <nav class="navbar navbar-expand-md navbar-dark bg-dark" style="height: 80px">
+
+    <!--         Prognos Logo on left side of navbar-->
+                 <div class="navbar-collapse">
+                     <a href="/homepage">
+                         <img src="https://www.safeguard.com/wp-content/uploads/2014/06/prognos-reversed.png" width="200px" alt="" class="d-inline-block align-middle mr-2">
+                     </a>
+                 </div>
+
+    <!--             upload file dropdown menu and logout option on right side-->
+                 <div class="navbar-collapse">
+                     <ul class="navbar-nav ml-auto">
+                         <li class="nav-item dropdown">
+                             <a class="nav-link dropdown-toggle" data-toggle="dropdown">Upload</a>
+                             <div class="dropdown-menu dropdown-menu-right">
+                                 <a href="/uploadcsv" class="dropdown-item">Questionnaire File</a>
+                                 <div class="dropdown-divider"></div>
+                                 <a href="#" class="dropdown-item">Policies File</a>
+                             </div>
+                         </li>
+                         <li class="nav-item">
+                             <a class="nav-link" href="#">Logout</a>
+                         </li>
+                     </ul>
+                 </div>
+             </nav>
+        </div>
+
+
+
+        <div class="row" style="margin-top: 10%">
+        <div class="col-5 offset-1 d-flex">
+            <div class="card" style="height: 170px; background-color: rgba(50,50,50,0.5) !important; border-radius: 35px">
+                <br><br>
+                <div class="card-body">
+                    <form action="indexfile" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="file" name="csvfile" multiple>
+                        <input type="submit" style="margin-top: 10px">
+                    </form>
+                </div>
+            </div>
+        </div>
+        </div>
+
+    {% endblock %}
+
+</body>
+</html>

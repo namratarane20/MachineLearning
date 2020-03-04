@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Portal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link src="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body style="background-color:#040230">
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row col-12">
+        <nav class="navbar navbar-expand-md  fixed-top"style="background-color:#040230;border-bottom:solid #2c345e 1px;">
+            <div class="container-fluid col-12 ">
+                <a href="/" class="navbar-brand">
+                   <img src="{% static 'images/prognoshealth.png' %}"style="width:200px;"
+                         alt=""
+                         class="d-inline-block align-middle mr-2">
+
+                    <!-- <span class="text-uppercase font-weight-bold">Company</span> -->
+                </a>
+                <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                        class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
+
+
+                <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active"><a href="#" class="nav-link">
+                            <strong class="text-warning pt-2"> Welcome {{user.first_name}} &nbsp; &nbsp;</strong>
+                            <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item"><a href="/adminLogin" class="nav-link">
+                            <strong style="color:white"> Upload File </strong></a>
+                        </li>
+<!--                        <form>-->
+<!--                            {% csrf_token %}-->
+<!--                            <li class="nav-item">-->
+<!--                                <a class="nav-link" onclick="openNav()">-->
+<!--                                    <strong style="color:white;cursor:pointer;"> Tags </strong></a>-->
+<!--                            </li>-->
+<!--                            <div id="mySidenav" class="sidenav">-->
+<!--                                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>-->
+<!--                                <h1>this is tags list</h1>-->
+<!--                                <ul>-->
+<!--                                    {% for tg in tagNameList %}-->
+<!--                                    <li>{{ tg }}</li>-->
+<!--                                    {% endfor %}-->
+<!--                                </ul>-->
+<!--                            </div>-->
+<!--                        </form>-->
+                        <li class="nav-item"><a href="/account/logout" class="nav-link">
+                            <!--                            {% if user.is_authenticated %}-->
+                            <strong style="color:white">Log Out</strong>
+                            <!--                            {% endif %}-->
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+
+    <!--    end of row which contains nav and all nav items-->
+
+
+    <br><br><br><br><br>
+
+
+    <div class="row col-12">
+        <div class="container-fluid ">
+            <form action="/searchKeyword" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                        <div class="col-12">
+                            <div class="offset-3 col-6 form-group has-search">
+                                <span class="fa fa-search form-control-feedback"></span>
+                                <input class="form-control " align="center" type="text" name="keyword"style="border-radius:20px;height:40  px;
+                                       value="{{ keyword }}"
+                                       placeholder="Search with keyword" ondblclick="dbclick()" id="keyword" autocomplete="off"/>
+                                <table id="searchResultTable" style="display: none; " class="table mt-2">
+                                <tr style="background-color: white; border-radius: 10px;" class="row">
+                                    <td onclick="singleClick()"><div style="border:1px solid black;border-radius:15px;background:white" class="p-1">Questionnaire </div></td>
+                                    <td onclick="singleClick()"><div style="border:1px solid black;border-radius:15px" class="p-1">Policies </div></td>
+                                </tr>
+                            </table>
+                            </div>
+
+                            <style>
+                                .has-search .form-control {
+                                    padding-left: 2.375rem;
+                                }
+                                .has-search .form-control-feedback {
+                                    position: absolute;
+                                    z-index: 2;
+                                    display: block;
+                                    width: 2.375rem;
+                                    height: 2.375rem;
+                                    line-height: 2.375rem;
+                                    text-align: center;
+                                    pointer-events: none;
+                                    color: #aaa;
+                                }
+                            </style>
+
+                            <script type="text/javascript">
+                                function dbclick(){
+                                    document.getElementById('searchResultTable').style.display='block'
+                                }
+                            </script>
+
+                            <!--                        <input name="response" onclick="document.getElementById('searchResultTable').style.display='block'" id="responseArea" style="width:100%;"/>-->
+
+
+                            <script type="text/javascript">
+                                function singleClick(){
+                                    document.getElementById('searchResultTable').style.display='none'
+                                }
+                            </script>
+
+
+                            <script>
+                                $('#searchResultTable td div').click(function () {
+                                    col = "In@".concat($(this).html())
+                                    colVal = col.concat(":- ")
+
+                                    document.getElementById('keyword').value =colVal
+                                });
+                            </script>
+                        </div>
+
+
+                    </div>
+
+            </form>
+        </div>
+    </div>
+    <!--    ======end of search box row==================-->
+
+    <div class="container-fluid">
+        <h5 class="description" style="color:white;"> Tag Name &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp : {{ selectedTagName}} </h5>
+<span>
+        <h5 class="italic " style="color:white;"> Tag Description : {{ tagDesc }}</h5>
+        <a href="" data-toggle="modal" class="float-right" data-target="#myModal" style="margin-top:-30px;"><strong>Destroy tag</strong>
+        </a>
+</span>
+
+        <form action="/destroyTag" method="POST">
+            {% csrf_token %}
+            <div class="modal fade" id="myModal" role="dialog" style="display:none;">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background:#c4bdf2;">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <h4>Are sure you want to destroy this tag ?</h4>
+                                <strong><input type="text" name="destroyedTagName" value="{{ selectedTagName }}"
+                                               style="border:0px none;color:blue;"></strong>
+                                <!--                                <h4 style="color:blue;"><strong>{{ selectedTagName}}</strong></h4>-->
+                            </div>
+                            <br>
+                            <button type="submit" id="hide" class="btn btn-secondary">Yes
+                            </button>
+                            <button type="button" data-dismiss="modal" class="btn btn-secondary">No
+                            </button>
+                        </div>
+                        <div class="modal-footer" style="background:#c4bdf2;">
+                            <button type="button" data-dismiss="modal" class="btn btn-secondary">Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <form action="displayTagInformation" method="POST">
+            {% csrf_token %}
+            <hr>
+            <div style="background:white; padding: 5px 5px">
+            <div class="row-12" id="hidedata">
+                <div class="tableFixHead table-responsive jumbotron"
+                     style="padding: 0px 0px">
+                    <table class="table table-hover col-12" id="Table1">
+                        <thead>
+                        <tr class="d-flex">
+                            <th class="col-1">Vendor Name</th>
+                            <th class="col-2">Section Name</th>
+                            <th class="col-2">Control Name</th>
+                            <th class="col-3">Security Questions</th>
+                            <th class="col-2">Responses</th>
+                            <th class="col-2">Additional Comments</th>
+                        </tr>
+                        </thead>
+                        {% for data in addedTagdata %}
+                        <tr class="d-flex">
+                            <td class="col-1">{{ data.vendorname }}</td>
+                            <td class="col-2">{{ data.sectionname }}</td>
+                            <td class="col-2">{{ data.controlname }}</td>
+                            <td class="col-3">{{ data.securityquestion }}</td>
+                            <td class="col-2">{{ data.response }}</td>
+                            <td class="col-2">{{ data.additionalcomment }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+</body>
+</html>
+
+
+<script>
+    $(document).ready(function() {
+
+  $("#agreebutton").on("click", function(e) {
+
+    if ($("#checkedId").is(':checked')) {
+      $('.showIfcheked').show();
+    } else {
+      $('.showIfcheked').hide();
+      alert('please select at least one row');
+     return false;
+    }
+
+  });
+
+});
+$(document).ready(function(){
+  $("#hide").click(function(){
+    $("#hidedata").hide();
+  });
+  $("#show").click(function(){
+    $("p").show();
+  });
+});
+</script>
+
+
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+</script>
+
+<style>
+<!--.description{-->
+<!--    color:blue;-->
+<!--    font-family: Poiret One;-->
+<!--    }-->
+<!--    .italic{-->
+<!--    font-family: cursive;-->
+<!--    }-->
+
+    .sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 100px;
+  left: 0;
+  background-color: white;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: black;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+</style>

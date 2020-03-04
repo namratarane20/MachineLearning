@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Portal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link src="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ <link rel="shortcut icon" href="{% static 'images/fevicon.png' type='image/x-icon' %}">
+</head>
+<body style="background-color:#040230">
+
+{% block content %}
+<div class="row col-12">
+    <nav class="navbar navbar-expand-md fixed-top"
+         style="background-color:#040230;border-bottom:solid #2c345e 1px;">
+        <div class="container-fluid">
+            <a href="/toHomePage" class="navbar-brand">
+                <img src="{% static 'images/prognoshealth.png' %}" style="width:200px;"
+                     alt=""
+                     class="d-inline-block align-middle mr-2">
+
+                <!-- <span class="text-uppercase font-weight-bold">Company</span> -->
+            </a>
+            <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                    class="navbar-toggler custom-toggler">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+
+            <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active"><a href="#" class="nav-link">
+                        <strong class="text-warning pt-2"> Welcome {{user.first_name}} </strong>
+                        <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/uploadFile" class="nav-link">
+                            <strong style="color: white;">Upload File</strong>
+                        </a>
+                    </li>
+                    <li class="nav-item"><a href="/account/logout" class="nav-link">
+                        {% if user.is_authenticated %}
+                        <strong style="color:white">Log Out</strong>
+                        {% endif %}
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<br><br><br><br><br>
+
+<div class="container-fluid" style="width:100%">
+
+    <div class="row">
+        <div class="col-12">
+            <nav style="width: 100%;">
+                <div class="nav nav-tabs horizontalScrollBar"
+                     style="display: -webkit-box; overflow-x: scroll; flex-wrap: unset; border-bottom:0px; margin-bottom: -1.2rem;"
+                     id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" data-toggle="tab" href="#tagsReport">Tags Report</a>
+                    <a class="nav-item nav-link" data-toggle="tab" href="#favouriteReport">Favorite Responses Report</a>
+                    <a class="nav-item nav-link" data-toggle="tab" href="#fileUploadReport">Upload File Report</a>
+                    <a href="#keywordSearched" class="nav-item nav-link" data-toggle="tab">Keyword Searched Report</a>
+                    <a href="#userSessionRecord" class="nav-item nav-link" data-toggle="tab">User Session Report</a>
+                </div>
+            </nav>
+
+            <!-- Tab panes -->
+            <div class="tab-content" style="background-color: white; padding-top: 1rem;">
+                <div id="tagsReport" class="tab-pane active" style="padding-bottom: 1px">
+                    <div class="jumbotron" style="padding: 0px 0px; margin-bottom: 0rem; background: white;">
+                        <!--                        <table class="table table-hover" border="1" style="margin-bottom: 0rem">-->
+                        <div class="tbl-header">
+                            <table class="table-hover" cellpadding="0" cellspacing="0" border="1">
+                                <thead>
+                                <tr class="d-flex">
+                                    <th class="col-2">Tag Name</th>
+                                    <th class="col-6">Description</th>
+                                    <th class="col-1">Created By</th>
+                                    <th class="col-1">Updated By</th>
+                                    <th class="col-1">Destroyed By</th>
+                                    <th class="col-1">Date</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+
+                        <div class="tbl-content">
+                            <table class="table-hover" cellpadding="0" cellspacing="0" border="1">
+                                <tbody>
+                                {% for data in tagsInfoList %}
+                                <tr class="d-flex">
+                                    <td class="col-2">{{data.tagName}}</td>
+                                    <td class="col-6">{{data.description}}</td>
+                                    <td class="col-1">{{data.createdBy}}</td>
+                                    <td class="col-1">{{data.updatedBy}}</td>
+                                    <td class="col-1">{{data.destroyedBY}}</td>
+                                    <td class="col-1">{{data.dateTime}}</td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--                        </table>-->
+                    </div>
+                </div>
+
+                <div id="favouriteReport" class=" tab-pane fade" style="padding-bottom: 1px">
+                    <div class="jumbotron" style="padding: 0px 0px; margin-bottom: 0rem; background: white;">
+                        <!--                        <table class="table table-hover" border="1" style="margin-bottom: 0rem">-->
+                        <div class="tbl-header">
+                            <table class="table-hover" cellpadding="0" cellspacing="0" border="1">
+                                <thead>
+                                <tr class="d-flex">
+                                    <th class="col-1">User Name</th>
+                                    <th class="col-1">Keyword</th>
+                                    <th class="col-1">Vendor</th>
+                                    <th class="col-3">Security Question</th>
+                                    <th class="col-2">Response</th>
+                                    <th class="col-2">Additional Comment</th>
+                                    <th class="col-1">Favourite / Unfavourite</th>
+                                    <th class="col-1">Time</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="tbl-content">
+                            <table class="table-hover" cellpadding="0" cellspacing="0" border="1">
+                                <tbody>
+                                {% for data in favouritesReportList %}
+                                <tr class="d-flex">
+                                    <td class="col-1">{{ data.userName }}</td>
+                                    <td class="col-1">{{ data.keyword }}</td>
+                                    <td class="col-1">{{ data.vendorName }}</td>
+                                    <td class="col-3">{{ data.question }}</td>
+                                    <td class="col-2">{{ data.response }}</td>
+                                    <td class="col-2">{{ data.additionalComment }}</td>
+                                    <td class="col-1">{{ data.status }}</td>
+                                    <td class="col-1">{{ data.time }}</td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--                        </table>-->
+                    </div>
+                </div>
+
+                <div id="fileUploadReport" class="tab-pane" style="padding-bottom: 1%">
+                    <div class="jumbotron col-10 offset-1" style="padding: 0px 0px; margin-bottom: 0rem; background: white;">
+                        <div class="tbl-header">
+                            <table class="table-hover" cellpadding="0" cellspacing="0" border="1">
+                                <thead>
+                                <tr class="d-flex">
+                                    <th class="col-4">File Name</th>
+                                    <th class="col-2">Uploaded By</th>
+                                    <th class="col-2">Updated By</th>
+                                    <th class="col-2">Uploaded Time</th>
+                                    <th class="col-2">Updated Time</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="tbl-content">
+                            <table class="table-hover" cellpadding="0" cellspacing="0" border="1">
+                                <tbody>
+                                {% for data in fileUploadHistoryList %}
+                                <tr class="d-flex">
+                                    <td class="col-4">{{data.fileName}}</td>
+                                    <td class="col-2">{{data.uploadedBy}}</td>
+                                    <td class="col-2">{{data.updatedBy}}</td>
+                                    <td class="col-2">{{data.uploadedTime}}</td>
+                                    <td class="col-2">{{data.updatedTime}}</td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--                        <table class="table table-hover" border="1" style="margin-bottom: 0rem">-->
+                        <!--                        </table>-->
+                    </div>
+                </div>
+
+                <div id="userSessionRecord" class="tab-pane" style="padding-bottom: 1px">
+                    <div class="jumbotron col-6 offset-1" style="padding: 0px 0px; margin-bottom: 0rem; background: white;">
+                        <div class="tbl-header">
+                            <table class="table-hover" cellpadding="0" cellspacing="0" border="1">
+                                <thead>
+                                <tr class="d-flex">
+                                    <th class="col-4">User</th>
+                                    <th class="col-4">Login Time</th>
+                                    <th class="col-4">Logout Time</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="tbl-content">
+                            <table class="table-hover" cellpadding="0" cellspacing="0" border="1">
+                                <tbody>
+                                {% for data in userSessionDatabaseList %}
+                                <tr class="d-flex">
+                                    <td class="col-4">{{ data.userName }}</td>
+                                    <td class="col-4">{{ data.login }}</td>
+                                    <td class="col-4">{{ data.logout }}</td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--                        <table class="table table-hover" border="1" style="margin-bottom: 0rem;">-->
+                        <!--                        </table>-->
+                    </div>
+                </div>
+
+                <div id="keywordSearched" class="tab-pane" style="padding-bottom: 1px">
+                    <div class="jumbotron col-6 offset-1" style="padding: 0px 0px; margin-bottom: 0rem; background: white;">
+                        <div class="tbl-header">
+                            <table class="table-hover" cellpadding="0" cellspacing="0" border="1">
+                                <thead>
+                                <tr class="d-flex">
+                                    <th class="col-4">User</th>
+                                    <th class="col-4">Keyword</th>
+                                    <th class="col-4">Time</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="tbl-content">
+                            <table class="table-hover" cellpadding="0" cellspacing="0" border="1">
+                                <tbody>
+                                {% for data in keywordSearchedList %}
+                                <tr class="d-flex">
+                                    <td class="col-4">{{ data.userName }}</td>
+                                    <td class="col-4">{{ data.keyword }}</td>
+                                    <td class="col-4">{{ data.time }}</td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--                        <table class="table table-hover" border="1" style="margin-bottom: 0rem;">-->
+
+
+                        <!--                        </table>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+</body>
+</html>
+
+<style>
+table{
+  width:100%;
+  table-layout: fixed;
+}
+.tbl-header{
+  background-color: #ccccff;
+ }
+.tbl-content{
+  max-height:400px;
+  overflow-x:auto;
+  margin-top: 0px;
+  overflow-y: auto;
+}
+.tbl-header th{
+  text-align: center;
+  font-size: 17px;
+  word-break: break-word;
+  padding: 5px;
+}
+.tbl-content td {
+padding: 8px 3px;
+  text-align: left;
+  vertical-align:middle;
+  word-break: break-word;
+  background: #EBECED;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+.custom-toggler {
+border-color: white;
+}
+.custom-toggler .navbar-toggler-icon {
+   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+ }
+</style>

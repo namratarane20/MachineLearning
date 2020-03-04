@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Portal</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity=" sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ <link rel="shortcut icon" href="{% static 'images/fevicon.png' type='image/x-icon' %}"></head>
+<body style="background-color:#040230">
+
+{% block content %}
+
+<div>
+    <div class="col-xl-12 box">
+        <nav class="navbar navbar-expand-md  fixed-top " style="background-color:#040230;border-bottom:solid #2c345e 1px;">
+            <!--         Prognos Logo on left side of navbar-->
+            <div class="navbar-collapse">
+                <a href="/toHomePage">
+                    <img src="{% static 'images/prognoshealth.png' %}"style="width:200px;"
+                         alt=""
+                         class="d-inline-block align-middle mr-2">
+                </a>
+            </div>
+        </nav>
+    </div>
+</div>
+
+<br><br><br><br>
+<div class="d-flex justify-content-center h-100 col-xl-6">
+    <div class="card " style="height: 320px; border-radius:10px;">
+        <div class="card-body" align="center">
+            <h3 style="color:black;"align="center"><strong> SIGN IN </strong></h3>
+          <hr style="background-color:#040230;width:130%;margin-left:-25px; height:3px;">
+
+
+            <form action="adminMailVerification" method="POST">
+                {% csrf_token %}
+                {% if message %}
+                <p><i><font color="black"> {{ message }} </font> </i></p>
+                {% endif %}
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                        <br>
+                        <span class="input-group-text">
+                                <i class="fa fa-user" style="font-size: 24px"></i>
+                        </span>
+                    </div>
+                    <input type="email" class="form-control" name="emailId" placeholder="Email Id">
+                </div>
+
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                        <br>
+                        <span class="input-group-text">
+                                <i class="fa fa-key" style="font-size: 24px"></i>
+                        </span>
+                    </div>
+
+                    <input type="password" class="form-control" name="password" placeholder="Password">
+                </div>
+                <br>
+
+                {% if validate %}
+                <p><i><font color="white">Please enter valid email-Id</font> </i></p>
+                {% endif %}
+
+                <div class="form-group">
+                    <button type="submit" value="Login" class="btn float-center login_btn "><strong>Login</strong></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+</body>
+</html>
+<style>
+
+
+.container{
+height: 100%;
+align-content: center;
+}
+
+.card{
+height: 400px;
+margin-top:100px;
+margin-bottom: auto;
+width: 400px;
+
+}
+
+.social_icon span{
+font-size: 60px;
+margin-left: 10px;
+color: #FFC312;
+}
+
+.social_icon span:hover{
+color: white;
+cursor: pointer;
+}
+
+.card-header h3{
+color: white;
+}
+
+.social_icon{
+position: absolute;
+right: 20px;
+top: -45px;
+}
+
+.input-group-prepend span{
+width: 50px;
+background-color: #FFC312;
+color: black;
+border:0 !important;
+}
+
+input:focus{
+outline: 0 0 0 0  !important;
+box-shadow: 0 0 0 0 !important;
+
+}
+
+.remember{
+color: white;
+}
+
+.remember input
+{
+width: 20px;
+height: 20px;
+margin-left: 15px;
+margin-right: 5px;
+}
+
+.login_btn{
+color: black;
+background-color: #FFC312;
+width: 100px;
+}
+.custom-toggler {
+border-color: white;
+}
+.custom-toggler .navbar-toggler-icon {
+   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+ }
+</style>

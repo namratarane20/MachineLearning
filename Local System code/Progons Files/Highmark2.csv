@@ -1,0 +1,187 @@
+VendorName,SectionName,ContrrolName,SecurityQuestions,SolutionResponse,SolutionComments,Most Relevant Responses,Keywords for Most Relevant
+Highmark Health,New Request,New Request," VRA 50.0 - Are users who access electronic information required to authenticate using a
+unique user name and password?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 51.0 - Are logs generated for applications that access, store and/or process our company's data?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 51.1 - Can logs be shared for applications that access, store and/or process our company's data?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 52.0 - Are reports of user authentication to systems available which include a date and time stamp
+indicator?",Yes,,,
+Highmark Health,New Request,New Request,VRA 53.0 - Is password reset authority restricted to authorized individuals?,Yes,,,
+Highmark Health,New Request,New Request,"VRA 54.0 - Please identify the processes available for a user to reset or unlock user access accounts or
+passwords.", Help desk,,,
+Highmark Health,New Request,New Request,"VRA 55.0 - Do authentication procedures enforce the use of strong passwords and prevent password re-
+use?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 56.0 - Along with a user’s password, are multi-factor authentication mechanisms used where our
+data can be accessed, processed and/or stored in your environment (e.g., token, biometric)?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 57.0 - Are remote access (Virtual Private Network (VPN)) utilities configured for at least two-factor
+authentication?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 57.1 - Does VPN authentication enforce unique usernames, passwords, and workstation connection
+encryption?",Yes,,,
+Highmark Health,New Request,New Request,VRA 58.0 - Are user IDs locked-out after 3 to 5 failed access attempts?,Yes,,,
+Highmark Health,New Request,New Request,VRA 58.1 - Is a systems administrator required to unlock the user account and / or reset the password?,Yes,,,
+Highmark Health,New Request,New Request,"VRA 59.0 - Are user access accounts used by third party vendors / sub-contractors enabled only during
+the time needed?",Yes,,,
+Highmark Health,New Request,New Request,VRA 59.1 - Are user access accounts configured to automatically expire?,Yes,,,
+Highmark Health,New Request,New Request,"VRA 60.0 - Is access to all electronic information immediately revoked from employees, temporary
+workers, and contractors upon termination?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 61.0 - Does your organization allow end users who are not IT administrators to install and execute
+software on their workstations (e.g., Laptop, PC, Server)?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 61.1 - What processes or controls are in place to verify non-IT administrators install company-
+approved programs that do not violate IT Security Policies and any software license agreements?","Automated workstation and server scans (1), X Notification of installed programs to system administrator or security function (2), Whitelist of approved applications (3),License availability review (4)",,,
+Highmark Health,New Request,New Request,"VRA 61.2 - Are print jobs which generate confidential information secured (i.e. configured to be physically
+released by an authorized user via PIN, user credentials, ID card, etc.)?","For resources having access to PHI, print is disabled",,,
+Highmark Health,New Request,New Request,"VRA 61.3 - Does a policy regarding secure printing practices exist (e.g., shred confidential documents left
+on printer, do not print unless ready to pick up)?",Because print is disabled for all the machines having access to PHI,,,
+Highmark Health,New Request,New Request,"VRA 62.0 - Is there a remote access (VPN) information security policy which is communicated to all users
+(employees and other external parties) with remote access?",Yes,,,
+Highmark Health,New Request,New Request,VRA 62.1 - Explain how the remote access policy is communicated to all users with remote access,Virtual Clean room SoP is posted on the company’s intranet and also the users go through a Prognos Security and Privacy training annually ,,,
+Highmark Health,New Request,New Request,"VRA 62.2 - Is the remote access policy reviewed and reaffirmed at least annually by IT Security policy
+owners?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 63.0 - Are all router, switches, wireless access points, and firewall configurations physically and
+logically secured?","We do not have physical router, switches and WAP as we leverage AWS cloud infrastructure for this",,,
+Highmark Health,New Request,New Request,VRA 64.0 - Is a firewall used to protect the organization's network?,We do not have physical organization network and leverage cloud infrastructure but we have firewall enabled on our endpoints,,,
+Highmark Health,New Request,New Request,"VRA 64.1 - Are firewalls configured with security rules limit allow inbound and outbound traffic to only that
+which is required to conduct business?",Not Applicable,,,
+Highmark Health,New Request,New Request,"VRA 65.0 - Are web servers located on public facing network segments separated from the internal
+network by a firewall?",We do not have an internal network.,,,
+Highmark Health,New Request,New Request,"VRA 66.0 - Are changes to the firewall firmware, software, configuration, and placement subject to a
+change control processes?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 67.0 - Are all passwords on network devices (e.g., routers, switches, firewalls) and intrusion
+detection systems encrypted?","Those systems are a service to us, we do not run the hardware directly",,,
+Highmark Health,New Request,New Request,VRA 68.0 - Is all covered electronic information that passes through public networks encrypted?,Yes,,,
+Highmark Health,New Request,New Request,VRA 68.2 - Is all covered electronic information that passes through private networks encrypted?,Yes,,,
+Highmark Health,New Request,New Request,"VRA 69.0 - Are vulnerability assessments, scans and penetration tests performed on internal and
+externally facing networks?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 69.1 - Are vulnerability assessments, scans and penetration tests performed at least every 12
+months?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 70.0 - Are network devices configured to prevent communications from unapproved or untrusted
+networks?",Yes,,,
+Highmark Health,New Request,New Request,VRA 71.0 - Is wireless access to internal systems permitted?,Yes,,,
+Highmark Health,New Request,New Request,"VRA 71.1 - Are egress and ingress filters installed on all border routers to prevent impersonation with
+spoofed IP addresses?","No, Only authorized IP’s have access to the PHI and it works on IP whitelisting ",,,
+Highmark Health,New Request,New Request,VRA 71.2 - Do perimeter firewalls exist between wireless networks and sensitive information?,Yes,,,
+Highmark Health,New Request,New Request,VRA 72.0 - Are scans run periodically to identify unauthorized wireless devices?,We do not control the wireless access in our HQ,,,
+Highmark Health,New Request,New Request,"VRA 73.0 - Is there an information security and configuration policy in place around software applications,
+servers, operating systems, databases, routers, hubs, etc.?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 73.1 - Is the configuration policy reviewed and reaffirmed at least every 12 months by applicable
+policy owners?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 74.0 - Does your organization have a process to formally review and verify new technology
+acquisitions that are in line with your strategic and operational objectives?",Not Applicable,,,
+Highmark Health,New Request,New Request,"VRA 74.1 - Is your formal process reviewed, updated, and reaffirmed every twelve months?",We do not purchase technology in this fashion,,,
+Highmark Health,New Request,New Request,"VRA 75.0 - Is there a mobile device policy which is communicated to all employees across the
+organization?",No access to systems is permitted from mobile devices,,,
+Highmark Health,New Request,New Request,"VRA 75.0.1 - Please clarify if a mobile device policy does not exist and/or if a policy is not communicated
+across your organization",Mobile device policy does not exist,,,
+Highmark Health,New Request,New Request,"VRA 75.1.1 - Please provide the business reason why the mobile device policy is not reviewed and
+reaffirmed every twelve months.",Mobile devices does not have access to PHI and there in no way that the information can be downloaded,,,
+Highmark Health,New Request,New Request,"VRA 76.0 - Is there a policy related to the secure disposal of electronic information which is
+communicated to all employees across the organization?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 76.1 - Is the secure disposal of information policy reviewed and reaffirmed every twelve months
+by applicable policy owners?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 77.0 - Is there a system software and operating system patch management policy which is
+communicated to applicable employees in the organization?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 77.1 - Is the system software and operating system patch management policy reviewed and
+reaffirmed every twelve months by applicable policy owners?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 77.2 - Does your organization have a process for applying critical vendor recommended operating
+system and application security updates and/or patches?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 77.3 - Does your security update and/or patch schedule include the prompt implementation of
+recommended updates or patches?",Yes,,,
+Highmark Health,New Request,New Request,VRA 77.4 - Does your security update and/or patch schedule include the documentation of exceptions?,Yes,,,
+Highmark Health,New Request,New Request,"VRA 78.0 - Is there a change control process which ensures information security vulnerabilities or
+weakness are addressed when additions, deletions, and changes to information technology assets
+(including application systems, servers, network devices, databases, operating systems, etc.) are made?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 79.0 - Are development, quality assurance, and production application and operating system
+software updated with security patches?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 80.0 - Is there a removable media policy (CDs, DVDs, tapes, disk drives, USB / thumb drives, etc.)
+which restricts usage?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 80.1 - Is the removable media policy reviewed and reaffirmed at least annually by applicable policy
+owners?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 80.0.1 - Please describe any organizational policies that authorize or restrict data storage locations
+for removable media.",Virtual Cleanroom SoP and System Access Policy,,,
+Highmark Health,New Request,New Request,VRA 81.0 - Are there technological controls implemented which restrict the use of removable media?,Yes,,,
+Highmark Health,New Request,New Request,VRA 81.1 - Please specify all removable media controls,"Read / Write / Copy Prevention (1), I/O Settings (3)",,,
+Highmark Health,New Request,New Request,"VRA 82.0 - Are users able to access data from any form of removable media (i.e., USB Drive, recordable
+CD, external hard drive, smart phone, etc.) without detection?","No, We do not allow the use of removable media",,,
+Highmark Health,New Request,New Request,VRA 83.0 - Is encryption required when removable media is used?,We do not allow the transport of any data via physical media,,,
+Highmark Health,New Request,New Request,VRA 83.1 How is removable media encryption enforced? Please explain.,Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,"VRA 84.0 ""Is all confidential electronic information that is transported off site via physical media (tape, disk, USB /thumb drive, DVD, CD, etc.) encrypted?""",Not Applicable - Please explain why - We do not allow the transport of any data via physical media,,,
+Highmark Health,New Request,New Request,VRA 83.0.1 "Please describe any plans to implement technical controls to restrict the use of removable media. Please describe your Data Loss Prevention tools and processes to prevent or identify when confidential data is being inappropriately saved to removable media.",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 84.0.1 "Please describe the types of media/data being transported off site and processes for secure delivery. Please describe any plans to encrypt all physical media to off site locations.",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 85.0 Is our production data used for testing and development purposes?,No,,,
+Highmark Health,New Request,New Request,VRA 85.1 Is our data obfuscated in all non-production environments (where applicable)?,Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,"VRA 85.1.1 ""Do the non-production environments have the same technical controls and processes as the production environment (e.g., access control activity logging)?""",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,"VRA 86.0 ""Are the logs of critical infrastructure assets such as firewalls, routers, wireless access points, and authentic servers reviewed for unauthorized traffic and configuration changes?""",Not Applicable - Please explain why - ClearDATA provides critical service monitoring,,,
+Highmark Health,New Request,New Request,VRA 86.1 Please explain how often these infrastructure reviews occur.,Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 86.0.1 "Please describe any monitoring controls or processes in place to identify unauthorized or inappropriate network traffic and configuration changes.",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 87.0 Are all critical system clocks synchronized?,Yes,,,
+Highmark Health,New Request,New Request,VRA 88.0 Do system security and user activity logs include date and time stamps?,Yes,,,
+Highmark Health,New Request,New Request,"VRA 89.0 ""Are there procedures in place to ensure that default passwords are changed on all information technology assets (systems, databases, routers, hubs, firewalls, etc.) before placing the asset into production?""",Not Applicable - Please explain why - We do not run any of the hardware or software at this level.,,,
+Highmark Health,New Request,New Request,VRA 89.0.1 "Please explain the systems and situations where default passwords are necessary to remain on production IT assets. Does your organization plan to put procedures in place to ensure that default passwords are changed on all information technology assets before placing the asset into production?",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,"VRA 90.0 Are secure, encrypted communications sessions utilized for all remote administrator activities?",Yes,,,
+Highmark Health,New Request,New Request,VRA 90.0.1 Please describe your method of remote connection to your internal network.,Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,"VRA 91.0 ""Is all confidential electronic information maintained on employee, temporary worker, and contractor workstation devices (laptops, desktops, smart phones, tablets, etc.) encrypted to prevent sensitive information from being compromised in the event the device is lost or stolen?""",Yes,,,
+Highmark Health,New Request,New Request,VRA 91.0.1 "Please describe any controls in place to prevent sensitive information from being compromised if saved to a device that is lost or stolen. Please describe if there is a plan to encrypt all workstation devices that may store sensitive information.",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,"VRA 92.0 ""Are there anti-virus and anti-malware protection programs which prevent employees, temporary workers, contractors, and customers from introducing unauthorized access to, or destruction of, information assets via servers and end-user computing devices (e.g. laptops, desktops, smart phones, tablets)?""",Yes,,,
+Highmark Health,New Request,New Request,"VRA 92.0.1 ""Please describe your anti-virus/anti-malware program or any end-point protection, IDS, and/or perimeter control systems that prevent users from installing malicious programs or malware that open back-doors or unauthorized tunnels to external networks.""",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,"VRA 93.0 ""Is there virus / malware scanning in place at all times on servers and end-user computing devices (e.g. laptops, desktops, smart phones, tablets)?""",Yes,,,
+Highmark Health,New Request,New Request,"VRA 93.1 ""Please specify how often anti-virus, anti-malware, and other system security software definitions are updated.""",18 - 24 hours,,,
+Highmark Health,New Request,New Request,"VRA 93.0.1 ""Please describe how often virus/malware scans are run on all servers and workstations. If virus/malware protection programs that include regular scanning are not in place, please describe how viruses/malware are prevented, detected and/or remediated?""",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 93.1.1 Why are definitions not updated more often?,Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 94.0 "Is there a Data Loss Prevention program in place to automatically detect and prevent the unauthorized transmission and/or storage of confidential information?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 94.0.1 ""Please describe any plans to implement Data Loss Prevention tools and processes. Please describe how your organization identifies, monitors, detects, and/or mitigates any confidential data loss.""",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,"VRA 95.0 ""Is an Intrusion Detection System (IDS) implemented and calibrated to identify, alert and respond to information security attacks?""",Yes,,,
+Highmark Health,New Request,New Request,VRA 95.0.1 Please explain how you identify and respond to potential malicious activity from external sources?,Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,"VRA 96.0 ""Is there an inventory of all information technology assets including software application systems, systems, databases and data stores, network devices, web services, etc.?""",Yes,,,
+Highmark Health,New Request,New Request,VRA 96.1 "Does the asset inventory specify individual(s) who are considered the custodians of the company owned asset(s)?",Yes,,,
+Highmark Health,New Request,New Request,VRA 96.0.1 "Please describe your asset management process and controls to verify all information technology assets are properly tracked and managed.",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 96.1.1 "Please describe any processes in place to identify owners of company owned technology assets. Please describe any plans to identify custodians or owners of company owned assets.",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 97.0 "Is there an information technology asset management policy which is communicated to applicable personnel?",Yes,,,
+Highmark Health,New Request,New Request,VRA 97.1 "Is the asset management policy reviewed and reaffirmed every twelve months by applicable policy owners?",Yes,,,
+Highmark Health,New Request,New Request,VRA 97.0.1 "Please describe the process to manage information technology assets. Is there a plan to formalize an asset management policy and communicate to all employees?",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,"VRA 98.0 Do any third parties of your organization collect, process and/or manage our confidential information?",No,,,
+Highmark Health,New Request,New Request,"VRA 98.1 ""Please provide the name(s) of the third parties with whom our data and information is shared, where they are geographically located, the type of information shared, and format (physical vs. electronic).""",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,"VRA 98.2 ""Are third parties handling sensitive information contractually required to comply with your information security policies, standards, and practices?""",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,"VRA 99.0 ""Are the security policies, practices, and procedures of third parties with whom your organization shares covered information reviewed and reaffirmed every twelve months?""",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 100.0 "Are Confidentiality agreements and/or Non Disclosure Agreements required of third party vendors prior to engagement?",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,"VRA 101.0 ""Does your organization permit access to external websites including file sharing, public email, social media (e.g. Personal Box.com, Dropbox, Google Docs, Gmail, Yahoo, Hotmail, Facebook, Twitter, Snapchat, Filezilla, Torrents) that do not have a business justification?""",No,,,
+Highmark Health,New Request,New Request,VRA 101.1 "Please explain how user activities are monitored and/or restricted to these sites to prevent any inappropriate data storage or transmission.",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 102.0 Does your company provide cloud services to customers?,No,,,
+Highmark Health,New Request,New Request,VRA 102.1 "Are users required to use two factor authentication to remotely access the production cloud environment containing customer data?",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 102.1.0 "Please describe the authentication mechanism currently in use and any plans to implement multifactor authentication where our data is stored and processed in your cloud environment.",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,"VRA 102.2 ""In the event of a client subpoena or forensics incident, can you legally demonstrate sufficient data segmentation so as not to impact other customers' data?""",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 102.3 Please explain how customer data stored in the cloud is encrypted at rest and in transit?,Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 102.4 Are users prohibited from accessing customer data stored in the cloud in an un-encrypted state?,Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 102.5 Are client encryption keys securely stored to prevent unauthorized decryption?,Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,"VRA 103.0 ""Please describe your data retention/destruction schedule and how customer data is removed, returned, and/or destroyed in the cloud and/or any other means of storage (e.g. NAS, database).""",Data retention is for 90 days unless otherwise negotiated. Any storage we may directly control is scrub and zero?ed as per NIST guidelines,,,
+Highmark Health,New Request,New Request,VRA 104.0 Does your company have a Bring Your Own Device (BYOD) program?,No,,,
+Highmark Health,New Request,New Request,VRA 104.1 Are employees with access to our data participating in the BYOD program?,Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 105.00 Does your organization have a defined BYOD policy which describes the requirements of the organization and employee?,Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,"VRA 105.1 ""Does your BYOD policy specifically address all of the following:* The allowable device types (iPhone, Android, Blackberry) * The nature of services accessible through the devices - taking into account the existing IT architecture * The way employees are to be using the devices * Integrating all enterprise-issued devices into an asset management program * The types of authentication and encryption to be present on the devices * The applications that are allowed to be accessed and the tasks for which employees may use the device * How data should be securely stored and transmitted * Remote locking and wiping of lost or stolen devices"" ",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 105.2 Please specify which attributes are not covered by your BYOD policy.,Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 106.0 Does your organization utilize a third party to provide and support Mobile Device Management (MDM)?,Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 106.1 Are these MDM activities hosted and performed on-site?,Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 106.2 Are MDM activities managed offsite?,Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 106.3 Are MDM activities managed from an offshore (non-U.S. based location),Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 106.4 Who manages MDM activities and where are they located?,Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 106.1.1 Please provide the name of the third party used to support your organization's MDM.,Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 107.0 "Are passwords that meet your organization's information security standards enabled in order to access our data from mobile devices?",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 107.0.1 Are the corporate devices managed by an MDM program and does it enforce passcode protection?,Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,"VRA 108.0 ""Are mobile devices remotely wiped, locked, and/or disabled in the event they are lost, stolen, or breached?""",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,"VRA 108.0.1 ""Please describe the MDM solution(s) utilized to remotely wipe, lock, and/or disable in the event a mobile device is lost, stolen, or breached. Please describe if there is a plan to upgrade or implement this functionality. Are users educated and trained to provide immediate notification if their mobile device has been lost, stolen, or breached.""",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 109.0 Does your company use Microsoft Operating System products?,No,,,
+Highmark Health,New Request,New Request,VRA 109.1 Has your organization transitioned from Microsoft Windows XP operating system to Windows 7 or later?,Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 109.2 Does your organization have a plan to transition from Windows XP?,Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 109.3 Approximately when does your organization plan to transition from Windows XP?,Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 110.0 "Does your company have technical safeguards in place to prevent and detect Denial of Service (DDoS) attacks?",Yes,,,
+Highmark Health,New Request,New Request,VRA 110.0.1 What compensating controls are in place to detect and respond to DDOS attacks?,Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,"VRA 111.0 ""Please estimate the number of records which contain our company's confidential information that your company has the ability to access, process and/or store within a calendar year.""","Less than 10,000 records",,,
+Highmark Health,New Request,New Request,VRA 112.0 Does your organization have a Business Continuity Plan (BCP)?,Yes,,,
+Highmark Health,New Request,New Request,VRA 112.1 Is the BCP reviewed and updated every 12 months?,Yes,,,
+Highmark Health,New Request,New Request,VRA 112.2 Does the BCP contain a clear communication and escalation path to all employees?,Yes,,,
+Highmark Health,New Request,New Request,"VRA 112.3 ""Does the BCP cover all of the locations from which our company data will be stored, transmitted, and/or processed?""",Yes,,,
+Highmark Health,New Request,New Request,VRA 113.0 Does your organization have a Disaster Recovery Plan?,Yes,,,
+Highmark Health,New Request,New Request,"VRA 113.1 Is the Disaster Recovery Plan reviewed, tested, and revised every 12 months?",Yes,,,
+Highmark Health,New Request,New Request,"VRA 114.0 ""Does your organization have an incident response, crisis management, and/or recovery plan specific to ransomware attacks and exploits?""",Yes,,,
+Highmark Health,New Request,New Request,VRA 115.0 Have any of your systems been infected by ransomware to date?,No,,,
+Highmark Health,New Request,New Request,"VRA 115.1 Please describe the root cause, impact, and remediation of each event.",Not Applicable (Logic),,,
+Highmark Health,New Request,New Request,VRA 116.0 Identify all Spectre and Meltdown vulnerability remediation activities your organization is under-taking:,Operating System Patch(es),,,
+Highmark Health,New Request,New Request,VRA 117.0 When is the anticipated date of Spectre/Meltdown remediation plan completion? (mm/dd/yyyy),12/31/2018,,,

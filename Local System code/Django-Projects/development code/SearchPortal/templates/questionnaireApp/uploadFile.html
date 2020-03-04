@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Portal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="shortcut icon" href="{% static 'images/fevicon.png' type='image/x-icon' %}">
+
+
+</head>
+<body style="background-color:#040230">
+
+{% block content %}
+<div class="row col-12">
+    <nav class="navbar navbar-expand-md fixed-top"
+         style="background-color:#040230;border-bottom:solid #2c345e 1px;">
+        <div class="container-fluid col-12 ">
+            <a href="/toHomePage" class="navbar-brand">
+                <img src="{% static 'images/prognoshealth.png' %}" style="width:200px;"
+                     alt=""
+                     class="d-inline-block align-middle mr-2">
+
+                <!-- <span class="text-uppercase font-weight-bold">Company</span> -->
+            </a>
+            <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                    class="navbar-toggler custom-toggler">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+
+            <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active"><a href="#" class="nav-link">
+                        <strong class="text-warning pt-2"> Welcome {{user.first_name}} </strong>
+                        <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item"><a href="/report" class="nav-link">
+                        <strong style="color:white"> Report </strong></a>
+                    </li>
+                    <li class="nav-item"><a href="/account/logout" class="nav-link">
+                        {% if user.is_authenticated %}
+                        <strong style="color:white">Log Out</strong>
+                        {% endif %}
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<br><br><br><br><br>
+
+<div class="row col-12">
+    <div class="col-xl-4 offset-xl-1 col-lg-5 offset-lg-1 col-md-6 offset-md-0 col-sm-9 offset-sm-2 col-xs-10">
+        <div class="card card-body" style=" border-radius:10px; margin-top:8%;  background-color:white;">
+            <h3 align="center"><strong> Upload Questionnaire File </strong></h3>
+            <hr style="background-color:#040230;width:130%;margin-left:-25px; height:3px;">
+
+            <form action="/indexQuestionnaireFile" method="POST" id="indexQuestionnaireFile"
+                  enctype="multipart/form-data"
+                  style="margin-left: 20px">
+                {% csrf_token %}
+
+                <div class="modal fade" id="questionnaireModal" role="dialog" style="display:none;">
+                    <div class="modal-dialog " style="width:400px;height:200px; ">
+                        <div class="modal-content">
+                            <div class="modal-header" style="background:#c4bdf2;">
+                                <h4 class="modal-title"
+                                    style="margin:0 auto; text-align: center">File Name Already Exist</h4>
+                            </div>
+                            <div class="modal-body" style="margin:0 auto;">
+                                <h5>Either rename file or Overwrite</h5>
+                            </div>
+                            <div class="modal-footer" style="background:#c4bdf2;">
+                                <button type="submit"
+                                        style="border:black;border-style: solid;border-width: 2px;margin:0 auto;">
+                                    Overwrite
+                                </button>
+                                <button type="button" data-dismiss="modal"
+                                        style="border:black;border-style: solid;border-width: 2px;margin:0 auto;">Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table border="0" style="width: 100%;">
+                    <tr class="d-flex" style="width: 100%;">
+                        <td class="col-4" style="padding:0%;">Vendor:</td>
+                        <td class="col-8" style="padding:0%;">
+                            <input list="vendors" style="width: 100%;" name="vendorName" required>
+                            <datalist id="vendors">
+                                {% for name in distinctVendors %}
+                                <option value="{{name.vendorName}}">
+                                    {% endfor %}
+                            </datalist>
+                        </td>
+                    </tr>
+                    <tr class="d-flex" style="margin-top:2%;">
+                        <td class="col-4" style="padding: 0%">Received Date :</td>
+                        <td class="col-8" style="padding:0%; display: flex; align-items: center;">
+                            <input type="date" style="width: 100%;" name="questionnaireReceivedDate">
+                        </td>
+                    </tr>
+                    <tr class="d-flex" style="margin-top:2%;">
+                        <td class="col-4" style="padding: 0%">Submit Date :</td>
+                        <td class="col-8" style="padding:0%; display: flex; align-items: center;">
+                            <input type="date" style="width: 100%;" name="questionnaireSubmittedDate">
+                        </td>
+                    </tr>
+                    <tr class="d-flex" style="margin-top: 2%;">
+                        <td class="col-4" style="padding: 0%;">Document Link :</td>
+                        <td class="col-8" style="padding:0%; display: flex; align-items: center;">
+                            <input type="url" style="width: 100%;" name="questionnaireDocumentLink">
+                        </td>
+                    </tr>
+                    <tr class="d-flex" style="margin-top: 2%;">
+                        <td class="col-4" style="padding: 0%;  display: flex; align-items: center;">
+                            Scope :
+                        </td>
+                        <td class="col-8" style="padding: 0%;">
+                            <textarea name="questionnaireScope" style="width: 100%;"></textarea>
+                        </td>
+                    </tr>
+                    <tr class="d-flex" style="margin-top: 2%;">
+                        <td class="col-4" style="padding: 0%;">Related Communication:</td>
+                        <td class="col-8" style="padding:0%;">
+                            <textarea name="questionnaireRelatedCommunication" style="width: 100%;"></textarea>
+                        </td>
+                    </tr>
+                </table>
+                <div class="custom-file" style="overflow: hidden;">
+                    <input type="file" class="custom-file-input"  name="questionnaireFile" id="questionnaireFile"/>
+                    <label class="custom-file-label" for="questionnaireFile">Choose file</label>
+                </div>
+                <div class="input-group-append" hidden>
+                    <button class="btn btn-primary">Upload</button>
+                </div>
+                <script>
+                $('#questionnaireFile').on('change',function(){
+                    //get the file name
+                    var fileName = $(this)[0].files[0].name;
+                    console.log(fileName)
+                    //replace the "Choose a file" label
+                    $(this).next('.custom-file-label').html(fileName);
+                })
+                </script>
+                <button class="btn float-center submit_btn" style="margin-top:2%;" type="button" onclick="uploadFile()">
+                    <strong>Upload</strong>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-xl-4 offset-xl-1 col-lg-5 offset-lg-0 col-md-6 offset-md-0 col-sm-9 offset-sm-2 col-xs-10 ">
+        <div class="card card-body" style="border-radius:10px; margin-top:8%; background-color:white;">
+            <h3 align="center"><strong> Upload Policies File </strong></h3>
+            <hr style="background-color:#040230;width:130%;margin-left:-25px; height:3px;">
+            <form action="indexPoliciesFile" method="POST" id="indexPoliciesFile" enctype="multipart/form-data"
+                  style="margin-left: 20px">
+                {% csrf_token %}
+
+                <div class="modal fade" id="policyModal" role="dialog" style="display:none;">
+                    <div class="modal-dialog " style="width:400px;height:200px; ">
+                        <div class="modal-content">
+                            <div class="modal-body" style="margin:0 auto;">
+                                <h5>Policy File Already Exist</h5>
+                            </div>
+                            <div class="modal-footer" style="background:#c4bdf2;">
+                                <button type="submit"
+                                        style="border:black;border-style: solid;border-width: 2px;margin:0 auto;">
+                                    Overwrite
+                                </button>
+                                <button type="button" data-dismiss="modal"
+                                        style="border:black;border-style: solid;border-width: 2px;margin:0 auto;">Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <table width="100%;">
+                    <tr class="d-flex">
+                        <td class="col-3" style="padding: 0%;">
+                            Policy Link:
+                        </td>
+                        <td class="col-9" style="padding: 0rem;">
+                            <input type="url" style="width: 100%;" name="link" placeholder="Enter url" width="100%">
+                        </td>
+                    </tr>
+                </table>
+                <div class="custom-file" style="overflow:hidden; margin-top: 5%;">
+                    <input type="file" class="custom-file-input" name="policyFile" id="policyFile"/>
+                    <label class="custom-file-label" for="policyFile">Choose file</label>
+                </div>
+                <div class="input-group-append" hidden>
+                    <button class="btn btn-primary">Upload</button>
+                </div>
+                <script>
+            $('#policyFile').on('change',function(){
+                //get the file name
+                var fileName = $(this)[0].files[0].name;
+                //replace the "Choose a file" label
+                $(this).next('.custom-file-label').html(fileName);
+            })
+
+                </script>
+                <button class="btn float-center submit_btn" style="margin-top: 5%;" type="button"
+                        onclick="uploadFile()"><strong>Upload</strong>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <ul id="fileNameList" style="display: none">
+        {% for name in fileNameList %}
+        <li><a style="color: white">{{ name.fileName }}</a></li>
+        {% endfor %}
+    </ul>
+
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags %}
+    <script>alert("{{ message }}")</script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+    <script>
+        function uploadFile() {
+            var questionnaire = false
+            var policy = false
+            if (document.getElementById('questionnaireFile').value) {
+                var fileName = document.getElementById('questionnaireFile').value.replace(/.*[\/\\]/, '')
+                questionnaire = true
+            } else {
+                var fileName = document.getElementById('policyFile').value.replace(/.*[\/\\]/, '')
+                fileName = fileName.substring(0, fileName.indexOf('.docx')) .replace(/\s+$/, '');
+                policy = true
+            }
+            if (fileName == '') {
+                alert("Please select a file to upload")
+            } else {
+                var ul = document.getElementById("fileNameList");
+                var li = ul.getElementsByTagName("li");
+                var flag = false
+                for (i = 0; i < li.length; i++) {
+                    a = li[i].getElementsByTagName("a")[0];
+                    console.log("file name : ", a)
+                    if (fileName == a.innerText) {
+                        flag = true;
+                        break;
+                    }
+                }
+                if (flag == true) {
+                    if (questionnaire) {
+                        $('#questionnaireModal').modal('show');
+                    } else if (policy) {
+                        $('#policyModal').modal('show');
+                    }
+                } else {
+                   if (questionnaire) {
+                        $("#indexQuestionnaireFile").submit();
+                   } else if (policy) {
+                        $("#indexPoliciesFile").submit();
+                   }
+                }
+            }
+        }
+
+    </script>
+</div>
+
+{% endblock %}
+
+</body>
+</html>
+
+<style>
+
+ .card  {
+    height: auto;
+}
+
+.submit_btn{
+color: black;
+background-color: #FFC312;
+width: 100px;
+}
+
+.resultitem{
+ -webkit-transition: 0.5s;
+          transition: 0.5s;
+}
+
+.resultitem:hover{
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+.custom-toggler {
+border-color: white;
+}
+.custom-toggler .navbar-toggler-icon {
+   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+ }
+</style>

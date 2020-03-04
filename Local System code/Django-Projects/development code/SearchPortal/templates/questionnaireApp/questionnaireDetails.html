@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Portal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link src="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata:700">
+ <link rel="shortcut icon" href="{% static 'images/fevicon.png' type='image/x-icon' %}">
+</head>
+<body style="background-color:#040230">
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row col-12">
+        <nav class="navbar navbar-expand-md fixed-top"
+             style="background-color:#040230;border-bottom:solid #2c345e 1px;">
+            <div class="container-fluid col-12 ">
+                <a href="/toHomePage" class="navbar-brand">
+                    <img src="{% static 'images/prognoshealth.png' %}" style="width:200px;"
+                         alt=""
+                         class="d-inline-block align-middle mr-2">
+                </a>
+
+                <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                        class="navbar-toggler custom-toggler">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active"><a href="#" class="nav-link">
+                            <strong class="text-warning pt-2"> Welcome {{user.first_name}} </strong>
+                            <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item"><a href="/adminLogin" class="nav-link">
+                            <strong style="color:white"> Upload File </strong></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/account/logout" class="nav-link">
+                                {% if user.is_authenticated %}
+                                <strong style="color:white">Log Out</strong>
+                                {% endif %}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <br><br><br><br><br>
+
+    <div class="row" style="margin-left: 1%;">
+        <table width="100%;" class="col-7" style="word-break: break-word;">
+            <tr class="d-flex">
+                <td class="col-2" style="padding: 0%;">
+                    <h5 style="color: white;"><strong>Vendor Name </strong></h5>
+                </td>
+                <td class="col-9" style="padding: 0%;">
+                    <h5 style="color: white;"><strong> : {{vendorName}}</strong></h5>
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <td class="col-2" style="padding: 0%;">
+                    <h5 style="color: white;"><strong>Scope </strong></h5>
+                </td>
+                <td class="col-9" style="padding: 0%;">
+                    <h5 style="color: white;"><strong> : {{ scope }}</strong></h5>
+                </td>
+            </tr>
+        </table>
+        <div class="col-5">
+            <h5 style="color: white;"><strong>Document Link :</strong></h5>
+            <a href="{{docLink}}" style="word-break: break-word" target="_blank"> {{docLink}} </a>
+        </div>
+    </div>
+
+    <div class="jumbotron" style="padding: 1%; margin-top: 2%; background: white;">
+        <div class="row">
+            <div class="col-12">
+                <div class="tbl-header">
+                    <table cellpadding="0" cellspacing="0" border="1">
+                        <thead>
+                        <tr class="d-flex">
+                            <th class="col-4">Security Questions</th>
+                            <th class="col-4">Responses</th>
+                            <th class="col-4">Additional Comments</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="tbl-content">
+                    <table cellpadding="0" cellspacing="0" border="1">
+                        <tbody>
+                        {% for data in vendorsData %}
+                        <tr class="d-flex" style="word-break: break-word">
+                            <td class="col-4">{{data.SecurityQuestions}}</td>
+                            <td class="col-4">
+                                {{data.Responses}}
+                            </td>
+                            <td class="col-4">
+                                {{data.AdditionalComments}}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+</body>
+</html>
+
+<!--style for sidenav-->
+<style>
+table{
+  width:100%;
+  table-layout: fixed;
+}
+.tbl-header{
+  background-color: #ccccff;
+ }
+.tbl-content{
+  height:390px;
+  overflow-x:auto;
+  margin-top: 0px;
+  overflow-y: auto;
+}
+.tbl-header th{
+  text-align: center;
+  font-size: 17px;
+  word-break: break-word;
+  padding: 5px;
+}
+.tbl-content td{
+  text-align: left;
+  vertical-align:middle;
+  padding: 3px 8px;
+  word-break: break-word;
+  background: #EBECED;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+.custom-toggler {
+border-color: white;
+}
+.custom-toggler .navbar-toggler-icon {
+   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+ }
+
+
+</style>

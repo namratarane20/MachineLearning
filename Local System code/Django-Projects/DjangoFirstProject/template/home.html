@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body bgcolor=#d3d3d3>
+
+{% block content %}
+<h1>welcome {{name}} to our channel</h1>
+<form action="add" method="post">
+    {% csrf_token %}
+    Enter first number:<input type="text" name="num1"><br><br>
+    Enter first number:<input type="text" name="num2"><br>
+    <input type="submit">
+</form>
+
+{% endblock %}
+</body>
+</html>

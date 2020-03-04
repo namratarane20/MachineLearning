@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <link rel="stylesheet" href="{%static "css/admin.css" %}">
+</head>
+<body style="background-image: url({% static 'images/logo.jpg' %}); background-size: cover">
+
+{% block content %}
+
+    <div>
+        <nav class="navbar bg-dark">
+            <img src="https://www.safeguard.com/wp-content/uploads/2014/06/prognos-reversed.png" width="200px" alt="" class="d-inline-block align-middle mr-2">
+
+        </nav>
+    </div>
+
+            <button  > go to admin page </button>
+            <table bgcolor="white" border="3" >
+                <form action="addUser" method="post">
+                      <input type="button" value="Add User" name="add"/>&nbsp &nbsp
+                </form>
+                <form action="deleteUser" method="post">
+                      <input type="button" value="Delete User" name="del"/>&nbsp &nbsp
+                </form>
+                <br> <br>
+                <hr>
+                <thead>
+                    <tr>
+<!--                        <th>User id </th>-->
+                        <th>User name</th>
+                        <th>User Mail ID</th>
+                        <th>add/delete</th>
+                    </tr>
+                </thead>
+                   {% for item in emp %}
+
+
+                    <tr>
+                        <form action="displayUser" method="post">
+                            {% csrf_token %}
+                            <td>{{ item.ename}}</td>
+                            <td>{{ item.eemail }}</td>
+                            <td><button type="submit" name="chk" value="chk">Delete</button></td>
+                        </form>
+                    </tr>
+                   {% endfor %}
+
+
+
+                </table>
+<!--            <button>Add new User</button>-->
+        <div>
+
+                        <form action="addUser" method="post">
+                            {% csrf_token %}
+                            <button>ADD USER</button>
+                            <input type="text" name="ename">
+                            <input type="text" name="eemail">
+                        </form>
+                        <h1> {{msg}}</h1>
+
+                        <form action="deleteUser" method="post">
+                            {% csrf_token %}
+                            <button>Delete USER</button>
+
+                        </form>
+                        <h1> {{msg}}</h1>
+        </div>
+        </div>
+
+
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>

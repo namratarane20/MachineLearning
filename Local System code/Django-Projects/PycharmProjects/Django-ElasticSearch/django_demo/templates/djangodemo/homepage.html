@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Portal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/mark.js/7.0.0/jquery.mark.min.js"></script>
+    <link rel="stylesheet" href="{% static "css/homepage.css" %}">
+</head>
+<body style="background-image: url({% static 'images/prognos.jpg' %}); background-size: cover">
+{% block content %}
+    <div >
+        <div  class="shadow">
+          <nav class="navbar navbar-expand-md navbar-dark bg-dark" style="height: 80px">
+<!--              Prognos Logo on left side of navbar&ndash;&gt;-->
+             <div class="navbar-collapse">
+                 <img src="https://www.safeguard.com/wp-content/uploads/2014/06/prognos-reversed.png" width="200px" alt="" class="d-inline-block align-middle mr-2">
+             </div>
+
+<!--             upload file dropdown menu and logout option on right side-->
+             <div class="navbar-collapse">
+                 <ul class="navbar-nav ml-auto">
+                     <li class="nav-item dropdown">
+                         <a class="nav-link dropdown-toggle" data-toggle="dropdown">Upload</a>
+                         <div class="dropdown-menu dropdown-menu-right">
+                             <a href="/uploadcsv" class="dropdown-item">Questionnaire File</a>
+                             <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item">Policies File</a>
+                             </div>
+                     </li>
+                     <li class="nav-item">
+                         <a class="nav-link" href="#">Logout</a>
+                     </li>
+                 </ul>
+             </div>
+         </nav>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="container" align="center">
+        <div class="row">
+            <div class="col-8 offset-2">
+                <form action="searchKeyword" method="POST">
+                    {% csrf_token %}
+                    <input class="form-control" align="center" id='search' type="text" name="keyword" value="{{ keyword }}" placeholder="Search with keyword">
+                    <br>
+                    <button class="btn btn-secondary" value="Search" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    {% if result%}
+        <div class="jumbotron tableFixHead"  >
+            <table class="table table-hover searchtbl"  >
+
+                <thead>
+                <tr class="d-flex">
+                    <th class="col-1">Vendor Name</th>
+                    <th class="col">Section Name</th>
+                    <th class="col">Control Name</th>
+                    <th class="col-3">Security Questions</th>
+                    <th class="col-3">Security / Solution Responces</th>
+                    <th class="col-2">Security / Solution Comments</th>
+                </tr>
+                </thead>
+                <tbody id="context">
+
+
+                    {% for data in result %}
+
+                <tr class="d-flex">
+                    <td class="col-1" >{{ data.VendorName }}</td>
+                    <td class="col">{{ data.SectionName }}</td>
+                    <td class="col">{{ data.ControlName }}</td>
+                    <td class="col-3" >{{ data.SecurityQuestions }}</td>
+                    <td class="col-3">{{ data.ServiceSolutionResponse }}</td>
+                    <td class="col-2">{{ data.ServiceSolutionComments }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+
+                 <h5>{{keyword}}</h5>
+<!--                <mark>{{keyword}}</mark>-->
+            </table>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+</body>
+</html>
+
+<script>
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+}
+
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+}
+
+ $(function() {
+  $("input").on("input.highlight", function() {
+    // Determine specified search term
+    var searchTerm = $(this).val();
+    // Highlight search term inside a specific context
+    $("#context").unmark().mark(searchTerm);
+  }).trigger("input.highlight").focus();
+});
+
+</script>
+
+<!--$(function() {-->
+<!--  $("input").on("input.highlight", function() {-->
+<!--    // Determine specified search term-->
+<!--    var searchTerm = $(this).val();-->
+<!--    // Highlight search term inside a specific context-->
+<!--    $("#context").unmark().mark(searchTerm);-->
+<!--  }).trigger("input.highlight").focus();-->
+<!--});-->

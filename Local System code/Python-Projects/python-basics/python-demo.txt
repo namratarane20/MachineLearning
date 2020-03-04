@@ -1,0 +1,9 @@
+Below are some facts about Python.
+
+Python is a widely used general-purpose, high-level programming language.
+Python allows programming in Object-Oriented and Procedural paradigms.
+Python programs generally are smaller
+ than other programming languages like Java. 
+Programmers have to type relatively less and indenthis is appended data 
+this is appended data 
+this is appended data /nthis is appended data /nthis is appended data /nthis is appended data /n
