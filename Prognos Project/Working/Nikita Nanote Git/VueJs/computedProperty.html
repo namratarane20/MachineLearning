@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" placeholder="First name" v-model="fname">
+        <input type="text" placeholder="Last name" v-model="lname">
+        <br>
+        {{ runme() }}
+        <br>
+<h4>Full name : {{ fullname }}</h4><br>
+<input type="text" placeholder="length in meters" v-model="meter"><br>
+<h4>Value in Centimeter : {{ convertToCentimeter }}</h4><br>
+<input type="text" placeholder="Maths" v-model="maths">
+<input type="text" placeholder="English" v-model="english">
+<input type="text" placeholder="Science" v-model="science">
+<h4>Total marks: {{ totalFun1 }}</h4>
+    </div>
+    <script>
+    new Vue({
+
+        el:'#app',
+        data:{
+            fname:'',
+            lname:'',
+            meter:'',
+            maths:0,
+            english:0,
+            science:0
+        },
+        methods:{
+            runme:function(){
+                console.log("this is my first method")
+                return "i am method"
+            }   
+        },
+        computed:{
+            convertToCentimeter:function(){
+                return this.meter*100
+            },
+            fullname:function(){
+                return this.fname+" "+this.lname
+            },
+            totalFun1:function(){
+                return parseInt(this.maths) + parseInt(this.english) + parseInt(this.science)
+            }
+        }
+    })
+    </script>
+</body>
+</html>

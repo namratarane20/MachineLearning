@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Portal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link src="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+</head>
+<body style="background-color:#040230">
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row col-12">
+        <nav class="navbar navbar-expand-md fixed-top"
+             style="background-color:#040230;border-bottom:solid #2c345e 1px;">
+            <div class="container-fluid col-12 ">
+                <a href="/toHomePage" class="navbar-brand">
+                    <img src="{% static 'images/prognoshealth.png' %}" style="width:200px;"
+                         alt=""
+                         class="d-inline-block align-middle mr-2">
+
+                    <!-- <span class="text-uppercase font-weight-bold">Company</span> -->
+                </a>
+                <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                        class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
+
+
+                <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active"><a href="#" class="nav-link">
+                            <strong class="text-warning pt-2"> Welcome {{user.first_name}} </strong>
+                            <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                               aria-expanded="false">
+                                <strong style="color:white"> Upload File </strong>
+                            </a>
+                            <div class="dropdown-menu dropdown-content dropdown-menu-right">
+                                <a class="dropdown-item" href="/uploadNewQuestionnaire">New Questionnaire</a>
+                                <a class="dropdown-item" href="/uploadFile">Final Filled Questionnaire</a>
+                            </div>
+                        </li>
+                        <li class="nav-item"><a href="/report" class="nav-link">
+                            <strong style="color:white"> Report </strong></a>
+                        </li>
+                        <li class="nav-item"><a href="/account/logout" class="nav-link">
+                            {% if user.is_authenticated %}
+                            <strong style="color:white">Log Out</strong>
+                            {% endif %}
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <br><br><br><br><br>
+
+    <div class="row col-12">
+        <nav>
+            <div class="nav nav-tabs " id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="all-tab" data-toggle="tab" href="#all" role="tab">All</a>
+                {% for vendorName, data in vendorNameDictionary.items %}
+                <a class="nav-item nav-link" id="{{vendorName}}-tab" data-toggle="tab" href="#{{data.link}}" role="tab">{{vendorName}}</a>
+                {% endfor %}
+            </div>
+        </nav>
+    </div>
+
+    <div class="tab-content" id="nav-tabContent" style="background:white; padding: 1rem 0rem;">
+        <div class="tab-pane show active" id="all">
+            <div class="jumbotron tableFixHead table-responsive" style="padding: 0px 0px; margin-bottom: 0rem;">
+                <table class="table table-hover" style="margin: 0rem">
+                    <thead style="text-align: center">
+                    <tr class="d-flex">
+                        <th class="col-1">Vendor</th>
+                        <th class="col-3">Summary</th>
+                        <th class="col-2">Received Date</th>
+                        <th class="col-2">Submitted Date</th>
+                        <th class="col-2">Documents</th>
+                        <th class="col-2">Related Communication</th>
+                    </tr>
+                    </thead>
+                    {% for data in adminDbDataList %}
+                    {% if data.status == 0 %}
+                    <tr class="d-flex">
+                        <td class="col-1">
+                            <a href="fillQuestionnaire/{{data.clientId}}?name=new" style="color:black;">
+                                {{data.vendorName}}  <span style="color:red">new</span>
+                            </a>
+                        </td>
+                        <td class="col-3">
+                            {% if data.summary %}
+                            {{data.summary}}
+                            {% else %}
+                            &nbsp;
+                            {% endif %}
+                        </td>
+                        <td class="col-2">
+                            {% if data.receivedDate %}
+                            {{data.receivedDate}}
+                            {% else %}
+                            &nbsp;;
+                            {% endif %}
+                        </td>
+                        <td class="col-2">
+                            {% if data.submittedDate %}
+                            {{data.submittedDate}}
+                            {% else %}
+                            &nbsp;
+                            {% endif %}
+                        </td>
+                        <td class="col-2">
+                            {% if data.documentLink %}
+                            {{data.documentLink}}
+                            {% else %}
+                            &nbsp;
+                            {% endif %}
+                        </td>
+                        <td class="col-2">
+                            {% if data.relatedCommunication %}
+                            {{data.relatedCommunication}}
+                            {% else %}
+                            &nbsp;
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr class="d-flex">
+                        <td class="col-1">
+                            <a href="fillQuestionnaire/{{data.clientId}}?name=final" style="color:black;">
+                                {{data.vendorName}}
+                            </a>
+                        </td>
+                        <td class="col-3">
+                            {% if data.summary %}
+                            {{data.summary}}
+                            {% else %}
+                            &nbsp;
+                            {% endif %}
+                        </td>
+                        <td class="col-2">
+                            {% if data.receivedDate %}
+                            {{data.receivedDate}}
+                            {% else %}
+                            &nbsp;;
+                            {% endif %}
+                        </td>
+                        <td class="col-2">
+                            {% if data.submittedDate %}
+                            {{data.submittedDate}}
+                            {% else %}
+                            &nbsp;
+                            {% endif %}
+                        </td>
+                        <td class="col-2">
+                            {% if data.documentLink %}
+                            {{data.documentLink}}
+                            {% else %}
+                            &nbsp;
+                            {% endif %}
+                        </td>
+                        <td class="col-2">
+                            {% if data.relatedCommunication %}
+                            {{data.relatedCommunication}}
+                            {% else %}
+                            &nbsp;
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+        {% for vendorName, data in vendorNameDictionary.items %}
+        <div id="{{data.link}}" class="tab-pane">
+            <div class="jumbotron tableFixHead table-responsive" style="padding: 0px 0px; margin-bottom: 0rem;">
+                <table class="table-hover" width="100%">
+                    <thead style="text-align: center">
+                    <tr class="d-flex">
+                        <th class="col-1">Vendor</th>
+                        <th class="col-3">Summary</th>
+                        <th class="col-1">Received Date</th>
+                        <th class="col-1">Submitted Date</th>
+                        <th class="col-2">Google Sheet Link</th>
+                        <th class="col-2">Documents Link</th>
+                        <th class="col-2">Reference</th>
+                    </tr>
+                    </thead>
+                    {% for completeData in data.vendorData %}
+                    {% if completeData.status == 0 %}
+                    <tr class="d-flex">
+                        <td class="col-1">
+                            <a href="fillQuestionnaire/{{completeData.clientId}}?name=new" style="color:black;">
+                                {{completeData.vendorName}} <span style="color:red">new</span>
+                            </a>
+                        </td>
+                        <td class="col-3">
+                            {% if completeData.summary %}
+                            {{completeData.summary}}
+                            {% else %}
+                            &nbsp;
+                            {% endif %}
+                        </td>
+                        <td class="col-1">
+                            {% if completeData.receivedDate %}
+                            {{completeData.receivedDate}}
+                            {% else %}
+                            &nbsp;;
+                            {% endif %}
+                        </td>
+                        <td class="col-1">
+                            {% if completeData.submittedDate %}
+                            {{completeData.submittedDate}}
+                            {% else %}
+                            &nbsp;
+                            {% endif %}
+                        </td>
+                        <td class="col-2">
+                            <a href="">
+                                {% if completeData.googleSheetLink %}
+                                {{completeData.googleSheetLink}}
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </a>
+                        </td>
+                        <td class="col-2">
+                            {% if completeData.documentLink %}
+                            {{completeData.documentLink}}
+                            {% else %}
+                            &nbsp;
+                            {% endif %}
+                        </td>
+                        <td class="col-2">
+                            {% if completeData.relatedCommunication %}
+                            {{completeData.relatedCommunication}}
+                            {% else %}
+                            &nbsp;
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr class="d-flex">
+                        <td class="col-1">
+                            <a href="fillQuestionnaire/{{completeData.clientId}}?name=final" style="color:black;">
+                                {{completeData.vendorName}}
+                            </a>
+                        </td>
+                        <td class="col-3">
+                            {% if completeData.summary %}
+                            {{completeData.summary}}
+                            {% else %}
+                            &nbsp;
+                            {% endif %}
+                        </td>
+                        <td class="col-1">
+                            {% if completeData.receivedDate %}
+                            {{completeData.receivedDate}}
+                            {% else %}
+                            &nbsp;;
+                            {% endif %}
+                        </td>
+                        <td class="col-1">
+                            {% if completeData.submittedDate %}
+                            {{completeData.submittedDate}}
+                            {% else %}
+                            &nbsp;
+                            {% endif %}
+                        </td>
+                        <td class="col-2">
+                            <a href="">
+                                {% if completeData.googleSheetLink %}
+                                {{completeData.googleSheetLink}}
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </a>
+                        </td>
+                        <td class="col-2">
+                            {% if completeData.documentLink %}
+                            {{completeData.documentLink}}
+                            {% else %}
+                            &nbsp;
+                            {% endif %}
+                        </td>
+                        <td class="col-2">
+                            {% if completeData.relatedCommunication %}
+                            {{completeData.relatedCommunication}}
+                            {% else %}
+                            &nbsp;
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!--        <div id="aetna" class="tab-pane">-->
+        <!--            <div class="jumbotron tableFixHead table-responsive" style="padding: 0px 0px; margin-bottom: 0rem;">-->
+        <!--                <table class="table table-hover" style="margin: 0rem">-->
+        <!--                    <thead style="text-align: center">-->
+        <!--                            <tr class="d-flex">-->
+        <!--                                <th class="col-1">Vendor</th>-->
+        <!--                                <th class="col-3">Summary</th>-->
+        <!--                                <th class="col-1">Received Date</th>-->
+        <!--                                <th class="col-1">Submitted Date</th>-->
+        <!--                                <th class="col-2">Google Sheet Link</th>-->
+        <!--                                <th class="col-2">Documents Link</th>-->
+        <!--                                <th class="col-2">Reference</th>-->
+        <!--                            </tr>-->
+        <!--                    </thead>-->
+        <!--                            <tr class="d-flex">-->
+        <!--                                <td class="col-1"><a href="fillQuestionnaire/Aetna" style="color:black;">Aetna</a></td>-->
+        <!--                                <td class="col-3"></td>-->
+        <!--                                <td class="col-1">29-01-2020</td>-->
+        <!--                                <td class="col-1">29-01-2020</td>-->
+        <!--                                <td class="col-2"><a href="">https://prognoshealth.com/</a></td>-->
+        <!--                                <td class="col-2"></td>-->
+        <!--                                <td class="col-2"></td>-->
+        <!--                            </tr>-->
+        <!--                </table>-->
+        <!--            </div>-->
+        <!--        </div>-->
+
+        <!--        <div id="Bio-Reference" class="tab-pane">-->
+        <!--            <div class="jumbotron tableFixHead table-responsive" style="padding: 0px 0px; margin-bottom: 0rem;">-->
+        <!--                <table class="table table-hover" style="margin: 0rem">-->
+        <!--                    <thead style="text-align: center">-->
+        <!--                    <tr class="d-flex">-->
+        <!--                        <th class="col-1">Vendor</th>-->
+        <!--                        <th class="col-3">Summary</th>-->
+        <!--                        <th class="col-1">Received Date</th>-->
+        <!--                        <th class="col-1">Submitted Date</th>-->
+        <!--                        <th class="col-2">Google Sheet Link</th>-->
+        <!--                        <th class="col-2">Documents Link</th>-->
+        <!--                        <th class="col-2">Reference</th>-->
+        <!--                    </tr>-->
+        <!--                    </thead>-->
+        <!--                    <tr class="d-flex">-->
+        <!--                        <td class="col-1"><a href="fillQuestionnaire/Bio_reference" style="color:black;">Bio-->
+        <!--                            Reference</a></td>-->
+        <!--                        <td class="col-3"></td>-->
+        <!--                        <td class="col-1">29-01-2020</td>-->
+        <!--                        <td class="col-1">29-01-2020</td>-->
+        <!--                        <td class="col-2"><a href="">https://prognoshealth.com/</a></td>-->
+        <!--                        <td class="col-2"></td>-->
+        <!--                        <td class="col-2"></td>-->
+        <!--                    </tr>-->
+        <!--                    <tr class="d-flex">-->
+        <!--                        <td class="col-1">Bio Reference</td>-->
+        <!--                        <td class="col-3"></td>-->
+        <!--                        <td class="col-1">19-01-2019</td>-->
+        <!--                        <td class="col-1">19-01-2019</td>-->
+        <!--                        <td class="col-2"><a href="">https://prognoshealth.com/</a></td>-->
+        <!--                        <td class="col-2"></td>-->
+        <!--                        <td class="col-2"></td>-->
+        <!--                    </tr>-->
+        <!--                </table>-->
+        <!--            </div>-->
+        <!--        </div>-->
+
+        <!--        <div id="CORL" class="tab-pane">-->
+        <!--            <div class="jumbotron tableFixHead table-responsive" style="padding: 0px 0px; margin-bottom: 0rem;">-->
+        <!--                <table class="table table-hover" style="margin: 0rem">-->
+        <!--                    <thead style="text-align: center">-->
+        <!--                    <tr class="d-flex">-->
+        <!--                        <th class="col-2">Vendor</th>-->
+        <!--                        <th class="col-3">Summary</th>-->
+        <!--                        <th class="col-1">Uploaded Date</th>-->
+        <!--                        <th class="col-1">Last Modified Date</th>-->
+        <!--                        <th class="col-3">Link</th>-->
+        <!--                        <th class="col-2">Documents attached</th>-->
+        <!--                    </tr>-->
+        <!--                    </thead>-->
+        <!--                    <tr class="d-flex">-->
+        <!--                        <td class="col-2">CORL</td>-->
+        <!--                        <td class="col-3"></td>-->
+        <!--                        <td class="col-1">29-01-2020</td>-->
+        <!--                        <td class="col-1">29-01-2020</td>-->
+        <!--                        <td class="col-3"><a href="">https://prognoshealth.com/</a></td>-->
+        <!--                        <td class="col-2"></td>-->
+        <!--                    </tr>-->
+        <!--                </table>-->
+        <!--            </div>-->
+        <!--        </div>-->
+
+        <!--        <div id="Highmark" class="tab-pane">-->
+        <!--            <div class="jumbotron tableFixHead table-responsive" style="padding: 0px 0px; margin-bottom: 0rem;">-->
+        <!--                <table class="table table-hover" style="margin: 0rem">-->
+        <!--                    <thead style="text-align: center">-->
+        <!--                    <tr class="d-flex">-->
+        <!--                        <th class="col-2">Vendor</th>-->
+        <!--                        <th class="col-3">Summary</th>-->
+        <!--                        <th class="col-1">Uploaded Date</th>-->
+        <!--                        <th class="col-1">Last Modified Date</th>-->
+        <!--                        <th class="col-3">Link</th>-->
+        <!--                        <th class="col-2">Documents attached</th>-->
+        <!--                    </tr>-->
+        <!--                    </thead>-->
+        <!--                    <tr class="d-flex">-->
+        <!--                        <td class="col-2">Highmark</td>-->
+        <!--                        <td class="col-3"></td>-->
+        <!--                        <td class="col-1">29-01-2020</td>-->
+        <!--                        <td class="col-1">29-01-2020</td>-->
+        <!--                        <td class="col-3"><a href="">https://prognoshealth.com/</a></td>-->
+        <!--                        <td class="col-2"></td>-->
+        <!--                    </tr>-->
+        <!--                    <tr class="d-flex">-->
+        <!--                        <td class="col-2">Highmark</td>-->
+        <!--                        <td class="col-3"></td>-->
+        <!--                        <td class="col-1">19-01-2019</td>-->
+        <!--                        <td class="col-1">19-01-2019</td>-->
+        <!--                        <td class="col-3"><a href="">https://prognoshealth.com/</a></td>-->
+        <!--                        <td class="col-2"></td>-->
+        <!--                    </tr>-->
+        <!--                    <tr class="d-flex">-->
+        <!--                        <td class="col-2">Highmark</td>-->
+        <!--                        <td class="col-3"></td>-->
+        <!--                        <td class="col-1">18-01-2018</td>-->
+        <!--                        <td class="col-1">18-01-2018</td>-->
+        <!--                        <td class="col-3"><a href="">https://prognoshealth.com/</a></td>-->
+        <!--                        <td class="col-2"></td>-->
+        <!--                    </tr>-->
+        <!--                </table>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--    </div>-->
+
+    </div>
+
+    {% endblock %}
+
+</body>
+</html>

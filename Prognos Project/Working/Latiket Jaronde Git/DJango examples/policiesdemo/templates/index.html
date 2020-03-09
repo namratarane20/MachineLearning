@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% block content %}
+    <h1>policies indexing demo</h1>
+
+{#    indexing file#}
+    <form action="index" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="docFile" multiple> <br><br>
+        <input type="url" name="link"> <br><br>
+        <input type="submit" value="index">
+    </form>
+
+    <br><br>
+
+    <form action="search" method="POST">
+        {% csrf_token %}
+        <input type="text" name="keyword">
+        <input type="submit" style="margin-top: 10px">
+    </form>
+
+    <br><br>
+
+    {% if policyresult %}
+
+        <table style="border: black 2px solid">
+            <thead>
+            <tr>
+                <td>Policy Name</td>
+                <td>Policy</td>
+                <td>Link</td>
+            </tr>
+            </thead>
+            {% for result in policyresult %}
+                <tr >
+                    <td style="border: black 2px dot-dash">{{ result.PolicyName }}</td>
+                    <td style="border: black 2px dot-dash">{{ result.Data }}</td>
+                    <td style="border: black 2px dot-dash"><a href="{{ result.Link }}" target="_blank"> {{ result.Link }} </a> </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+    {% endif %}
+
+{% endblock %}
+</body>
+</html>
+<style>
+table, th, td {
+  border: 3px solid black;
+  border-collapse: collapse;
+    padding: 1em;
+}
+
+</style>

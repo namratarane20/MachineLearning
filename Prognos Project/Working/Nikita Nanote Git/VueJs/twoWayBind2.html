@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" @keypress="keyPressfun" >
+        <br>
+        {{ character }}
+        <br><br>
+        <input type="text" placeholder="name" v-model="name"><br>
+        {{ name }}
+        <br>
+        <input type="text" placeholder="email" v-model="mail"><br>
+        {{ mail }}
+    </div>
+<script>
+new Vue({
+    el:'#app',
+    data:{
+        character:'',
+        name:'',
+        mail:''
+    },
+    methods:{
+        keyPressfun:function(event){
+            console.log("key press")
+            this.character=event.key
+        }
+    }
+})
+</script>
+</body>
+</html>

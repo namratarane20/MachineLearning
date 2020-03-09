@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app1">
+<p>
+    Title : {{ title1 }}
+</p>
+<p>
+    Auther Name : {{ author }}
+</p>
+<p>
+    {{ secondapp() }}
+</p>
+<p>
+    {{ thirdapp() }}
+</p>
+<p>
+    {{ computedofAbc() }}
+</p>
+    </div>
+    <div id="app2">
+<p>
+    Author : {{ author1 }}
+</p>
+<p>
+    {{ secondapp() }}
+</p>
+<p>
+    {{ funProp }}
+</p>
+    </div>
+    <script>
+         var bcd = new Vue({
+        el:'#app2',
+        data:{
+            author1:"Nikita"
+        },
+        methods:{
+            secondapp:function(){
+                return "This is second function"
+            }
+        },
+        computed:{
+            funProp:function(){
+                return "This is computed property"
+            }
+        }
+    })
+    var abc = new Vue({
+        el:'#app1',
+        data:{
+            title1:"This is my title",
+            author : bcd.author1
+        },
+        methods:{
+            secondapp:function(){
+            return "This is first function"
+        },
+        thirdapp:function(){
+            return bcd.secondapp()
+        },
+        computedofAbc:function(){
+            return bcd.funProp
+        }
+        }
+        
+    })
+   
+    </script>
+</body>
+</html>

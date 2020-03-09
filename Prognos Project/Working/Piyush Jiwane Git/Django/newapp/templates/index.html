@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+<body>
+    <div id="app">
+        <h1>Hello World</h1>
+        <ul>
+            {% for day in days%}
+                <li>{{ day }}</li>
+            {% endfor %}
+        </ul>
+        <hr>
+        <p> [[title]] </p>
+        <ul v-for="day in days">
+            <li>Day [[day]]</li>
+        </ul>
+        <hr>
+        <ul>
+            <li v-for="day in {{days}}">
+                <h4> Day [[ day ]]</h4>
+            </li>
+        </ul>
+        <hr>
+        <ul>
+            <li v-for="day in listOfDict">
+                <h4> Day [[ day.Piyush ]]</h4>
+            </li>
+        </ul>
+    </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<script>
+    new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#app',
+        data: {
+            title: 'Welcome to My Journal',
+            days:[1,2,3],
+            listOfDict:listOfDict
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,9 @@
+body {
+    background: aliceblue;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.jumbotron {
+    background: none;
+    color: black;
+}

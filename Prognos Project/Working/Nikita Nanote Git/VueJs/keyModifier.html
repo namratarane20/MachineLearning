@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" placeholder="KEY PRESS" @keypress.enter="keyPress">
+        <input type="text" placeholder="KEY PRESS" @keyup.alt.enter="keyPress">
+        <input type="text" placeholder="KEY PRESS" @keyup.delete="keyPress">
+        <input type="text" placeholder="KEY PRESS" @keyup.ctrl.enter="keyPress">
+        <input type="text" placeholder="KEY PRESS" @keyup.space="keyPress">
+
+
+    </div>
+    <script>
+    new Vue({
+        el:'#app',
+        data:{
+
+        },
+        methods:{
+            keyPress:function(){
+                console.log("it is running...")
+            }
+        }
+    })
+    </script>
+</body>
+</html>

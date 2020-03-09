@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Portal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link src="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata:700">
+
+</head>
+<body style="background-color:#040230">
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row col-12">
+        <nav class="navbar navbar-expand-md fixed-top"
+             style="background-color:#040230;border-bottom:solid #2c345e 1px;">
+            <div class="container-fluid col-12 ">
+                <a href="/toHomePage" class="navbar-brand">
+                    <img src="{% static 'images/prognoshealth.png' %}" style="width:200px;"
+                         alt=""
+                         class="d-inline-block align-middle mr-2">
+                </a>
+
+                <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active"><a href="#" class="nav-link">
+                            <strong class="text-warning pt-2"> Welcome {{user.first_name}} </strong>
+                            <span class="sr-only">(current)</span></a>
+                        </li>
+                        <!--                        <li class="nav-item">-->
+                        <!--                            <a class="nav-link" onclick="openNav()">-->
+                        <!--                                <strong style="color:white;cursor:pointer;"> Tags </strong></a>-->
+                        <!--                        </li>-->
+                        <div id="mySidenav" class="sidenav">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><span><strong>Close&times;</strong></span></a>
+                            <ul>
+                                {% for tg in tagNameList %}
+                                <li>{{ tg }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <script>
+                        function openNav() {
+                          document.getElementById("mySidenav").style.width = "250px";
+                        }
+                        function closeNav() {
+                          document.getElementById("mySidenav").style.width = "0";
+                        }
+
+
+                        </script>
+
+                        <li class="nav-item dropdown">
+                            <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                               aria-expanded="false">
+                                <strong style="color:white"> Upload File </strong>
+                            </a>
+                            <div class="dropdown-menu dropdown-content dropdown-menu-right">
+                                <a class="dropdown-item" href="/uploadNewQuestionnaire">New Questionnaire</a>
+                                <a class="dropdown-item" href="/uploadFile">Final Filled Questionnaire</a>
+                            </div>
+                        </li>
+                        <li class="nav-item"><a href="/report" class="nav-link">
+                            <strong style="color:white"> Report </strong></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/account/logout" class="nav-link">
+                                {% if user.is_authenticated %}
+                                <strong style="color:white">Log Out</strong>
+                                {% endif %}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <br><br><br><br><br>
+
+    <div>
+        <div class="row">
+            <div class="col-12">
+                <!--            vendors list button and preview button-->
+                <div class="row" style="margin-top: -7px;">
+                    <div class="col-2"  >
+                        <form action="/toAdminHomePage" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-secondary" type="submit">Vendors List</button>
+                        </form>
+                    </div>
+                    <div class="col-7">
+                        <h4 style="color:white"><strong>Vendor Name : {{vendorName}} </strong></h4>
+                    </div>
+                    <div class="col-1" style="margin-left: 5%;">
+                        <button class="btn btn-secondary">Download</button>
+                    </div>
+                </div>
+
+                <!--            tabs-->
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist" style="margin-top: 1%">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#allQuestions">Preview Questions</a>
+                    </li>
+                    {% if dataFromDatabase %}
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#myUnansweredQuestions">My Unanswered Questions</a>
+                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" data-toggle="tab" href="#currentQuestion">Current Question</a>-->
+<!--                    </li>-->
+                    {% endif %}
+                    <!--                    {% if questionCategory.answeredQuestions %}-->
+                    <!--                    <li class="nav-item">-->
+                    <!--                        <a class="nav-link" data-toggle="tab" href="#answeredQuestions">Answered Questions</a>-->
+                    <!--                    </li>-->
+                    <!--                    {% endif %}-->
+                    <!--                    {% if questionCategory.unansweredQuestions %}-->
+                    <!--                    <li class="nav-item">-->
+                    <!--                        <a class="nav-link" data-toggle="tab" href="#allUnansweredQuestions">All Unanswered-->
+                    <!--                            Questions</a>-->
+                    <!--                    </li>-->
+                    <!--                    {% endif %}-->
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content" style="background-color: white; ">
+                    <!--                displays current questions, response, additional comment textarea-->
+<!--                    <div id="currentQuestion" class="tab-pane fade"><br>-->
+<!--                        <div class="jumbotron" style="padding: 1%; border:2px solid black;">-->
+<!--                            <form action="getResult" method="POST" style="margin-top: -1%">-->
+<!--                                {% csrf_token %}-->
+<!--                                <table style="border: none">-->
+<!--                                    <tr style="border: none">-->
+<!--                                        <td style="width:10%">-->
+<!--                                            <h5 style="margin-top:5px"><strong> Question {{ questionNumber }} <span-->
+<!--                                                    style="text-align: right">:</span> </strong></h5>-->
+<!--                                        </td>-->
+<!--                                        <td style="width:90%">-->
+<!--                                            <strong> {{ questionsList }}Do you have an implemented network-based Data-->
+<!--                                                Loss Prevention (DLP) system on the company network? </strong>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <td style="width:10% ">-->
+<!--                                            <h5><strong>Search <span style="text-align: right">:</span> </strong></h5>-->
+<!--                                        </td>-->
+<!--                                        <td>-->
+<!--                                            {% if keyword %}-->
+<!--                                            <input type="text" name="keyword" placeholder="keyword" value="{{keyword}}">-->
+<!--                                            {% else %}-->
+<!--                                            <input type="text" name="keyword" placeholder="keyword">-->
+<!--                                            {% endif %}-->
+<!--                                            <button class="btn btn-secondary" type="submit" name="search"-->
+<!--                                                    value="SEARCH">-->
+<!--                                                SEARCH-->
+<!--                                            </button>-->
+<!--                                            &lt;!&ndash;                                <a href="{{questionNumber}}?name=search" type="button" class="btn btn-secondary">Search</a>&ndash;&gt;-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <td style="width:10%"><h5><strong>Response <span-->
+<!--                                                style="text-align: right">:</span></strong>-->
+<!--                                        </h5></td>-->
+<!--                                        <td>-->
+<!--                                            <textarea name="response" id="responseArea" style="width:100%;">{{ responseList }}</textarea>-->
+<!--                                            <script>-->
+<!--&lt;!&ndash;                                Automatically size all of your <textarea> elements as you type&ndash;&gt;-->
+<!--                                autosize(document.querySelectorAll('textarea'));-->
+
+
+<!--                                            </script>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <td style="width:10%">-->
+<!--                                            <h5><strong>Additional Comments <span-->
+<!--                                                    style="text-align: right">:</span></strong></h5>-->
+<!--                                        </td>-->
+<!--                                        <td>-->
+<!--                                        <textarea name="additionalComment" id="commentArea"-->
+<!--                                                  style="width:100%;">{{ additionalCommentsList }}</textarea>-->
+<!--                                            <script>-->
+<!--&lt;!&ndash;                                Automatically size all of your <textarea> elements as you type&ndash;&gt;-->
+<!--                                autosize(document.querySelectorAll('textarea'));-->
+
+
+<!--                                            </script>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                </table>-->
+
+<!--                                <br>-->
+<!--                                &lt;!&ndash;                buttons&ndash;&gt;-->
+<!--                                <div class="row" style="padding-left:5%;">-->
+<!--                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 ">-->
+<!--                                        <a href="{{ previousUrl }}?name=previous"-->
+<!--                                           class="btn btn-secondary btn-block">PREVIOUS</a>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-2 offset-1">-->
+<!--                                        <a href="{{ nextUrl }}?name=next"-->
+<!--                                           class="btn btn-secondary btn-block">NEXT</a>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-2 offset-1">-->
+<!--                                        <button class="btn btn-secondary btn-block" type="submit" value="SAVE"-->
+<!--                                                name="save">-->
+<!--                                            SAVE-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+<!--                                    <div class="dropdown col-2 offset-1 btn-block">-->
+<!--                                        <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">-->
+<!--                                            ASSIGN TO-->
+<!--                                        </button>-->
+<!--                                        <div class="dropdown-menu">-->
+<!--                                            <a class="dropdown-item" href="#">Pavan</a>-->
+<!--                                            <a class="dropdown-item" href="#">Aviral</a>-->
+<!--                                            <a class="dropdown-item" href="#">Daniel</a>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+                    <!--                personal unanswered questions-->
+                    <!--                to display unanswered questions-->
+                    <div id="myUnansweredQuestions" class="tab-pane fade" style="padding-top: 5px">
+
+                        <div class="jumbotron" style="padding: 0%">
+                            <div class="row">
+                                <div class="col-12">
+                                    <table border="1" width="100%">
+                                        <thead>
+                                        <tr class="d-flex">
+                                            <td class="col-1"><strong>Assigned To</strong></td>
+                                            <td class="col-4" style="text-align: center"><strong>Question</strong></td>
+                                            <td class="col-3" style="text-align: center"><strong>Response</strong></td>
+                                            <td class="col-3" style="text-align: center"><strong>Additional
+                                                Comment</strong>
+                                            </td>
+                                            <td class="col-1" style="text-align: center"><strong>Save</strong></td>
+                                        </tr>
+                                        </thead>
+                                        {% for question in questionCategory.unansweredQuestions %}
+                                        <tr class="d-flex">
+                                            <td class="col-1" style="padding: 8px"></td>
+                                            <td class="col-4" style="padding: 8px"><a style="color: black"
+                                                                                      href="{{question.queNo}}">{{question.question}}</a>
+                                            </td>
+                                            <td class="col-3" style="padding: 8px" contenteditable="true">
+                                                {{ question.response }}
+                                            </td>
+                                            <td class="col-3" contenteditable="true" style="padding: 8px">
+                                                {{ question.comment }}
+                                            </td>
+                                            <td class="col-1">
+                                                <button class="btn btn-primary">Save</button>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                        <tr class="d-flex">
+                                            <td class="col-1" style="padding: 8px">Pavan</td>
+                                            <td class="col-4" style="padding: 8px"><a style="color: black"
+                                                                                      >Does your company utilize third parties</a>
+                                            </td>
+                                            <td class="col-3" style="padding: 8px" contenteditable="true">
+
+                                            </td>
+                                            <td class="col-3" contenteditable="true" style="padding: 8px">
+
+                                            </td>
+                                            <td class="col-1">
+                                                <button class="btn btn-primary" disabled>Save</button>
+                                            </td>
+                                        </tr>
+                                        <tr class="d-flex">
+                                            <td class="col-1" style="padding: 8px">Pavan</td>
+                                            <td class="col-4" style="padding: 8px"><a style="color: black"
+                                                                                      >TP1.1 Provide the name of a critical third party service provider</a>
+                                            </td>
+                                            <td class="col-3" style="padding: 8px" contenteditable="true">
+
+                                            </td>
+                                            <td class="col-3" contenteditable="true" style="padding: 8px">
+
+                                            </td>
+                                            <td class="col-1">
+                                                <button class="btn btn-primary" disabled>Save</button>
+                                            </td>
+                                        </tr>
+                                        <tr class="d-flex">
+                                            <td class="col-1" style="padding: 8px">Pavan</td>
+                                            <td class="col-4" style="padding: 8px"><a style="color: black"
+                                                                                      >TP1.2 Provide address of Aetna fourth party</a>
+                                            </td>
+                                            <td class="col-3" style="padding: 8px" contenteditable="true">
+
+                                            </td>
+                                            <td class="col-3" contenteditable="true" style="padding: 8px">
+
+                                            </td>
+                                            <td class="col-1">
+                                                <button class="btn btn-primary" disabled>Save</button>
+                                            </td>
+                                        </tr>
+                                        <tr class="d-flex">
+                                            <td class="col-1" style="padding: 8px">Pavan</td>
+                                            <td class="col-4" style="padding: 8px"><a style="color: black"
+                                                                                      >TP1.3.1 Provide offshore location details</a>
+                                            </td>
+                                            <td class="col-3" style="padding: 8px" contenteditable="true">
+
+                                            </td>
+                                            <td class="col-3" contenteditable="true" style="padding: 8px">
+
+                                            </td>
+                                            <td class="col-1">
+                                                <button class="btn btn-primary" disabled>Save</button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--                to display all questions-->
+                    <div id="allQuestions" class="tab-pane active" style="padding-top:5px;">
+                        <div class="jumbotron" style="padding: 0%">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="tbl-header">
+                                        <table cellpadding="0" cellspacing="0" border="1">
+                                            <thead>
+                                            {% if dataFromDatabase %}
+                                            <tr class="d-flex">
+                                                <th class="col-1">Assigned To</th>
+                                                <th class="col-4">Security Questionnaire</th>
+                                                <th class="col-3">Response</th>
+                                                <th class="col-3">Additional Comment</th>
+                                                <th class="col-1">Save</th>
+                                            </tr>
+                                            {% else %}
+                                            <tr class="d-flex">
+                                                <th class="col-4">Security Questionnaire</th>
+                                                <th class="col-4">Response</th>
+                                                <th class="col-4">Additional Comment</th>
+                                            </tr>
+                                            {% endif %}
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <div class="tbl-content">
+                                        <table cellpadding="0" cellspacing="0" border="1">
+                                            <tbody>
+                                            {% if dataFromDatabase %}
+                                            <form action="" method="POST">
+                                                {% csrf_token %}
+                                                {% for data in vendorsData %}
+                                                {% if data.exactmatch == 1 %}
+                                                <tr class="d-flex"
+                                                    style="word-break: break-word;background-color: #bbd6b6;">
+                                                    <td class="col-1">
+                                                        <div class="row" style="padding-left:15px; padding-top:30%;">
+                                                            <div class="dropdown">
+                                                                <button name="slackUserName[]"
+                                                                        class="btn btn-primary btn-sm dropdown-toggle text-center"
+                                                                        type="submit" id="dropdownMenuButton"
+                                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false"
+                                                                        value="{{forloop.counter}}">
+                                                                    <i class="fa fa-handshake-o" style="font-size:10px"
+                                                                       aria-hidden="true"></i>
+                                                                </button>
+                                                                <style>
+                                                        .dropdown-menu{
+                                                            transform: translate3d(5px, 35px, 0px)!important;
+                                                        }
+
+                                                                </style>
+                                                                <div class="dropdown-menu pull-right"
+                                                                     aria-labelledby="dropdownMenuButton">
+                                                                    {% for user_name in userSet%}
+                                                                    <a class="dropdown-item"
+                                                                       href="/slackNotification/{{user_name}}/{{data.question|urlencode}}">
+                                                                        {{ user_name }}</a>
+                                                                    {% endfor %}
+                                                                </div>
+                                                            </div>
+                                                            <i class="fa fa-search btn btn-primary" aria-hidden="true"
+                                                               style="font-size:15px; float:right; margin-left: 8px;"></i>
+                                                        </div>
+                                                    </td>
+                                                    <style>
+                                                 .blink {
+                                                      animation: blinker 0.6s linear infinite;
+                                                      color: #4d0605;
+                                                      font-family: sans-serif;
+                                                      }
+                                                       @keyframes blinker {
+                                                      10% { opacity: 0; }
+                                                      }
+
+
+                                                    </style>
+                                                    <td class="col-4">{{data.question}}
+                                                        <br>
+                                                        <span class="blink"><i><b>exact match</b></i></span>
+                                                        <i class="fa fa-thumbs-up float-right"
+                                                           style="font-size:24px;color:blue;"></i>
+                                                    </td>
+                                                    <td class="col-3" style="padding:0px">
+                                                        <textarea name="{{data.responseKey}}"
+                                                                  style="width:100%; height:100%; background-color: #bbd6b6">{{data.response}}</textarea>
+                                                    </td>
+                                                    <td class="col-3" style="padding:0px">
+                                                        <textarea name="{{data.commentKey}}"
+                                                                  style="width:100%; height:100%; background-color: #bbd6b6;">{{data.additionalComment}}</textarea>
+                                                    </td>
+                                                    <td class="col-1 " style="padding-top: 1%;">
+                                                        <button class="btn btn-primary"
+                                                                style="display: block; margin: auto; " type="submit"
+                                                                name="save" value="save" disabled>Save
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                {% else %}
+                                                <tr class="d-flex"
+                                                    style="word-break: break-word;">
+                                                    <td class="col-1">
+                                                        <div class="row" style="padding-left:15px; padding-top:20%;">
+                                                            <div class="dropdown">
+                                                                <button name="slackUserName[]"
+                                                                        class="btn btn-primary btn-sm dropdown-toggle text-center"
+                                                                        type="submit" id="dropdownMenuButton"
+                                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false"
+                                                                        value="{{forloop.counter}}">
+                                                                    <i class="fa fa-handshake-o" style="font-size:10px"
+                                                                       aria-hidden="true"></i>
+                                                                </button>
+                                                                <style>
+                                                        .dropdown-menu{
+                                                            transform: translate3d(5px, 35px, 0px)!important;
+                                                        }
+
+                                                                </style>
+                                                                <div class="dropdown-menu pull-right"
+                                                                     aria-labelledby="dropdownMenuButton">
+                                                                    {% for user_name in userSet%}
+                                                                    <a class="dropdown-item"
+                                                                       href="/slackNotification/{{user_name}}/{{data.question|urlencode}}">
+                                                                        {{ user_name }}</a>
+                                                                    {% endfor %}
+                                                                </div>
+                                                            </div>
+                                                            <i class="fa fa-search btn btn-primary" aria-hidden="true"
+                                                               style="font-size:15px; float:right; margin-left: 8px;"></i>
+                                                        </div>
+                                                    </td>
+                                                    <td class="col-4">{{data.question}}
+                                                    </td>
+                                                    <td class="col-3" style="padding:0px">
+                                                        <textarea name="{{data.responseKey}}"
+                                                                  style="width:100%; height:100%; background-color:white;">{{data.response}}</textarea>
+                                                    </td>
+                                                    <td class="col-3" style="padding:0px">
+                                                        <textarea name="{{data.commentKey}}"
+                                                                  style="width:100%; height:100%; background-color:white;">{{data.additionalComment}}</textarea>
+                                                    </td>
+                                                    <td class="col-1 " style="padding-top: 1%;">
+                                                        <button class="btn btn-primary"
+                                                                style="display: block; margin: auto;" type="submit"
+                                                                name="save" value="save" disabled>Save
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </form>
+                                            {% else %}
+                                            {% for data in vendorsData %}
+                                            <tr class="d-flex" style="word-break: break-word">
+                                                <td class="col-4">{{data.SecurityQuestions}}</td>
+                                                <td class="col-4">
+                                                    {{data.Responses}}
+                                                </td>
+                                                <td class="col-4">
+                                                    {{data.AdditionalComments}}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                            {% endif %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--        search result-->
+        {% if questionnaireRequiredData %}
+        <div class="row" style="margin-top: 2%">
+            <div class="col-12">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#allResponses">Responses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#policies">Policy Data</a>
+                    </li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content" style="background-color: white">
+                    <div id="allResponses" class="tab-pane active" style="margin: 0% 0%; padding-bottom: 1%"><br>
+                        <div class="jumbotron" style="padding: 1%; margin: 1%">
+                            <br>
+                            <div class="row" style="width: 100%">
+                                <div class="col-12">
+                                    <table border="1" id="searchResultTable"
+                                           style="margin: -1%; word-break: break-word;">
+                                        <thead>
+                                        <tr class="d-flex" style="text-align: center">
+                                            <th class="col-4"><strong>Security Question</strong>
+                                            </th>
+                                            <th class="col-4"><strong>Responses</strong></th>
+                                            <th class="col-4"><strong>Additional Comment</strong>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for data in questionnaireRequiredData %}
+                                        <tr class="d-flex">
+                                            <td class="col-4">{{ data.SecurityQuestions }}</td>
+                                            <td class="col-4">{{ data.Responses }}</td>
+                                            <td class="col-4">{{ data.AdditionalComments }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--                favourite responses-->
+                    <div id="favouriteResponses" class="tab-pane fade" style="margin: 0% 2%; padding-bottom: 1%"><br>
+                        <div class="jumbotron">
+                            <h3>Most favourite Responses</h3>
+                            <p>it will contain only favourite responses</p>
+                        </div>
+                    </div>
+
+                    <!--                policies data-->
+                    <div id="policies" class="tab-pane fade" style="margin: 0% 2%; padding-bottom: 1%"><br>
+                        <div class="jumbotron">
+                            <h3>Policies</h3>
+                            <p>it will contain only policies data</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {% endif %}
+
+        <script>
+            $('#searchResultTable td').dblclick(function(){
+                col = $(this).parent().children().index($(this));
+                var text = $(this).html()
+                if (col == 3) {
+                    document.getElementById('responseArea').value = text
+                } else if(col == 4) {
+                    document.getElementById('commentArea').value = text
+                }
+            });
+
+
+        </script>
+    </div>
+
+
+</div>
+{% endblock %}
+
+</body>
+</html>
+
+<!--style for sidenav-->
+<style>
+ .sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 100px;
+  left: 0;
+  background-color: white;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+.sidenav a:hover {
+  color: black;
+}
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+table{
+  width:100%;
+  table-layout: fixed;
+}
+.tbl-header{
+  background-color: #ccccff;
+ }
+.tbl-content{
+  height:390px;
+  overflow-x:auto;
+  margin-top: 0px;
+  overflow-y: auto;
+}
+.tbl-header th{
+  text-align: center;
+  font-size: 17px;
+  padding: 5px;
+}
+.tbl-content td{
+  text-align: left;
+  vertical-align:middle;
+  padding: 3px 8px;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
+<!--search bar-->
+</style>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Portal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link src="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+</head>
+<body style="background-color:#040230">
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row col-12">
+        <nav class="navbar navbar-expand-md fixed-top"
+             style="background-color:#040230;border-bottom:solid #2c345e 1px;">
+            <div class="container-fluid col-12 ">
+                <a href="/" class="navbar-brand">
+                    <img src="{% static 'images/prognoshealth.png' %}" style="width:200px;"
+                         alt=""
+                         class="d-inline-block align-middle mr-2">
+
+                    <!-- <span class="text-uppercase font-weight-bold">Company</span> -->
+                </a>
+                <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                        class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
+
+
+                <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active"><a href="#" class="nav-link">
+                            <strong class="text-warning pt-2"> Welcome {{user.first_name}} </strong>
+                            <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item"><a href="/adminLogin" class="nav-link">
+                            <strong style="color:white"> Upload File </strong></a>
+                        </li>
+                        <li class="nav-item"><a href="/account/logout" class="nav-link">
+                            {% if user.is_authenticated %}
+                            <strong style="color:white">Log Out</strong>
+                            {% endif %}
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!--    end of row which contains nav and all nav items-->
+
+    <br><br><br><br><br>
+
+     <div style="background:white; height:200px;width:300px;display:none;" >
+
+        <ul id="ulid" style="display:none;">
+            {% for key, val in tagAndDescDict.items %}
+            <li><span>{{key}} ^ {{val}}</span></li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="row col-12">
+        <div class="container-fluid ">
+            <form action="/searchKeyword" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                        <div class="col-12">
+                            <div class="offset-3 col-6 form-group has-search resultitem">
+                                <span class="fa fa-search form-control-feedback"></span>
+                                <input class="form-control " align="center" type="text" name="keyword" style="border-radius:20px;height:40px;"
+                                       value="{{ keyword }}"
+                                       placeholder="Search with keyword" ondblclick="dbclick()" id="keyword" autocomplete="off"/>
+                                <table id="searchResultTable" style="display: none;margin-left:50px;opacity:0.9;" class="mt-1">
+
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                         {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+
+                                <tr style="background-color: white; border-radius: 10px;padding:4px" class="row">
+                                    <td onclick="singleClick()"><div style="border:1px solid black;border-radius:15px;padding-right:7px;padding-left:7px;background-color:#D3D9F9 ">Questionnaire </div></td>
+                                    <td onclick="singleClick()"><div style="border:1px solid black;border-radius:15px;padding-right:7px;padding-left:7px;background-color:#D3D9F9 ">Policies </div></td>
+                                    <td onclick="singleClick()"><div style="border:1px solid black;border-radius:15px;padding-right:7px;padding-left:7px;background-color:#D3D9F9 ">Tags </div></td>
+                                </tr>
+                            </table>
+                            </div>
+
+                            <style>
+                                .has-search .form-control {
+                                    padding-left: 2.375rem;
+                                }
+                                .has-search .form-control-feedback {
+                                    position: absolute;
+                                    z-index: 2;
+                                    display: block;
+                                    width: 2.375rem;
+                                    height: 2.375rem;
+                                    line-height: 2.375rem;
+                                    text-align: center;
+                                    pointer-events: none;
+                                    color: #aaa;
+                                }
+                            </style>
+
+                            <script type="text/javascript">
+                                function dbclick(){
+                                    document.getElementById('searchResultTable').style.display='block'
+                                }
+                            </script>
+
+                            <!--                        <input name="response" onclick="document.getElementById('searchResultTable').style.display='block'" id="responseArea" style="width:100%;"/>-->
+
+
+                            <script type="text/javascript">
+                                function singleClick(){
+                                    document.getElementById('searchResultTable').style.display='none'
+
+                                }
+                            </script>
+
+
+                            <script>
+
+                                  $('#searchResultTable td div').click(function () {
+                                    col = "in@".concat($(this).html())
+                                    colVal = col.concat(":- ")
+
+                                    document.getElementById('keyword').value =colVal
+                                });
+
+                            </script>
+                        </div>
+
+
+                    </div>
+
+            </form>
+            <!--         end of second row which contains serach box and  button-->
+            <br>
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <nav>
+                            <div class="nav nav-tabs " id="nav-tab" role="tablist">
+                                {% if questionnaireResult %}
+                                <a class="nav-item nav-link {{questionnaireActive}}" id="nav-home-tab" data-toggle="tab"
+                                   href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Questionaire</a>
+                                {% endif %}
+                                {% if policiesResult %}
+                                <a class="nav-item nav-link {{policyActive}}" id="nav-profile-tab" data-toggle="tab"
+                                   href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Policies</a>
+                                {% endif %}
+                            </div>
+                        </nav>
+
+                        {% if questionnaireResult %}
+                        <div class="tab-content py-3 px-3 px-sm-0 " id="nav-tabContent" style="background:white;">
+                            <div class="tab-pane fade show {{questionnaireActive}}" id="nav-home" role="tabpanel"
+                                 aria-labelledby="nav-home-tab">
+                                <div class="jumbotron tableFixHead table-left-margin table-responsive"
+                                     style="padding: 0px 0px">
+
+                                    <form action="/tagsAndFavouredResponse" method="post">
+                                        {% csrf_token %}
+
+                                        <div class="modal fade" id="myModal" role="dialog" style="display:none;">
+                                            <div class="modal-dialog " style="width:400px;height:200px; ">
+                                                <div class="modal-content">
+                                                    <div class="modal-header" style="background:#c4bdf2;">
+                                                        <h4 class="modal-title"
+                                                            style="margin:0 auto;margin-left:120px;">Assign tag </h4>
+                                                        <button type="button" class="close" data-dismiss="modal">
+                                                            &times;
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body" style="margin:0 auto;">
+                                                       <span> <h6>Assign tag name :</h6><input type=" text"
+                                                                                               name="tagname"
+                                                                                               id="textsend"
+                                                                                               oninput="success()"
+                                                                                               list="browsers"
+                                                                                               style="width:270px; height:30px;"></span><br>
+                                                         <datalist id="browsers">
+                                                            {% for tagname ,desc in tagAndDescDict.items %}
+                                                            <option> {{ tagname }}</option>
+                                                            {% endfor %}
+
+                                                        </datalist>
+
+                                                        <h6>Add Description :</h6><textarea cols="35"id="descId"
+                                                                                            name="tagDescription"
+                                                                                            list="tagDesc"></textarea>
+                                                        <datalist id="tagDesc">
+                                                            <option>{{ tagDesc }}</option>
+                                                        </datalist>
+                                                    </div>
+                                                    <div class="modal-footer" style="background:#c4bdf2;">
+                                                        <button type="submit" class="btn btn-secondary "
+                                                                style=" border:black;border-style: solid;border-width: 2px;margin:0 auto;"
+                                                                id="saveButton" disabled
+                                                                name="saveTag" value="saveTag">
+                                                            Save
+                                                        </button>
+                                                       <script>
+                                                            function success() {
+                                                               if(document.getElementById("textsend").value==="") {
+                                                                  document.getElementById('saveButton').disabled = true;
+                                                               } else {
+                                                                  document.getElementById('saveButton').disabled = false;
+                                                               }
+
+                                                                var seletedTagName = document.getElementById('textsend').value
+
+                                                                if (seletedTagName == '') {
+                                                                    document.getElementById('descId').value = ''
+                                                                } else {
+                                                                    var ul = document.getElementById('ulid');
+                                                                    var li = ul.getElementsByTagName("li");
+                                                                    for (var i=0;  i<li.length; i++) {
+                                                                        sp = li[i].getElementsByTagName("span")[0];
+                                                                        dataArray = sp.innerText.split("^")
+                                                                        if (seletedTagName.trim() == dataArray[0].trim()) {
+                                                                            document.getElementById('descId').value = dataArray[1]
+                                                                            break;
+                                                                        }
+                                                                    }
+                                                                }
+                                                             }
+                                                        </script>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <table class="table table-hover" id="Table1">
+                                            <thead>
+                                            <tr class="d-flex">
+                                                <th class="col-1">Best Responses</th>
+                                                <th class="col-1">Vendor Name</th>
+                                                <th class="col-1">Section Name</th>
+                                                <th class="col-1">Control Name</th>
+                                                <th class="col-3">Security Questions</th>
+                                                <th class="col-2">Responses</th>
+                                                <th class="col-2">Additional Comments</th>
+                                                <th class="col-1">Tags</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            {% for data in questionnaireResult %}
+                                            {% if userKeyword in data.MostRelevantResponses %}
+                                            <tr class="d-flex">
+                                                <td class="col-1">
+                                                    <div class="col text-center">
+                                                        <button class="btn btn-default" type="submit" name="fevButton[]"
+                                                                value="{{ forloop.counter }}" data-toggle=”button”
+                                                                style="background-color:transparent"><i
+                                                                class="fa fa-star"
+                                                                style="font-size:24px;color:#f5b907;"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                                <td class="col-1">{{ data.VendorName }}</td>
+                                                <td class="col-1">{{ data.SectionName }}</td>
+                                                <td class="col-1">{{ data.ControlName }}</td>
+                                                <td class="col-3 highlightClass">{{ data.SecurityQuestions }}</td>
+                                                <td class="col-2 highlightClass">{{ data.Responses }}</td>
+                                                <td class="col-2 highlightClass">{{ data.AdditionalComments }}</td>
+                                                <td class="col-1" align="center">
+                                                    <input type="checkbox" name="tagCheckbox[]" id="checkedIdStar"
+                                                           value="{{forloop.counter}}" style="height:15px;width:15px;"/>
+                                                    <button type="button" class=" btn btn-link fa fa-tag "
+                                                            style="color:blue;"
+                                                            title="Select at least one row!" name="agreebutton"
+                                                            id="agreebuttonStar"
+                                                            data-toggle="modal" data-target="#myModal">
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            {% else %}
+                                            <tr class="d-flex">
+                                                <td class="col-1">
+                                                    <div class="col text-center">
+                                                        <button class="btn btn-default" type="submit" name="fevButton[]"
+                                                                value="{{ forloop.counter }}" data-toggle=”button”
+                                                                style="background-color:transparent"><i
+                                                                class="fa fa-star-o"
+                                                                style="font-size:24px;color:black;"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                                <td class="col-1">{{ data.VendorName }}</td>
+                                                <td class="col-1">{{ data.SectionName }}</td>
+                                                <td class="col-1">{{ data.ControlName }}</td>
+                                                <td class="col-3 highlightClass">{{ data.SecurityQuestions }}</td>
+                                                <td class="col-2 highlightClass">{{ data.Responses }}</td>
+                                                <td class="col-2 highlightClass">{{ data.AdditionalComments }}</td>
+                                                <td class="col-1" align="center">
+                                                    <input type="checkbox" name="tagCheckbox[]" id="checkedId"
+                                                           value="{{forloop.counter}}" style="height:15px;width:15px;"/>
+                                                    <button type="button" class=" btn btn-link fa fa-tag "
+                                                            style="color:blue;"
+                                                            title="Select at least one row!" name="agreebutton"
+                                                            id="agreebutton"
+                                                            data-toggle="modal" data-target="#myModal">
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            {% endif %}
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            {% if policiesResult %}
+                            <div class="tab-pane fade show {{policyActive}}" id="nav-profile" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab" style="background:white;">
+                                <div class="jumbotron tableFixHead table-left-margin " style="padding: 0px 0px">
+
+
+                                    <table class="table table-hover table-fixed ">
+                                        <thead>
+                                        <tr class="d-flex">
+                                            <th class="col-2">Policy / Procedure Name</th>
+                                            <th class="col-7">Description</th>
+                                            <th class="col-3">Policy Link</th>
+                                        </tr>
+                                        </thead>
+
+                                        {% for data in policiesResult %}
+                                        <tr class="d-flex">
+                                            <td class="col-2">{{ data.PolicyName }}</td>
+                                            <td class="col-7 highlightClass">{{ data.Data }}</td>
+                                            <td class="col-3">
+                                                <a href="{{ data.Link }}" target="_blank"> {{ data.Link }} </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--js function for highliting the searched keyword-->
+<script>
+                                                $(document).ready(function(){
+                                                var text = document.getElementById('keyword').value;
+                                                    textArray = text.split(" ")
+                                                    firstCapText = ""
+                                                    for (var i=0; i< textArray.length; i++) {
+                                                        firstCapText = firstCapText.concat(textArray[i].substring(0,1).toUpperCase() + textArray[i].substring(1)) + " "
+                                                    }
+                                                var data = document.getElementsByClassName('highlightClass')
+                                                for (var i = 0; i < data.length; i++) {
+                                                    var innerHTML = data[i].innerText
+                                                    if (innerHTML.includes(text)) {
+                                                        var index = innerHTML.indexOf(text);
+                                                    } else if (innerHTML.includes(text.toUpperCase())) {
+                                                        var index = innerHTML.indexOf(text.toUpperCase());
+                                                    } else {
+                                                        var index = innerHTML.indexOf(firstCapText);
+                                                    }
+                                                    console.log('index : ', index)
+                                                    if (index >= 0) {
+                                                        innerHTML = innerHTML.substring(0,index) + "<span class='highlight'>" + innerHTML.substring(index,index+text.length) + "</span>" + innerHTML.substring(index + text.length);
+                                                        document.getElementsByClassName('highlightClass')[i].innerHTML = innerHTML;
+                                                    }
+                                                    }
+                                                })
+
+
+</script>
+
+{% endblock %}
+
+</body>
+</html>
+
+<style>
+a:hover {
+  text-decoration: underline;
+}
+.highlight {
+    background-color: #f5b907;
+}
+</style>
+
+<script>
+    $(document).ready(function() {
+  $("#agreebutton").on("click", function(e) {
+
+    if ($("#checkedId").is(':checked')) {
+      $('.showIfcheked').show();
+    } else {
+      $('.showIfcheked').hide();
+      alert('please select at least one row');
+     return false;
+    }
+
+  });
+});
+$(document).ready(function() {
+  $("#agreebuttonStar").on("click", function(e) {
+
+    if ($("#checkedIdStar").is(':checked')) {
+      $('.showIfcheked').show();
+    } else {
+      $('.showIfcheked').hide();
+      alert('please select at least one row');
+     return false;
+    }
+
+  });
+});
+
+
+
+</script>

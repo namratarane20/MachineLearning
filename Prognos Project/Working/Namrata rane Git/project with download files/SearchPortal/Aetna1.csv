@@ -1,0 +1,239 @@
+,question,response,additionalComment
+0,"Does your company utilize third parties (Aetna fourth party) that may have access to Aetna data, directly or indirectly?",,
+1,TP1.1 Provide the name of a critical third party service provider (Aetna fourth party).,,
+2,"TP1.2 Provide address of Aetna fourth party: Street, City, State and Zip Code.",,
+3,TP1.3 Are services and/or resources located offshore?,,
+4,"TP1.3.1 Provide offshore location details: Street, City, State/Province, and Country.",,
+5,TP1.3.1.1 Are resources located offshore in a clean room environment when accessing Aetna data?,,
+6,TP1.4 Provide fourth party URL,,
+7,"TP1.5 Provide contact information for the fourth party: Name, phone number, and email.",,
+8,TP1.6 Provide a description of Services provided by fourth party.,,
+9,TP1.7 Provide a listing of Aetna data elements the fourth party has access to or processes.,,
+10,TP1.8 Provide your risk ranking from your assessment of the fourth party.,,
+11,TP1.9 Upon completion of your assessment were any findings or remediation items identified?,,
+12,TP1.10 Do you have a second critical third party (Aetna fourth party) not previously mentioned?,,
+13,TP2.1 Provide the name of a critical third party service provider (Aetna fourth party).,,
+14,"TP2.2 Provide address of Aetna fourth party: Street, City, State and Zip Code.",,
+15,TP2.3 Are services and/or resources located offshore?,,
+16,"TP2.3.1 Provide offshore location details: Street, City, State/Province, and Country.",,
+17,TP2.3.1.1 Are resources located offshore in a clean room environment when accessing Aetna data?,,
+18,TP2.4 Provide fourth party URL,,
+19,"TP2.5 Provide contact information for the fourth party: Name, phone number, and email.",,
+20,TP2.6 Provide a description of Services provided by fourth party.,,
+21,TP2.7 Provide a listing of Aetna data elements the fourth party has access to or processes.,,
+22,TP2.8 Provide your risk ranking from your assessment of the fourth party.,,
+23,TP2.9 Upon completion of your assessment were any findings or remediation items identified?,,
+24,TP2.10 Do you have a third critical third party (Aetna fourth party) not previously mentioned?,,
+25,TP3.1 Provide the name of a critical third party service provider (Aetna fourth party).,,
+26,"TP3.2 Provide address of Aetna fourth party: Street, City, State and Zip Code.",,
+27,TP3.3 Are services and/or resources located offshore?,,
+28,"TP3.3.1 Provide offshore location details: Street, City, State/Province, and Country.",,
+29,TP3.3.1.1 Are resources located offshore in a clean room environment when accessing Aetna data?,,
+30,TP3.4 Provide fourth party URL,,
+31,"TP3.5 Provide contact information for the fourth party: Name, phone number, and email.",,
+32,TP3.6 Provide a description of Services provided by fourth party.,,
+33,TP3.7 Provide a listing of Aetna data elements the fourth party has access to or processes.,,
+34,TP3.8 Provide your risk ranking from your assessment of the fourth party.,,
+35,TP3.9 Upon completion of your assessment were any findings or remediation items identified?,,
+36,TP3.10 Do you have a fourth critical third party (Aetna fourth party) not previously mentioned?,,
+37,TP4.1 Provide the name of a critical third party service provider (Aetna fourth party).,,
+38,"TP4.2 Provide address of Aetna fourth party: Street, City, State and Zip Code.",,
+39,TP4.3 Are services and/or resources located offshore?,,
+40,"TP4.3.1 Provide offshore location details: Street, City, State/Province, and Country.",,
+41,TP4.3.1.1 Are resources located offshore in a clean room environment when accessing Aetna data?,,
+42,TP4.4 Provide fourth party URL,,
+43,"TP4.5 Provide contact information for the fourth party: Name, phone number, and email.",,
+44,TP4.6 Provide a description of Services provided by fourth party.,,
+45,TP4.7 Provide a listing of Aetna data elements the fourth party has access to or processes.,,
+46,TP4.8 Provide your risk ranking from your assessment of the fourth party.,,
+47,TP4.9 Upon completion of your assessment were any findings or remediation items identified?,,
+48,TP4.10 Do you have a fifth critical third party (Aetna fourth party) not previously mentioned?,,
+49,TP5.1 Provide the name of a critical third party service provider (Aetna fourth party).,,
+50,"TP5.2 Provide address of Aetna fourth party: Street, City, State and Zip Code.",,
+51,TP5.3 Are services and/or resources located offshore?,,
+52,"TP5.3.1 Provide offshore location details: Street, City, State/Province, and Country.",,
+53,TP5.3.1.1 Are resources located offshore in a clean room environment when accessing Aetna data?,,
+54,TP5.4 Provide fourth party URL,,
+55,"TP5.5 Provide contact information for the fourth party: Name, phone number, and email.",,
+56,TP5.6 Provide a description of Services provided by fourth party.,,
+57,TP5.7 Provide a listing of Aetna data elements the fourth party has access to or processes.,,
+58,TP5.8 Provide your risk ranking from your assessment of the fourth party.,,
+59,TP5.9 Upon completion of your assessment were any findings or remediation items identified?,,
+60,"TP5.10 Do you have additional critical third parties?If so, please select Yes and use the artifact link below to provide a list of the third parties and the descriptive information previously collected for each third party.",,
+61,"Please select ""Yes"" to confirm, your company represents and warrants that you do not work with additional Third Parties with direct access to Aetna data.",,
+62,"Does your company represent and warrant that your Third Parties with direct access to Aetna data have completed an assessment substantially similar to this assessment (SOC and BAA documents are not sufficient), acknowledging and confirming their compliance with the same or more stringent security requirements? (Note: This includes anti-bribery and anti-money laundering policies and standards.)",,
+63,"Q1: Does your company store Aetna information in any cloud based service (Internal or External) or storage (i.e. AWS, Microsoft Azure, etc)?",,
+64,Q2: What cloud storage solution does your company use?,,
+65,Q2 A: What cloud storage solution is used?,,
+66,"Q2.1: What data classification (type) is stored in the cloud solution?
+
+Restricted: Payment Card Information (i.e. Credit Card)Medicare HICN and Social Security Numbers (SSN)System Credentials (i.e. Passwoird, Certificates, Keys, Pins, ect)
+
+Confidential: Protected Health Information (PHI)Personally Identifiable Information (PII)Employment information (i.e. compensating or demographic)Merger and Acquisition information (prior to public release)Pricing information Treasury transaction or company investment data
+
+Proprietary: This data is business information other than restricted or confidential used within a company. (i.e. employee directory, internal electronic mail messages, policies, procedures and training material, and meeting presentation material and minutes)",,
+67,Q2.2: Does your company use a scanning tool to ensure the cloud solution is appropriately secured and properly configured?,,
+68,Q2.3:What scanning tool(s) is used?,,
+69,Q3: Does your company use another cloud storage solution?,,
+70,Q3.1: What cloud storage solution is used?,,
+71,Q3.1A: What cloud storage solution is used?,,
+72,"S2-Q3.2: What data classification (type) is stored in the cloud solution?
+
+Restricted: Payment Card Information (i.e. Credit Card)Medicare HICN and Social Security Numbers (SSN)System Credentials (i.e. Passwoird, Certificates, Keys, Pins, ect)
+
+Confidential: Protected Health Information (PHI)Personally Identifiable Information (PII)Employment information (i.e. compensating or demographic)Merger and Acquisition information (prior to public release)Pricing information Treasury transaction or company investment data
+
+Proprietary: This data is business information other than restricted or confidential used within a company. (i.e. employee directory, internal electronic mail messages, policies, procedures and training material, and meeting presentation material and minutes)",,
+73,S2-Q3.3 Does your company use a scanning tool to ensure the cloud solution is appropriately secured and properly configured?,,
+74,S2-Q3.4 What scanning tool(s) is used?,,
+75,S2-Q4: Does your company use another cloud storage solution?,,
+76,S2-Q4.1: What cloud storage solution is used?,,
+77,S2-Q4.1A: Which cloud storage does your company use?,,
+78,"S3-Q4.2: What data classification (type) is stored in the cloud solution?
+
+Restricted: Payment Card Information (i.e. Credit Card)Medicare HICN and Social Security Numbers (SSN)System Credentials (i.e. Passwoird, Certificates, Keys, Pins, ect)
+
+Confidential: Protected Health Information (PHI)Personally Identifiable Information (PII)Employment information (i.e. compensating or demographic)Merger and Acquisition information (prior to public release)Pricing information Treasury transaction or company investment data
+
+Proprietary: This data is business information other than restricted or confidential used within a company. (i.e. employee directory, internal electronic mail messages, policies, procedures and training material, and meeting presentation material and minutes)",,
+79,S3-Q4.3: Does your company use a scanning tool to ensure the cloud solution is appropriately secured and properly configured?,,
+80,S3-Q4.4: What scanning tool is used?,,
+81,S3-Q5: Does your company use another cloud storage solution?,,
+82,S3-Q5.1: What cloud storage solution is used?,,
+83,S3-Q5.1A What cloud storage solution is used?,,
+84,"S4-Q5.2: What data classification (type) is stored in the cloud solution?
+
+Restricted: Payment Card Information (i.e. Credit Card)Medicare HICN and Social Security Numbers (SSN)System Credentials (i.e. Passwoird, Certificates, Keys, Pins, ect)
+
+Confidential: Protected Health Information (PHI)Personally Identifiable Information (PII)Employment information (i.e. compensating or demographic)Merger and Acquisition information (prior to public release)Pricing information Treasury transaction or company investment data
+
+Proprietary: This data is business information other than restricted or confidential used within a company. (i.e. employee directory, internal electronic mail messages, policies, procedures and training material, and meeting presentation material and minutes)",,
+85,S4-Q5.3: Does your company use a scanning tool to ensure the cloud solution is appropriately secured and properly configured?,,
+86,S4-Q5.4 What scanning tool(s) is used?,,
+87,S4-Q6: Does your company use another cloud storage solution?,,
+88,S5-Q6.1: What cloud storage solution is used?,,
+89,S5-Q6.1A: What cloud storage solution is used?,,
+90,"S5-Q6.2: What data classification (type) is stored in the cloud solution?
+
+Restricted: Payment Card Information (i.e. Credit Card)Medicare HICN and Social Security Numbers (SSN)System Credentials (i.e. Passwoird, Certificates, Keys, Pins, ect)
+
+Confidential: Protected Health Information (PHI)Personally Identifiable Information (PII)Employment information (i.e. compensating or demographic)Merger and Acquisition information (prior to public release)Pricing information Treasury transaction or company investment data
+
+Proprietary: This data is business information other than restricted or confidential used within a company. (i.e. employee directory, internal electronic mail messages, policies, procedures and training material, and meeting presentation material and minutes)",,
+91,S5-Q6.3: Does your company use a scanning tool to ensure the cloud solution is appropriately secured and properly configured?,,
+92,S5-Q6.4: What scanning tool(s) is used?,,
+93,"Two factor authentication has been implemented for any/all remote (over the Internet) access to non-public Third Party applications/systems, such systems are not available for access outside the Third Party network environment, and physical access controls are implemented to control who has access to Third Party facilities with direct network access.
+
+
+
+Note: Non-public data defination is available at: http://www.dfs.ny.gov/legal/regulations/adoptions/dfsrf500txt.pdf",,
+94,Provide date when multifactor authentication will be implemented.,,
+95,All access to sensitive data/systems is monitored with a known process to detect and respond to inappropriate access quickly (behavioral analytics recommended) and an Incident Response playbook is fully in place/implemented to respond quickly to any such incidents.,,
+96,Some other risk based authentication architecture which ensures that a high level of assurance authentication is required for High Risk access and a moderate level of assurance authentication is required for medium risk access is implemented. A full description of this control is required.,,
+97,Other data protection control (Specify),,
+98,Third Party confirms that they have encryption in place for non-public information at rest.,,
+99,Provide date when encryption for data at rest will be implemented.,,
+100,Network segmentation for non-public data,,
+101,Restriction of data access to individuals with a business need for access,,
+102,Privileged User Monitoring for individuals with access to non-public data,,
+103,Tokenization for non-public data,,
+104,Other data protection control (Specify),,
+105,Third Party confirms that they have encryption in place for non-public information in transit (over external networks).,,
+106,Provide date when encryption for data in transit will be implemented.,,
+107,Do you have a completed AUP?,,
+108,Was the AUP completed in the last 12 months?,,
+109,Who performed the AUP?,,
+110,Do you have a 3rd party independently verified report available such as a ISO 27001 or a SOC II Type 2?,,
+111,Was this report completed in the last 12 months?,,
+112,Do you commit to performing an AUP during the next assessment cycle?,,
+113,Does your company develop software and/or mobile applications for Aetna?,,
+114,"Use the Snyopsys Portal Link to begin the vBSIMM process.
+
+
+Synopsys Portal Link 
+
+
+
+For more information on the vBSIMM and Code Scan visit the AV-ISAC Portal AV-ISAC Portal link 
+
+
+
+If you require access please reach out to your Relationship Manager for assistance.",,
+115,"Does your company develop internal software and/or mobile applications that handles, stores and/or processes Aetna data?",,
+116,"Use the Snyopsys Portal Link to begin the vBSIMM process.
+
+
+Synopsys Portal Link 
+
+
+
+For more information on the vBSIMM and Code Scan visit the AV-ISAC Portal AV-ISAC Portal link 
+
+
+
+If you require access please reach out to your Relationship Manager for assistance.",,
+117,Do you have a process to respond to inquiries pertaining to how risk is managed by the enterprise?,,
+118,"Do you have a process to monitor, report, and remediate reputational risk via an unbiased process that includes validating, reporting and discussing with company stakeholders?",,
+119,"Do you have a procedure/process to document and approve exception requests to company policies, control standards and procedures that includes business justification, ownership/management approval and remediation/mitigation tracking?",,
+120,Do you have a policy/procedure that requires risk owners to regularly review identified risk that include: remediation plans and project process?,,
+121,Do you have a third party (subcontractor) inventory management policy/process?,,
+122,"Do you have a policy/procedure to handle voluntary/involuntary terminations that requires managers to work with appropriate internal groups to ensure proper communication of decision to the individual, ensuring the return of company equipment and facilitate the departure of the individual from company premises?",,
+123,Do you have a policy and/or procedure in place addressing the responsibilities and appropriate use of company badges?,,
+124,Does the policy/procedure require badges to be worn in a visible location on company property?,,
+125,"Does the policy/procedure indicate badge holders are not permitted to alter, modify or disfigure the badge?",,
+126,Does the policy/procedure require the employee to return the badge upon leaving the company or termination?,,
+127,Does the policy/procedure indicate badge holders are not permitted to allow another individual to use their badge to gain access to company facilities?,,
+128,Does the policy/procedure require an employee to immediately report missing or stolen badges?,,
+129,"Do you have an incident response process that requires the collection and documentation of details of the incident that includes: background information, incident criticality, investigation and forensic collection, root cause analysis and remediation plans?",,
+130,"Is there a policy/procedure that requires the immediate notification to your security incident response team to assess the issue, confirm the incident is legitimate and identify potential impact?",,
+131,Do you have a policy/procedure that requires business continuity plans be tested annually (at minimum) to identify incorrect information?,,
+132,"Do you have an application inventory of all company applications (internally developed, business developed, vendor purchased and mobile) during the period of active deployment in production and non-production environments?",,
+133,Do you have a centralized domain management registration process including 3rd party hosted domains?,,
+134,Do you have a policy/procedure that requires outbound internet access to transverse company proxy servers with authentication?,,
+135,Do you use external internet web sites that provide services for file storage?,,
+136,Do you use Box.com?,,
+137,Do you use Enterprise External SharePoint?,,
+138,Do you use something other than Box.com or Enterprise External SharePoint for external internet web sites that provide services for file storage?,,
+139,Please indicate the name of the external internet service that is used for file storage?,,
+140,Do you have an implemented network-based Data Loss Prevention (DLP) system on the company network?,,
+141,"Is there a DMZ or isolated environment (i.e. Citrix, guest network, ect) for third party/subcontracts to prevent direct access to your company’s network?",,
+142,Is internet site and file filtering enabled to block access to internet sites and files deemed inappropriate or potentially dangerous?,,
+143,Do you have a central password management tool for privileged accounts that allows for detailed audit logging and limited access?,,
+144,Do you have a policy/procedure that requires employees to maintain the latest updates on their mobile devices (including company owned and BYOD) that access or store Aetna data?,,
+145,"Do company owned PC's/Laptop's and Windows servers have approved, up-to-date and fully functioning anti-virus software that includes virus scan engine and firewall and IDS functionality?",,
+146,Do Virtual Machines (VM's) have anti-virus software installed at either the Host server level or guest VM level?,,
+147,Do you have a policy/procedure that requires workstations (laptop/desktop) and mobile devices (smartphone/table) to have Full Disk Encryption technology?,,
+148,Do you have a policy/procedure that requires on a quarterly basis (at minimum) a review of production systems' security event logging to ensure all systems are providing security event logs?,,
+149,Does your company send email's to Aetna members or on behalf of Aetna?,,
+150,Does your company use an authentication protocol such as DKIM or DMARC?,,
+151,OS-Q1 Will you be accessing ANY Aetna data from offshore locations?,,
+152,OS-Q2 List all offshore locations in the following format (City: Country),,
+153,"OS-Q3 Will access to Aetna data only be available from within a clean room environment (Defined as a segregated space - space separated by walls and doors) and secured using badges, key locks, biometric, etc.?",,
+154,OS-Q4 Has the Principle of Least Privilege been implemented on the systems accessed within the clean room?,,
+155,"OS-Q5 Are all portable devices prohibited from entering the clean room environment? This includes, but is not limited to, mobile devices (i.e. phones, tablets, smart watches, laptops, USB, recording devices, etc).",,
+156,OS-Q6 Are all devices in the clean room locked down to guard against accessing and downloading data through the use of external portals and devices?,,
+157,"OS-Q7 Do you monitor and prohibit items (i.e. paper, pen, pencil printed material, etc.) from entering or leaving the clean room?",,
+158,OS-Q8 Are external modems and/or wireless connections prevented from accessing systems/devices in the clean room?,,
+159,"OS-Q9 Are all entrances to facilities/locations protected by a security guard and/or badge, key locks, biometrics, etc.?",,
+160,OS-Q10 Does the company use digital surveillance to monitor and log access to facilities?,,
+161,OS-Q11 Does the company use digital surveillance to monitor and log access to clean room(s)?,,
+162,OS-Q12 Is access to Aetna data managed through Aetna virtual machines?,,
+163,"OS-Q13 Is access to Aetna data and/or networks through a dedicated private circuit, encrypted VPN tunnels and/or encrypted protocols (i.e. SSL or SFTP) and includes multi-factor authentication?",,
+164,OS-Q14 Is copy/paste and print screen functionality prevented and/or disabled on each local system?,,
+165,OS-Q15 Is Web browsing and email access restricted on devices used to access Aetna data?,,
+166,"OS-Q16 Does the company monitor instant messaging services (i.e. Skype, Google Hangouts, etc.)?",,
+167,OS-Q17 Does a U.S. based data trustee/data owner manage data access and privileges for offshore users?,,
+168,"OS-Q18 Do you monitor and log system activity/access and activity pertaining to firewalls, intrusion detection and content filtering?",,
+169,"P1. Does your company have a defined, documented, and management approved privacy program that includes privacy policies and incident response plan?",,
+170,P2. Are privacy policies and standards published and communicated to employees and subcontractors?,,
+171,"P3. Does your company have a defined, documented and management approved Incident Response Plan that includes procedures to notify internal parties, regulators, law enforcement and third parties of incidents?",,
+172,"P4. Does your company have a documented privacy impact assessment, remediation and acceptance policies or programs in place that have been approved by management?",,
+173,"P5. Does your company have business associate agreements (BAAs) with all vendors that create, receive, maintain or transmit PHI on your company's behalf?",,
+174,P6. Is your company currently undergoing any criminal or federal investigations relating to HIPAA violations?,,
+175,"SSN.1 Do you use, store or transmit full or partial Social Security Numbers (SSN), National Identifiers, Health Insurance Claim Numbers (HICN) in delivery of your service to CVS and/or Aetna?",,
+176,SSN 2. Aetna prohibits the use of the above identified data elements except in instances where a regulatory or legal requirement to store or process them exists. Is there a legal or regulatory requirement within the context of the services you provide that requires you to use or process this data?,,
+177,"SSN 3. If there is not a regulatory or legal requirement to store or process the above data, is there a service requirement that prevents you from eliminating it?",,
+178,,,
+179,SSN 3.1 Provide an explicit description of the service requirement pertaining to the use of these data sets.,,
+180,"SSN 4. Is data currently - or can it be - fully or partially masked, anonymized, or otherwise obscured without impacting the service?",,
+181,"SSN 5. If there is no regulatory, legal or service requirement to store or process full or partial SSN, HICN or National identifiers, please confirm that you will partner with Aetna to create a plan to discontinue use of this data.",,

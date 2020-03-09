@@ -1,0 +1,9 @@
+body {
+    background-image: url("https://www.nasa.gov/sites/default/files/thumbnails/image/potw1827a.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.jumbotron {
+    background: red;
+    color: white;
+}

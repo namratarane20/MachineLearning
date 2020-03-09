@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title></title>
+        <script src="vue.js"></script>
+    </head>
+
+    <body>
+        <div id="compProperty">
+
+            <!-- computed -->
+            First Name : <input type="text" placeholder="firstname" v-model="fname">
+            Last name : <input type="text" placeholder="lastname" v-model="lname">
+            <h4>Full name : {{ getFullName }} </h4><br><br>
+            <h4>Full name : {{ fname }} {{ lname }} </h4>
+
+            <br><hr><br>
+
+            Meter : <input type="number" placeholder="value in meter" v-model="m">
+            Centimeter : <input type="number" placeholder="value in centimeter" v-model="cm">
+
+            <p> {{ computeUnit }} </p>
+
+            <br><hr><br>
+
+            a : <input type="number" v-model="a"><br>
+            b : <input type="number" v-model="b">
+            <p>ans = {{ a }} + {{ b }} </p>
+           
+            <!-- computed vs method -->
+            <!-- <button v-on:click="counter++">increament</button>
+            <button v-on:click="counter--">decreament</button>
+            <button v-on:click="secCounter++">secCounter</button>
+            <p>Counter: {{ counter }} </p> 
+            <p>Sec counter: {{ secCounter }} </p>
+            <p> result: {{ result() }} | {{ output }}</p> -->
+        </div>
+        <script src="computedProperty.js"> </script>
+    </body>
+</html>

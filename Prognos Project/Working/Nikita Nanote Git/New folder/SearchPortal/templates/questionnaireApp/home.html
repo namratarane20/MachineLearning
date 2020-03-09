@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Portal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+</head>
+<body style="background-color:#e8eced">
+
+{% block content %}
+<div class="box">
+    <div class="col-xl-12 box">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top box" style="height: 80px">
+            <!--         Prognos Logo on left side of navbar-->
+            <div class="navbar-collapse">
+                <img src="https://www.safeguard.com/wp-content/uploads/2014/06/prognos-reversed.png" width="200px"
+                     alt=""
+                     class="d-inline-block align-middle mr-2">
+                <!--            </div>-->
+                <!--            <div class="text-light" align="center">-->
+                <!--            <h3>Search Portal</h3>-->
+                <!--            </div>-->
+
+
+                <div class="navbar-collapse ">
+                    <ul class="navbar-nav ml-auto">
+                        <li>
+                            <div class="text-warning pt-2"><strong> Welcome {{user.first_name}} &nbsp; &nbsp;</strong>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="/adminLogin">
+                                <strong style="color:white"> Index File </strong>
+                            </a>
+                        </li>
+                        <li>
+                            {% if user.is_authenticated %}
+                            <a class="nav-link" href="/account/logout">
+                                <strong style="color:white">Log Out</strong>
+                            </a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+
+<div class="container-fluid" align="center" style="margin-top:8%;">
+    <div class="row ">
+        <div class="col-12">
+            <form action="searchKeyword" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-7 offset-2 ">
+                        <input class="form-control" align="center" type="text" name="keyword"
+                               placeholder="Search with keyword">
+                    </div>
+                    <div class="col-1">
+                        <input class="btn btn-secondary" value="Search" type="submit">
+                    </div>
+
+                </div>
+            </form>
+
+            <br>
+
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <nav>
+                            <div class="nav nav-tabs " id="nav-tab" role="tablist">
+                                {% if questionnaireResult %}
+                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab"
+                                   href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Questionaire</a>
+                                {% endif %}
+                                {% if policiesResult %}
+                                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
+                                   href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Policies</a>
+                                {% endif %}
+                            </div>
+                        </nav>
+                        {% if questionnaireResult %}
+                            <div class="tab-content py-3 px-3 px-sm-0 bg-light" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                                     aria-labelledby="nav-home-tab">
+                                    <div class="jumbotron tableFixHead" style="padding: 0px 0px">
+                                        <br>
+                                        <table class="table table-hover">
+                                            <thead>
+                                            <tr class="d-flex">
+                                                <th class="col-1">Most Relevant Responses</th>
+                                                <th class="col-1">Vendor Name</th>
+                                                <th class="col-1">Section Name</th>
+                                                <th class="col-1">Control Name</th>
+                                                <th class="col-3">Security Questions</th>
+                                                <th class="col-3">Responses</th>
+                                                <th class="col-2">Additional Comments</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for data in questionnaireResult %}
+                                            {% for users in data.MostRelevantResponses %}
+                                            {% if user1 in users %}
+                                            {% for keywords in data.KeywordSearched %}
+                                            {% if keyword1 in keywords %}
+                                            <form action="relevantResponses" method="post">
+                                                             {% csrf_token %}
+                                            <tr class="d-flex" >
+                                                <td class="col-1">
+                                                    <div class="col text-center">
+                                                    <button class="btn btn-default" type="submit" name="fevButton[]" value="{{ forloop.counter }}" data-toggle=”button” style="background-color:transparent" ><i class="fa fa-star" style="font-size:24px;color:yellow"></i></button>
+                                                    <input type="hidden" name="flag" value="0">
+                                                    </div>
+                                                </td>
+                                                <td class="col-1">{{ data.VendorName }}</td>
+                                                <td class="col-1">{{ data.SectionName }}</td>
+                                                <td class="col-1">{{ data.ControlName }}</td>
+                                                <td class="col-3">{{ data.SecurityQuestions }}</td>
+                                                <td class="col-3">{{ data.Responses }}</td>
+                                                <td class="col-2">{{ data.AdditionalComments }}</td>
+                                            </tr>
+                                                </form>
+                                            {% endif %}
+                                            {% if keyword1 not in keywords %}
+                                             <form action="relevantResponses" method="post">
+                                                            {% csrf_token %}
+                                            <tr class="d-flex">
+                                                <td class="col-1">
+
+                                                    <div class="col text-center">
+                                                     <button class="btn btn-default" type="submit" name="fevButton[]" value="{{ forloop.counter }}" data-toggle=”button” style="background-color:transparent;" ><i class="fa fa-star-o " style="font-size:24px;color:black;"></i></button>
+                                                    <input type="hidden" name="flag" value="1">
+
+                                                    </div>
+                                                </td>
+                                                <td class="col-1">{{ data.VendorName }}</td>
+                                                <td class="col-1">{{ data.SectionName }}</td>
+                                                <td class="col-1">{{ data.ControlName }}</td>
+                                                <td class="col-3">{{ data.SecurityQuestions }}</td>
+                                                <td class="col-3">{{ data.Responses }}</td>
+                                                <td class="col-2">{{ data.AdditionalComments }}</td>
+                                            </tr>
+                                                 </form>
+                                            {% endif %}
+                                             {% endfor %}
+                                            {% endif %}
+                                            {% if user1 not in users %}
+                                            <form action="relevantResponses" method="post">
+                                                            {% csrf_token %}
+                                            <tr class="d-flex">
+                                                <td class="col-1">
+
+                                                    <div class="col text-center">
+                                                     <button class="btn btn-default" type="submit" name="fevButton[]" value="{{ forloop.counter }}" data-toggle=”button” style="background-color:transparent;" ><i class="fa fa-star-o " style="font-size:24px;color:black;"></i></button>
+                                                    <input type="hidden" name="flag" value="1">
+
+                                                    </div>
+                                                </td>
+                                                <td class="col-1">{{ data.VendorName }}</td>
+                                                <td class="col-1">{{ data.SectionName }}</td>
+                                                <td class="col-1">{{ data.ControlName }}</td>
+                                                <td class="col-3">{{ data.SecurityQuestions }}</td>
+                                                <td class="col-3">{{ data.Responses }}</td>
+                                                <td class="col-2">{{ data.AdditionalComments }}</td>
+                                            </tr>
+                                                 </form>
+                                            {% endif %}
+                                            {% endfor %}
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                </div>
+
+                        {% endif %}
+
+                        {% if policiesResult %}
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel"
+                             aria-labelledby="nav-profile-tab">
+                            <div class="jumbotron tableFixHead" style="padding: 0px 0px">
+                                <br>
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr class="d-flex">
+                                        <th class="col-2">Policy / Procedure Name</th>
+                                        <th class="col-7">Description</th>
+                                        <th class="col-3">Policy Link</th>
+                                    </tr>
+                                    </thead>
+                                    {% for data in policiesResult %}
+                                    <tr class="d-flex">
+                                        <td class="col-2">{{ data.PolicyName }}</td>
+                                        <td class="col-7">{{ data.Data }}</td>
+                                        <td class="col-3">
+                                            <a href="{{ data.Link }}" target="_blank"> {{ data.Link }} </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+</div>
+
+
+{% endblock %}
+
+</body>
+</html>

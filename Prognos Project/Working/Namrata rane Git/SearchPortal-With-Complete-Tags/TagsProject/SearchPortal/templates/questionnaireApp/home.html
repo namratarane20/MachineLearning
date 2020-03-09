@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Portal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-3.1.0.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <link src="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <!--    <script src="js/jQuery.highlight.js"></script>-->
+
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body style="background-color:#e8eced">
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row col-12">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top box">
+            <div class="container-fluid col-12 ">
+                <a href="/toHomePage" class="navbar-brand">
+                    <img src="https://www.safeguard.com/wp-content/uploads/2014/06/prognos-reversed.png" width="200px"
+                         alt=""
+                         class="d-inline-block align-middle mr-2">
+
+                    <!-- <span class="text-uppercase font-weight-bold">Company</span> -->
+                </a>
+                <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                        class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
+
+
+                <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active"><a href="#" class="nav-link">
+                            <strong class="text-warning pt-2"> Welcome {{user.first_name}} &nbsp; &nbsp;</strong>
+                            <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item"><a href="/adminLogin" class="nav-link">
+                            <strong style="color:white"> Index File </strong></a>
+                        </li>
+                        <form>
+                            {% csrf_token %}
+                            <li class="nav-item">
+                                <a class="nav-link" onclick="openNav()">
+                                    <strong style="color:white;cursor:pointer;"> Tags </strong></a>
+                            </li>
+                            <div id="mySidenav" class="sidenav">
+                                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                                <h1>this is tags list</h1>
+                                <ul>
+                                    {% for tg in tagNameList %}
+                                    <li>{{ tg }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </form>
+                        <li class="nav-item"><a href="/account/logout" class="nav-link">
+                            <!--                            {% if user.is_authenticated %}-->
+                            <strong style="color:white">Log Out</strong>
+                            <!--                            {% endif %}-->
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!--    end of row which contains nav and all nav items-->
+
+
+    <br><br><br><br><br>
+
+
+    <div class="row col-12">
+        <div class="container-fluid ">
+            <form action="searchKeyword" method="POST">
+                {% csrf_token %}
+                <div class="row col-12">
+                    <!--                    <div class="col-1">-->
+                    <!--                        <button type="button" class="btn btn-info btn-md " title="Select at least one row!" id="submit"-->
+                    <!--                                data-toggle="modal" data-target="#myModal">-->
+                    <!--                            Create Tag-->
+                    <!--                        </button>-->
+                    <!--                    </div>-->
+                    <div class="offset-3 col-5">
+                        <input class="form-control " align="center" type="text" name="keyword"
+                               value="{{ keyword }}"
+                               placeholder="Search with keyword">
+                    </div>
+                    <div class="class= col-1">
+                        <input class="btn btn-secondary" id="searchText" value="Search" onclick="findIt()"
+                               type="submit">
+                    </div>
+                </div>
+            </form>
+            <br>
+            <!--         end of second row which contains serach box and  button-->
+            <!--            <div class="row">-->
+            <!--                &nbsp&nbsp&nbsp&nbsp-->
+            <!--                <div style=" height:400px; background-color:white;border:thin;overflow-y: scroll"-->
+            <!--                     class="col-3 box justify-content-center">-->
+            <!--                    <form action="dispalyTagName" method="POST">-->
+            <!--                        {% csrf_token %}-->
+            <!--                        <h1>Tags</h1>-->
+            <!--                        <button>taglist</button>-->
+            <!--                        <br>-->
+
+            <!--                        <form action="#" method="POST">-->
+            <!--                            {% csrf_token %}-->
+            <!--                            {% for tagname in tagNameList %}-->
+            <!--                            <a href="{% url 'displayTagInfo' tagname %}" title="Created by " >{{ tagname }}, </a>-->
+            <!--                            {% endfor %}-->
+            <!--                        </form>-->
+            <!--                    </form>-->
+            <!--                </div>-->
+            <!--            </div>-->
+
+            <div class="row">
+                <nav>
+                    <div class="nav nav-tabs col-12" id="nav-tab" role="tablist">
+                        {% if questionnaireResult %}
+                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab"
+                           href="#nav-home" role="tab" aria-controls="nav-home"
+                           aria-selected="true">Questionaire</a>
+                        {% endif %}
+                        {% if policiesResult %}
+                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
+                           href="#nav-profile" role="tab" aria-controls="nav-profile"
+                           aria-selected="false">Policies</a>
+                        {% endif %}
+                    </div>
+                </nav>
+
+                <!--        end of third row which contains tabs like questinnarie and policy tabs-->
+
+                {% if questionnaireResult %}
+
+                <div class="tab-content py-3 px-3 px-sm-0 bg-light" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                         aria-labelledby="nav-home-tab">
+                        <div class="jumbotron tableFixHead table-left-margin table-responsive"
+                             style="padding: 0px 0px" id="selector">
+                            <!--                            <mark>{{keyword }}</mark>-->
+                            <br>
+
+
+                            <table class="table table-hover" id="myText">
+                                <thead>
+                                <tr class="d-flex">
+                                    <!--                                <th class="col-1">Tags</th>-->
+                                    <th class="col-1">Add Tags</th>
+                                    <th class="col-1">Vendor Name</th>
+                                    <th class="col-1">Section Name</th>
+                                    <th class="col-1">Control Name</th>
+                                    <th class="col-3">Security Questions</th>
+                                    <th class="col-3">Responses</th>
+                                    <th class="col-2">Additional Comments</th>
+                                </tr>
+                                </thead>
+                                <tbody class="fixed">
+                                <form action="addToTags" method="POST">
+                                    {% csrf_token %}
+                                    <div class="modal fade" id="myModal" role="dialog" style="display:none;">
+                                        <div class="modal-dialog "style="width:400px;height:200px; ">
+                                            <div class="modal-content">
+                                                <div class="modal-header" style="background:#c4bdf2;">
+                                                    <h4 class="modal-title">Type tag name</h4>
+                                                    <button type="button" class="close" data-dismiss="modal">
+                                                        &times;
+                                                    </button>
+
+                                                </div>
+                                                <div class="modal-body" style="margin:0 auto;" >
+                                                    <h5>Assign tag name :</h5><input type=" text" name="tagname"
+                                                                                     list="browsers"
+                                                                                     style="width:270px; height:30px;"><br><br>
+                                                    <datalist id="browsers">
+                                                        {% for tagname in tagNameList %}
+                                                        <option> {{ tagname }}</option>
+                                                        {% endfor %}
+
+                                                    </datalist>
+                                                    <!--                                                    <h5>Add to existing tag name : </h5><input list="browsers"  type=" text " name="existingTagName" style="width:270px; height:30px;"><br><br>-->
+                                                    <h5>Add Description :</h5><input type=" text" ,
+                                                                                     name="tagDescription"
+                                                                                     list="tagDesc"
+                                                                                     style="width:270px; height:60px;">
+                                                    <datalist id="tagDesc">
+
+                                                        <option>{{ tagDesc }}</option>
+
+                                                    </datalist>
+
+                                                </div>
+                                                <div class="modal-footer" style="background:#c4bdf2">
+
+
+                                                    <button type="submit" class="btn btn-secondary " style=" border:black;border-style: solid;border-width: 2px;">Save
+                                                    </button>
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!--                                <button type="submit">Add To Tags</button>-->
+                                    {% for data in questionnaireResult %}
+
+                                    <tr class="d-flex">
+                                        <td class="col-1" align="center">
+                                            <input type="checkbox" name="tagCheckbox[]" id="checkedId"
+                                                   value="{{forloop.counter}}" style="height:15px;width:15px;"/>
+                                            <button type="button" class=" btn btn-link fa fa-tag "
+                                                    style="color:blue;"
+                                                    title="Select at least one row!" name="agreebutton" id="agreebutton"
+                                                    data-toggle="modal" data-target="#myModal">
+<!--                                                <strong> Tag</strong>-->
+
+                                            </button>
+                                        </td>
+                                        <td class="col-1">{{ data.VendorName }}</td>
+                                        <td class="col-1">{{ data.SectionName }}</td>
+                                        <td class="col-1">{{ data.ControlName }}</td>
+                                        <td class="col-3">{{ data.SecurityQuestions }}</td>
+                                        <td class="col-3">{{ data.Responses }}</td>
+                                        <td class="col-2">{{ data.AdditionalComments }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </form>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button type="button" class="btn btn-success-outline float-right btn-lg">Submit
+                        </button>
+                    </div>
+                    {% endif %}
+
+                    {% if policiesResult %}
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel"
+                         aria-labelledby="nav-profile-tab">
+                        <div class="jumbotron tableFixHead table-left-margin" style="padding: 0px 0px">
+                            <br>
+                            <table class="table table-hover table-fixed ">
+                                <thead>
+                                <tr class="d-flex">
+                                    <th class="col-2">Policy / Procedure Name</th>
+                                    <th class="col-7">Description</th>
+                                    <th class="col-3">Policy Link</th>
+                                </tr>
+                                </thead>
+                                {% for data in policiesResult %}
+                                <tr class="d-flex">
+                                    <td class="col-2">{{ data.PolicyName }}</td>
+                                    <td class="col-7">{{ data.Data }}</td>
+                                    <td class="col-3">
+                                        <a href="{{ data.Link }}" target="_blank"> {{ data.Link }} </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    </form>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}
+
+</body>
+</html>
+<script>
+    $(document).ready(function() {
+
+  $("#agreebutton").on("click", function(e) {
+
+    if ($("#checkedId").is(':checked')) {
+      $('.showIfcheked').show();
+    } else {
+      $('.showIfcheked').hide();
+      alert('please select at least one row');
+     return false;
+    }
+
+  });
+
+});
+
+
+
+
+
+
+<!--<script>-->
+<!--$('#submit').prop("disabled", true);-->
+<!--$('input:checkbox').click(function() {-->
+<!-- if ($(this).is(':checked')) {-->
+<!-- $('#submit').prop("disabled", false);-->
+<!-- } else {-->
+<!-- if ($('.checks').filter(':checked').length < 1){-->
+<!-- $('#submit').attr('disabled',true);}-->
+<!-- }-->
+<!--});-->
+
+
+
+</script>
+
+
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+
+
+
+
+
+
+</script>
+
+
+</script>
+<style>
+    .sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 100px;
+  left: 0;
+  background-color: white;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: black;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+
+
+.fixed {
+  width:350px;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+
+
+.fixed tbody {
+  display: block;
+<!--  overflow: auto;-->
+  width: 100%;
+  height: 500px;
+  overflow-y: scroll;
+    overflow-x: hidden;
+}
+.fixed::-webkit-scrollbar{
+display:none;
+}
+
+</style>
+
+

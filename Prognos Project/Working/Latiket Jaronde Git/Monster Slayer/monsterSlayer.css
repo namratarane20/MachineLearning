@@ -1,0 +1,12 @@
+
+    .remainingLife {
+        background-color: red;
+        height: 100%;
+        border-radius: 14px; 
+    }
+    .rectangle {
+        border-style: solid; 
+        border-radius: 15px; 
+        width: 40%; 
+        height: 35px
+    }

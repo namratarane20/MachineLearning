@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p v-if="show">Yes......!</p>
+        <p v-else> No</p>
+        <template v-if="show">
+            <h3>third heading</h3>
+            <h4>forth heading</h4>
+        </template>
+        <button @click="show = !show"> Switch </button>
+    </div>
+
+    <br><hr><br>
+
+    <div id="app1">
+        <p v-if="isActive"> if statement paragraph changed </p>
+        <p v-else> else statement paragraph changed </p>
+        <p v-show="isActive"> show statement paragraph changed </p>
+
+        <button @click="changeActiveness">click</button>
+    </div>
+    <script src="conditionWithIF.js"></script>
+</body>
+</html>

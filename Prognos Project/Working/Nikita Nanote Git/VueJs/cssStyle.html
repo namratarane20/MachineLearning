@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+ <div id="app">
+<!-- <div class="demo" @click="attachRed=!attachRed" :class="{divClasses}">
+
+</div> -->
+<!-- <div class="demo" :class="{red:attachRed,blue:!attachRed}"></div>
+<div class="demo"></div> -->
+
+<div class="demo" @click="attachRed = !attachRed" :class="{red : attachRed}"></div>
+<div class="demo" :style="{backgroundColor:color}"></div>
+<div class="demo" @click="attachRed = !attachRed" :class="[color , {red : attachRed}]"></div>
+<div class="demo" :style="[myStyle,{height:width + 'px'}]"></div>
+<div class="demo" :style="myStyle"></div>
+
+<input type="text" v-model="color">
+<input type="text" v-model="width">
+ </div>   
+ <script>
+ new Vue({
+     el:'#app',
+     data:{
+         attachRed:false,
+         color:'green',
+         width:100
+     },
+     computed:{
+        myStyle:function(){
+           return{
+               backgroundColor:this.color,
+               width:this.width + 'px'
+           };
+        }
+     }
+ })
+ </script>
+ <style scoped>
+     .demo{
+         width: 100px;
+         height:100px;
+         background-color:gray;
+         display: inline-block;
+         margin: 10px;
+
+     }
+     .red{
+         background-color: red;
+     }
+     .blue{
+         background-color: blueviolet;
+     }
+     .green{
+         background-color: green;
+     }
+ </style>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p v-if="isActive">This is if statement</p>
+        <p v-else>This is else statement</p>
+        <p v-show="isActive">This is show statement</p>
+        <button type="button" @click="clicking">Increment</button>
+        <h3>Count is : {{ count }}</h3>
+        <p v-if="count==1">count is 1</p>
+        <p v-else-if="count==2">count is 2</p>
+        <p v-else-if="count==3">count is 3</p>
+        <p v-else>none</p>
+    </div>
+    <script>
+    new Vue({
+        el:'#app',
+        data:{
+            isActive:false,
+            count:0
+        },
+        methods:{
+            clicking:function(){
+              this.count++ 
+            }
+        }
+    })
+    </script>
+</body>
+</html>

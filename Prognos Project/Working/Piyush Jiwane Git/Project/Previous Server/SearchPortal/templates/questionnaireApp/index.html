@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Portal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link src="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body style="background-color:#e8eced">
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row col-12">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top box">
+            <div class="container-fluid col-12 ">
+                <a href="/" class="navbar-brand">
+                    <img src="https://www.safeguard.com/wp-content/uploads/2014/06/prognos-reversed.png" width="200px"
+                         alt=""
+                         class="d-inline-block align-middle mr-2">
+
+                    <!-- <span class="text-uppercase font-weight-bold">Company</span> -->
+                </a>
+                <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                        class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
+
+
+                <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active"><a href="#" class="nav-link">
+                            <strong class="text-warning pt-2"> Welcome {{user.first_name}} &nbsp; &nbsp;</strong>
+                            <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item"><a href="/adminLogin" class="nav-link">
+                            <strong style="color:white"> Upload File </strong></a>
+                        </li>
+<!--                        <form>-->
+<!--                            {% csrf_token %}-->
+<!--                            <li class="nav-item">-->
+<!--                                <a class="nav-link" onclick="openNav()">-->
+<!--                                    <strong style="color:white;cursor:pointer;"> Tags </strong></a>-->
+<!--                            </li>-->
+<!--                            <div id="mySidenav" class="sidenav">-->
+<!--                                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>-->
+<!--                                <h1>this is tags list</h1>-->
+<!--                                <ul>-->
+<!--                                    {% for tg in tagNameList %}-->
+<!--                                    <li>{{ tg }}</li>-->
+<!--                                    {% endfor %}-->
+<!--                                </ul>-->
+<!--                            </div>-->
+<!--                        </form>-->
+                        <li class="nav-item"><a href="/account/logout" class="nav-link">
+                            <!--                            {% if user.is_authenticated %}-->
+                            <strong style="color:white">Log Out</strong>
+                            <!--                            {% endif %}-->
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!--    end of row which contains nav and all nav items-->
+
+
+    <br><br><br><br><br>
+
+
+    <div class="row col-12">
+        <div class="container-fluid ">
+            <form action="/searchKeyword" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                        <div class="col-5 offset-3">
+                            <div class="offset-2 col-12 form-group has-search">
+                                <span class="fa fa-search form-control-feedback"></span>
+                                <input class="form-control " align="center" type="text" name="keyword"
+                                       value="{{ keyword }}"
+                                       placeholder="Search with keyword" ondblclick="dbclick()" id="keyword" autocomplete="off"/>
+                                <table id="searchResultTable" style="display: none; " class="table mt-2">
+                                <tr style="background-color: white; border-radius: 10px;" class="row">
+                                    <td onclick="singleClick()"><div style="border:1px solid black;border-radius:15px;background:white" class="p-1">Questionnaire </div></td>
+                                    <td onclick="singleClick()"><div style="border:1px solid black;border-radius:15px" class="p-1">Policies </div></td>
+                                </tr>
+                            </table>
+                            </div>
+
+                            <style>
+                                .has-search .form-control {
+                                    padding-left: 2.375rem;
+                                }
+                                .has-search .form-control-feedback {
+                                    position: absolute;
+                                    z-index: 2;
+                                    display: block;
+                                    width: 2.375rem;
+                                    height: 2.375rem;
+                                    line-height: 2.375rem;
+                                    text-align: center;
+                                    pointer-events: none;
+                                    color: #aaa;
+                                }
+                            </style>
+
+                            <script type="text/javascript">
+                                function dbclick(){
+                                    document.getElementById('searchResultTable').style.display='block'
+                                }
+                            </script>
+
+                            <!--                        <input name="response" onclick="document.getElementById('searchResultTable').style.display='block'" id="responseArea" style="width:100%;"/>-->
+
+
+                            <script type="text/javascript">
+                                function singleClick(){
+                                    document.getElementById('searchResultTable').style.display='none'
+                                }
+                            </script>
+
+
+                            <script>
+                                $('#searchResultTable td div').click(function () {
+                                    col = "In@".concat($(this).html())
+                                    colVal = col.concat(":- ")
+
+                                    document.getElementById('keyword').value =colVal
+                                });
+                            </script>
+                        </div>
+
+
+                    </div>
+
+            </form>
+            <br><br>
+            <!--         end of second row which contains serach box and  button-->
+            <div class="row">
+                &nbsp&nbsp
+
+                <div class="card box" style="width: 290px;overflow-y:scroll;height:350px">
+                    <div class="card-body">
+                        <h5 class="card-title" align="center">Tags</h5>
+
+                        <ul>
+                            {% for tagname in tagNameList %}
+                            <li><a href="tagInfo/{{tagname}}"> {{tagname}} </a></li>
+                            {% endfor %}
+                        </ul>
+
+                    </div>
+                </div>
+
+
+                &nbsp&nbsp&nbsp&nbsp&nbsp
+
+                 <div class="card box" style="width: 300px;overflow-y:scroll;height:350px">
+                    <div class="card-body">
+                        <h5 class="card-title" align="center">My Favourites</h5>
+                        <ul>
+                            {% for keyword1 in globalKeywordList %}
+                            <li><a href="searchKeyword/{{keyword1}}?name=mostRelevant" class="card-link">{{keyword1}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+
+                &nbsp&nbsp&nbsp&nbsp&nbsp
+                <div class="card box" style="width: 320px;overflow-y:scroll;height:350px">
+                    <div class="card-body">
+                        <h5 class="card-title" align="center">Popular Keywords</h5>
+                        <ul>
+                            {% for sb in newSearchTable %}
+                            <li><a href="{% url 'recentSearchKeyword' sb.keyword %}" class="card-link">{{ sb.keyword }}</a>&nbsp&nbsp&nbsp({{sb.count}})</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                &nbsp&nbsp&nbsp&nbsp&nbsp
+                <div class="card box" style="width: 300px;overflow-y:scroll;height:350px">
+                    <div class="card-body">
+                        <h5 class="card-title" align="center">Recent Search</h5>
+
+                        <ul>
+                            {% for rs in order %}
+                            <li><a href="{% url 'recentSearchKeyword' rs.keyword %}">{{ rs.keyword }}</a></li>
+                            {% endfor%}
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+</body>
+</html>
+<script>
+    $(document).ready(function() {
+
+  $("#agreebutton").on("click", function(e) {
+
+    if ($("#checkedId").is(':checked')) {
+      $('.showIfcheked').show();
+    } else {
+      $('.showIfcheked').hide();
+      alert('please select at least one row');
+      e.preventDefault();
+    }
+
+  });
+
+});
+
+</script>
+
+
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+
+
+</script>
+
+<style>
+    .sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 100px;
+  left: 0;
+  background-color: white;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: black;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+
+</style>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Portal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</head>
+<body style="background-color:#040230">
+
+{% block content %}
+<div>
+    <nav class="navbar navbar-expand-md  fixed-top " style="background-color:#040230;border-bottom:solid #2c345e 1px;">
+        <!--         Prognos Logo on left side of navbar-->
+        <div class="navbar-collapse">
+            <a href="/toHomePage">
+                <img src="{% static 'images/prognoshealth.png' %}" style="width:200px;"
+                     alt=""
+                     class="d-inline-block align-middle mr-2">
+            </a>
+        </div>
+
+        <div class="navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a href="#" class="nav-link">
+                    <strong class="text-warning pt-2"> Welcome {{user.first_name}} </strong>
+                    <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item"><a href="/report" class="nav-link">
+                    <strong style="color:white"> Report </strong></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/account/logout">
+                        <strong style="color:white">Log out</strong>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div class="row col-12">
+    <div class="card offset-2 col-4 card-body" style=" border-radius:10px;  background-color:white;">
+        <h3 align="center"><strong> Upload Questionnaire File </strong></h3>
+        <hr style="background-color:#040230;width:130%;margin-left:-25px; height:3px;">
+
+        <form action="/indexQuestionnaireFile" method="POST" id="indexQuestionnaireFile" enctype="multipart/form-data"
+              style="margin-left: 20px">
+            {% csrf_token %}
+
+            <div class="modal fade" id="questionnaireModal" role="dialog" style="display:none;">
+                <div class="modal-dialog " style="width:400px;height:200px; ">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background:#c4bdf2;">
+                            <h4 class="modal-title"
+                                style="margin:0 auto; text-align: center">File Name Already Exist</h4>
+                        </div>
+                        <div class="modal-body" style="margin:0 auto;">
+                            <h5>Either rename file or Overwrite</h5>
+                        </div>
+                        <div class="modal-footer" style="background:#c4bdf2;">
+                            <button type="submit"
+                                    style="border:black;border-style: solid;border-width: 2px;margin:0 auto;">Overwrite
+                            </button>
+                            <button type="button" data-dismiss="modal"
+                                    style="border:black;border-style: solid;border-width: 2px;margin:0 auto;">Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="file" name="questionnaireFile" id="questionnaireFile"> <br><br>
+            <input type="url" name="link" placeholder="Enter Google Sheet url" width="100%"> <br><br>
+            <button class="btn float-center submit_btn" type="button" onclick="uploadFile()"><strong>Upload</strong>
+            </button>
+        </form>
+    </div>
+
+    <div class="card offset-1 col-4 card-body"
+         style="margin-right:120px; margin-left:80px;border-radius:10px; background-color:white;">
+        <h3 align="center"><strong> Upload Policies File </strong></h3>
+        <hr style="background-color:#040230;width:130%;margin-left:-25px; height:3px;">
+        <form action="indexPoliciesFile" method="POST" id="indexPoliciesFile" enctype="multipart/form-data"
+              style="margin-left: 20px">
+            {% csrf_token %}
+
+            <div class="modal fade" id="policyModal" role="dialog" style="display:none;">
+                <div class="modal-dialog " style="width:400px;height:200px; ">
+                    <div class="modal-content">
+                        <div class="modal-body" style="margin:0 auto;">
+                            <h5>Policy File Already Exist</h5>
+                        </div>
+                        <div class="modal-footer" style="background:#c4bdf2;">
+                            <button type="submit"
+                                    style="border:black;border-style: solid;border-width: 2px;margin:0 auto;">Overwrite
+                            </button>
+                            <button type="button" data-dismiss="modal"
+                                    style="border:black;border-style: solid;border-width: 2px;margin:0 auto;">Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <input type="file" name="policyFile" id="policyFile"> <br><br>
+            <input type="url" name="link" placeholder="Enter url" width="100%"> <br><br>
+            <button class="btn float-center submit_btn" type="button" onclick="uploadFile()"><strong>Upload</strong>
+            </button>
+        </form>
+    </div>
+
+    <ul id="fileNameList" style="display: none">
+        {% for name in fileNameList %}
+        <li><a style="color: white">{{ name.fileName }}</a></li>
+        {% endfor %}
+    </ul>
+
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags %}
+    <script>alert("{{ message }}")</script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+    <script>
+        function uploadFile() {
+            var questionnaire = false
+            var policy = false
+            if (document.getElementById('questionnaireFile').value) {
+                var fileName = document.getElementById('questionnaireFile').value.replace(/.*[\/\\]/, '')
+                questionnaire = true
+            } else {
+                var fileName = document.getElementById('policyFile').value.replace(/.*[\/\\]/, '')
+                fileName = fileName.substring(0, fileName.indexOf('.docx')) .replace(/\s+$/, '');
+                policy = true
+            }
+            if (fileName == '') {
+                alert("Please select a file to upload")
+            } else {
+                var ul = document.getElementById("fileNameList");
+                var li = ul.getElementsByTagName("li");
+                var flag = false
+                for (i = 0; i < li.length; i++) {
+                    a = li[i].getElementsByTagName("a")[0];
+                    console.log("file name : ", a)
+                    if (fileName == a.innerText) {
+                        flag = true;
+                        break;
+                    }
+                }
+                if (flag == true) {
+                    if (questionnaire) {
+                        $('#questionnaireModal').modal('show');
+                    } else if (policy) {
+                        $('#policyModal').modal('show');
+                    }
+                } else {
+                   if (questionnaire) {
+                        $("#indexQuestionnaireFile").submit();
+                   } else if (policy) {
+                        $("#indexPoliciesFile").submit();
+                   }
+                }
+            }
+        }
+
+    </script>
+</div>
+
+{% endblock %}
+
+</body>
+</html>
+
+<style>
+
+ .card  {
+    margin-top:200px;
+    height: auto;
+
+
+}
+
+.submit_btn{
+color: black;
+background-color: #FFC312;
+width: 100px;
+}
+
+.resultitem{
+ -webkit-transition: 0.5s;
+          transition: 0.5s;
+}
+
+.resultitem:hover{
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+
+
+</style>

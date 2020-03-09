@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+    <style>
+        .red {
+            background-color: red;
+        }
+
+        .blue {
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body style="background-color: black">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4 red">
+                Hello
+            </div>
+            <div class="col-xl-4 blue">
+                Hello
+            </div>
+            <div class="col-xl-4 red">
+                Hello
+            </div>
+        </div>
+
+        <br>
+        <!-- default column size taken by bootstrap -->
+        <div class="row">
+            <div class="col red">
+                hey nigga
+            </div>
+            <div class="col blue">
+                hey nigga
+            </div>
+            <div class="col red">
+                hey nigga
+            </div>
+            <div class="col blue">
+                hey nigga
+            </div>
+            <div class="col red">
+                hey nigga
+            </div>
+        </div>
+
+        <br>
+        <!-- assigning specified no of columns and remaining columns gets equal size (remaining/no of remaining columns)-->
+        <div class="row">
+            <div class="col red">
+                1 of 3
+            </div>
+            <div class="col-6 blue">
+                2 of 3 (wider)
+            </div>
+            <div class="col red">
+                3 of 3
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-5 red">
+                1 of 3
+            </div>
+            <div class="col-5 blue">
+                2 of 3 (wider)
+            </div>
+            <div class="col red">
+                3 of 3
+            </div>
+        </div>
+
+        <br>
+
+        <!-- align row -->
+        <div class="row justify-content-md-center">
+            <div class="col col-lg-2 red">
+                1 of 3
+            </div>
+            <div class="col-md-auto blue">
+                Variable width content
+            </div>
+            <div class="col col-lg-2 red">
+                3 of 3
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col blue">
+                1 of 3
+            </div>
+            <div class="col-md-auto red">
+                Variable width content
+            </div>
+            <div class="col col-lg-2 blue">
+                3 of 3
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <!-- padding -->
+    <div class="container ">
+        <div class="row mx-lg-n5">
+            <div class="col py-3 px-lg-5 border bg-light">Custom column padding</div>
+            <div class="col py-3 px-lg-5 border bg-light">Custom column padding</div>
+        </div>
+
+        <br>
+        <!-- different columns for different screen size -->
+        <div class="row">
+            <div class="col-xl-4 col-lg-3 col-md-auto col-sm-6 red">
+                hey
+            </div>
+            <div class="col-xl-4 col-lg-3 col-md-auto col-sm-6 blue">
+                hey
+            </div>
+            <div class="col-xl-4 col-lg-3 col-md-auto col-sm-2 red">
+                hey
+            </div>
+        </div>
+
+        <br>
+
+    </div>
+
+    <div class="container">
+        <!-- verticle column alignment -->
+        <div class="row align-items-end">
+            <div class="col red">
+                One of three columns
+            </div>
+        </div>
+        <div class="row align-items-end">
+            <div class="col blue">
+                One of three columns 2nd
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col red">
+                One of three columns 3rd
+            </div>
+        </div>
+
+        <br>
+        <!-- align row -->
+        <div class="row red">
+            <div class="col align-self-start">
+                One of three columns
+            </div>
+            <div class="col align-self-center">
+                One of three columns
+            </div>
+            <div class="col align-self-end">
+                One of three columns
+            </div>
+        </div>
+
+        <br>
+        <!-- more than 12 columns -->
+        <div class="row red">
+            <div class="col-8">
+                One of three columns
+            </div>
+            <div class="col-5">
+                One of three columns
+            </div>
+            <div class="col-5">
+                One of three columns
+            </div>
+        </div>
+
+        <br>
+        <!-- forcing column in new line -->
+        <div class="row blue">
+            <div class="col-6 col-sm-3">.col-6 .col-sm-3</div>
+            <div class="col-6 col-sm-3">.col-6 .col-sm-3</div>
+
+            <!-- Force next columns to break to new line -->
+            <div class="w-100"></div>
+
+            <div class="col-6 col-sm-3">.col-6 .col-sm-3</div>
+            <div class="col-6 col-sm-3">.col-6 .col-sm-3</div>
+        </div>
+    </div>
+
+    <br>
+    <!-- order classes -->
+    <div class="container">
+        <div class="row red">
+            <div class="col">
+                First, but unordered
+            </div>
+            <div class="col order-12">
+                Second, but last
+            </div>
+            <div class="col order-1">
+                Third, but first
+            </div>
+        </div>
+
+        <br>
+        <div class="row blue">
+            <div class="col">
+                1st
+            </div>
+            <div class="col order-last">
+                2nd
+            </div>
+            <div class="col order-first">
+                3rd
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <!-- offset columns -->
+    <div class="container ">
+        <div class="row">
+            <div class="col-md-4 red">.col-md-4</div>
+            <div class="col-md-4 offset-md-4 blue">.col-md-4 .offset-md-4</div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 offset-md-3 red">.col-md-3 .offset-md-3</div>
+            <div class="col-md-3 offset-md-3 blue">.col-md-3 .offset-md-3</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 offset-md-3 red">.col-md-6 .offset-md-3</div>
+        </div>
+    </div>
+
+    <br>
+    <!-- margin utilities -->
+    <div class="container blue">
+        <div class="row">
+            <div class="col-md-4">.col-md-4</div>
+            <div class="col-md-4 ml-auto">.col-md-4 .ml-auto</div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 ml-md-auto">.col-md-3 .ml-md-auto</div>
+            <div class="col-md-3 ml-md-auto">.col-md-3 .ml-md-auto</div>
+        </div>
+        <div class="row">
+            <div class="col-auto mr-auto">.col-auto .mr-auto</div>
+            <div class="col-auto">.col-auto</div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

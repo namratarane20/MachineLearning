@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <style>
+        .size {
+            width: 300px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div id="attr_app">
+        <a v-bind:href="google_link" title="this is google link"> Google  link </a>
+        <br>
+        <!-- class binding -->
+        <img :src="imgLink" :class="{ size : isActive }">
+        <button @click="change"> click </button>
+        <hr><hr><hr><br>
+
+        <!-- input form binding -->
+        <form method="post">
+            <input type="text" placeholder="usename" :value="uname" ><br>
+            <input type="text" placeholder="email" :value="id"><br>
+            <button>submit</button>
+        </form>
+
+        <div v-html="htmlContent">
+
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    new Vue({
+        el : "#attr_app",
+        data : {
+            google_link : "https://www.google.co.in/",
+            imgLink : "akatsuki.jpg",
+            isActive : true,
+            uname : "dwayne wade",
+            id : "dwayne09@gmail.com",
+            htmlContent : "<div>this is paragraph</div>"
+        },
+        methods : {
+            change() {
+                this.isActive = !this.isActive
+            }
+        }
+    })
+</script>

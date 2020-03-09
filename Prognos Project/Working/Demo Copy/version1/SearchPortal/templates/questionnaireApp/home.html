@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Portal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body style="background-color:#e8eced">
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row col-12">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top box">
+            <div class="container-fluid col-12 ">
+                <a href="#" class="navbar-brand">
+                    <img src="https://www.safeguard.com/wp-content/uploads/2014/06/prognos-reversed.png" width="200px"
+                         alt=""
+                         class="d-inline-block align-middle mr-2">
+
+                    <!-- <span class="text-uppercase font-weight-bold">Company</span> -->
+                </a>
+                <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                        class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
+
+
+                <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active"><a href="#" class="nav-link">
+                            <strong  class= "text-warning pt-2"> Welcome {{user.first_name}} &nbsp; &nbsp;</strong>
+                            <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item"><a href="/adminLogin" class="nav-link">
+                            <strong style="color:white"> Index File </strong></a>
+                        </li>
+                        <li class="nav-item"><a href="/account/logout" class="nav-link">
+                            {% if user.is_authenticated %}
+                            <strong style="color:white">Log Out</strong>
+                            {% endif %}
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!--    end of row which contains nav and all nav items-->
+
+    <br><br><br><br><br>
+    <div class="row col-12">
+        <div class="container-fluid ">
+            <form action="searchKeyword" method="POST">
+                {% csrf_token %}
+                <div class="row col-12">
+                    <!--                    <div class="col-2 ">-->
+                    <!--                        <b><a href="default.asp" target="_blank">Tags Lists</a></b> &nbsp &nbsp-->
+                    <!--                        <b><a href="default.asp" target="_blank">Tags Lists</a></b>-->
+                    <!--                    </div>-->
+<!--                    <input id="btnGet" type="button" value="Get Selected"/>-->
+                    <div class=" col-5 offset-3">
+                        <input class="form-control" align="center" type="text" name="keyword" value="{{ keyword }}"
+                               placeholder="Search with keyword">
+                    </div>
+                    <div class="col-1">
+                        <input class="btn btn-secondary" value="Search" type="submit">
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <!--         end of second row which contains serach box and  button-->
+
+
+        <br>
+        <br>
+        <div class="row">
+            <nav>
+                <div class="nav nav-tabs col-12" id="nav-tab" role="tablist">
+                    {% if questionnaireResult %}
+                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab"
+                       href="#nav-home" role="tab" aria-controls="nav-home"
+                       aria-selected="true">Questionaire</a>
+                    {% endif %}
+                    {% if policiesResult %}
+                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
+                       href="#nav-profile" role="tab" aria-controls="nav-profile"
+                       aria-selected="false">Policies</a>
+                    {% endif %}
+                </div>
+            </nav>
+
+            <!--        end of third row which contains tabs like questinnarie and policy tabs-->
+
+            {% if questionnaireResult %}
+
+            <div class="tab-content py-3 px-3 px-sm-0 bg-light" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                     aria-labelledby="nav-home-tab">
+                    <div class="jumbotron tableFixHead table-left-margin table-responsive" style="padding: 0px 0px">
+                        <br>
+
+
+                        <table class="table table-hover " id="Table1">
+                            <thead>
+                            <tr class="d-flex">
+                                <th class="col-1">Tags</th>
+                                <th class="col-1">Most Relevant Responses</th>
+                                <th class="col-1">Vendor Name</th>
+                                <th class="col-1">Section Name</th>
+                                <th class="col-1">Control Name</th>
+                                <th class="col-3">Security Questions</th>
+                                <th class="col-2">Responses</th>
+                                <th class="col-2">Additional Comments</th>
+                            </tr>
+                            </thead>
+                            {% for data in questionnaireResult %}
+                            <tr class="d-flex">
+                                <td class="col-1">
+                                    <br>
+                                    <div id="showmehideme"
+                                         style=" height: 100px; width: 200px;background-color:balck; text-align: center;
+                                          position: relative; border: 2px solid black;display:none">
+                                        <input class="form-control" align="center" type="text" name="keyword"
+                                               placeholder="Add to existing tag">
+
+                                        <input class="form-control" align="center" type="text" name="keyword"
+                                               placeholder="Create new tag">
+                                    </div>
+
+                                    <form action="addToTags" method="POST">
+                                        {% csrf_token %}
+                                        <!--<b><a  onclick="showhide(mydiv)" type="button">Add tag</a></b>-->
+                                        <button type="submit" class="btn btn-primary btn-sm" onclick="showhide(mydiv)"
+                                                value="1" name="tagbtn">
+                                            Add to tags
+                                        </button>
+                                    </form>
+                                </td>
+                                <td class="col-1">
+                                   <input type="checkbox" name="checks" id="1"/>
+                                </td>
+                                <td class="col-1">{{ data.VendorName }}</td>
+                                <td class="col-1">{{ data.SectionName }}</td>
+                                <td class="col-1">{{ data.ControlName }}</td>
+                                <td class="col-3">{{ data.SecurityQuestions }}</td>
+                                <td class="col-2">{{ data.ServiceSolutionResponse }}</td>
+                                <td class="col-2">{{ data.ServiceSolutionComments }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <button type="button" class="btn btn-success-outline float-right btn-lg">Submit
+                    </button>
+                </div>
+                {% endif %}
+
+                {% if policiesResult %}
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel"
+                     aria-labelledby="nav-profile-tab">
+                    <div class="jumbotron tableFixHead table-left-margin" style="padding: 0px 0px">
+                        <br>
+                        <table class="table table-hover table-fixed ">
+                            <thead>
+                            <tr class="d-flex">
+                                <th class="col-2">Policy / Procedure Name</th>
+                                <th class="col-7">Description</th>
+                                <th class="col-3">Policy Link</th>
+                            </tr>
+                            </thead>
+                            {% for data in policiesResult %}
+                            <tr class="d-flex">
+                                <td class="col-2">{{ data.PolicyName }}</td>
+                                <td class="col-7">{{ data.Data }}</td>
+                                <td class="col-3">
+                                    <a href="{{ data.Link }}" target="_blank"> {{ data.Link }} </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</form>
+</div>
+</div>
+</div>
+
+{% endblock %}
+
+</body>
+</html>
+<style>
+    a:hover {
+  text-decoration: underline;
+}
+.table-left-margin {
+  margin-left: 30px;
+}
+
+</style>
+<!--<script>-->
+<!--mydiv = document.getElementById("showmehideme");-->
+
+<!--function showhide(d) {-->
+<!--    d.style.display = (d.style.display == "none") ? "block" : "none";-->
+<!--}-->
+<!--<script type="text/javascript">-->
+<!--    $(function () {-->
+<!--        //Assign Click event to Button.-->
+<!--        $("#btnGet").click(function () {-->
+<!--            var message = "Vendername  Sectionname\n Control name\n";-->
+
+<!--            //Loop through all checked CheckBoxes in GridView.-->
+<!--            $("#Table1 input[type=checkbox]:checked").each(function () {-->
+<!--                var row = $(this).closest("tr")[0];-->
+<!--&lt;!&ndash;             -->
+<!--                message += "   " + row.cells[2].innerHTML;-->
+<!--                message += "   " + row.cells[3].innerHTML;-->
+<!--                message += "   " + row.cells[4].innerHTML;-->
+<!--                message += "   " + row.cells[5].innerHTML;-->
+<!--                message += "   " + row.cells[6].innerHTML;-->
+<!--                message += "   " + row.cells[7].innerHTML;-->
+<!--&lt;!&ndash;-->
+<!--            });-->
+
+<!--            //Display selected Row data in Alert Box.-->
+<!--            alert(message);-->
+
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+
+

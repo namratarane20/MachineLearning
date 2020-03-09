@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>second page</h1>
+
+{% if n %}
+ {{ n }}
+{% endif %}
+
+{% if d1 %}
+    {{ d1 }}
+{% endif %}
+
+{% if first %}
+{% for d in data%}
+<a href="{{name}}/{{d}}">{{ d }}</a>
+{% endfor %}
+
+{% else %}
+{% for d in data%}
+<a href="{{d}}">{{ d }}</a>
+{% endfor %}
+
+{% endif %}
+
+<a type="button" href="{{ request.META.HTTP_REFERER }}">Referring page</a>
+</body>
+</html>

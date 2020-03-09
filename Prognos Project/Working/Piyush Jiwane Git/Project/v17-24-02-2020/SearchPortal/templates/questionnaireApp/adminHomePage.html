@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Portal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link src="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+</head>
+<body style="background-color:#040230">
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row col-12">
+        <nav class="navbar navbar-expand-md fixed-top"
+             style="background-color:#040230;border-bottom:solid #2c345e 1px;">
+            <div class="container-fluid col-12 ">
+                <a href="/toHomePage" class="navbar-brand">
+                    <img src="{% static 'images/prognoshealth.png' %}" style="width:200px;"
+                         alt=""
+                         class="d-inline-block align-middle mr-2">
+
+                    <!-- <span class="text-uppercase font-weight-bold">Company</span> -->
+                </a>
+                <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                        class="navbar-toggler custom-toggler">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+
+                <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active"><a href="#" class="nav-link">
+                            <strong class="text-warning pt-2"> Welcome {{user.first_name}} </strong>
+                            <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                               aria-expanded="false">
+                                <strong style="color:white"> Upload File </strong>
+                            </a>
+                            <div class="dropdown-menu dropdown-content dropdown-menu-right">
+                                <a class="dropdown-item" href="/uploadNewQuestionnaire">New Questionnaire</a>
+                                <a class="dropdown-item" href="/uploadFile">Final Filled Questionnaire</a>
+                            </div>
+                        </li>
+                        <li class="nav-item"><a href="/report" class="nav-link">
+                            <strong style="color:white"> Report </strong></a>
+                        </li>
+                        <li class="nav-item"><a href="/account/logout" class="nav-link">
+                            {% if user.is_authenticated %}
+                            <strong style="color:white">Log Out</strong>
+                            {% endif %}
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <br><br><br><br><br>
+
+    <div class="row col-12" style="margin-right: -15px;">
+        <nav style="width: 100%;">
+            <div class="nav nav-tabs horizontalScrollBar" style="display: -webkit-box; overflow-x: scroll; flex-wrap: unset; border-bottom:0px; margin-bottom: -1.2rem;" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="all-tab" data-toggle="tab" href="#all" role="tab">All</a>
+                {% for vendorName, data in vendorNameDictionary.items %}
+                <a class="nav-item nav-link" id="{{vendorName}}-tab" data-toggle="tab" href="#{{data.link}}" role="tab">{{vendorName}} ({{data.counter}})</a>
+                {% endfor %}
+            </div>
+        </nav>
+    </div>
+
+    <div class="tab-content" id="nav-tabContent" style="background:white; padding-top: 1rem;">
+        <div class="tab-pane show active" id="all">
+            <div class="jumbotron" style="padding: 0px 0px; margin-bottom: 0rem; background: white;">
+                <div class="tbl-header">
+                    <table class="table-hover" cellpadding="0" cellspacing="0" border="1">
+                        <thead>
+                        <tr class="d-flex">
+                            <th class="col-2">Vendor</th>
+                            <th class="col-3">Summary</th>
+                            <th class="col-1">Received Date</th>
+                            <th class="col-1">Submitted Date</th>
+                            <th class="col-2">Documents</th>
+                            <th class="col-3">Related Communication</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="tbl-content">
+                    <table class="table-hover" cellpadding="0" cellspacing="0" border="1">
+                        <tbody>
+                        {% for data in adminDbDataList %}
+                        {% if data.status == 0 %}
+                        <tr class="d-flex">
+                            <td class="col-2">
+                                <a href="fillQuestionnaire/{{data.clientId}}?name=new" style="color:black;">
+                                    {{data.vendorName}}
+                                </a>
+                                <span class="blink">new</span>
+                                        <style>
+                                           .blink {
+                                            animation: blinker 1.4s linear infinite;
+                                            color: red;
+                                            font-family: sans-serif;
+                                            }
+                                             @keyframes blinker {
+                                            50% { opacity: 0; }
+                                            }
+                                      </style>
+                            </td>
+                            <td class="col-3">
+                                {% if data.summary %}
+                                {{data.summary}}
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                            <td class="col-1">
+                                {% if data.receivedDate %}
+                                {{data.receivedDate}}
+                                {% else %}
+                                &nbsp;;
+                                {% endif %}
+                            </td>
+                            <td class="col-1">
+                                {% if data.submittedDate %}
+                                {{data.submittedDate}}
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                            <td class="col-2">
+                                {% if data.documentLink %}
+                                <a href="{{data.documentLink}}" target="_blank">{{data.documentLink}}</a>
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                            <td class="col-3">
+                                {% if data.relatedCommunication %}
+                                {{data.relatedCommunication}}
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr class="d-flex">
+                            <td class="col-2">
+                                <a href="fillQuestionnaire/{{data.clientId}}?name=final" style="color:black;">
+                                    {{data.vendorName}}
+                                </a>
+                            </td>
+                            <td class="col-3">
+                                {% if data.summary %}
+                                {{data.summary}}
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                            <td class="col-1">
+                                {% if data.receivedDate %}
+                                {{data.receivedDate}}
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                            <td class="col-1">
+                                {% if data.submittedDate %}
+                                {{data.submittedDate}}
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                            <td class="col-2">
+                                {% if data.documentLink %}
+                                <a href="{{data.documentLink}}" target="_blank">{{data.documentLink}}</a>
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                            <td class="col-3">
+                                {% if data.relatedCommunication %}
+                                {{data.relatedCommunication}}
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!--                </table>-->
+            </div>
+        </div>
+
+        {% for vendorName, data in vendorNameDictionary.items %}
+        <div id="{{data.link}}" class="tab-pane">
+            <div class="jumbotron " style="padding: 0px 0px; margin-bottom: 0rem; background: white;">
+                <div class="tbl-header">
+                    <table class="table-hover" cellpadding="0" cellspacing="0" border="1">
+                        <thead>
+                        <tr class="d-flex">
+                            <th class="col-2">Vendor</th>
+                            <th class="col-3">Summary</th>
+                            <th class="col-1">Received Date</th>
+                            <th class="col-1">Submitted Date</th>
+                            <th class="col-2">Documents</th>
+                            <th class="col-3">Related Communication</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="tbl-content">
+                    <table class="table-hover" cellpadding="0" cellspacing="0" border="1">
+                        <tbody>
+                        {% for completeData in data.vendorData %}
+                        {% if completeData.status == 0 %}
+                        <tr class="d-flex">
+                            <td class="col-2">
+                                <a href="fillQuestionnaire/{{completeData.clientId}}?name=new" style="color:black;">
+                                    {{completeData.vendorName}}
+                                </a>
+                                <span class="blink">new</span>
+                                <style>
+                                    .blink {
+                                    animation: blinker 0.6s linear infinite;
+                                    color: red;
+                                    font-family: sans-serif;
+                                    }
+                                     @keyframes blinker {
+                                    50% { opacity: 0; }
+                                    }
+                                </style>
+                            </td>
+                            <td class="col-3">
+                                {% if completeData.summary %}
+                                {{completeData.summary}}
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                            <td class="col-1">
+                                {% if completeData.receivedDate %}
+                                {{completeData.receivedDate}}
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                            <td class="col-1">
+                                {% if completeData.submittedDate %}
+                                {{completeData.submittedDate}}
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                            <td class="col-2">
+                                {% if completeData.documentLink %}
+                                <a href="{{completeData.documentLink}}" target="_blank">{{completeData.documentLink}}</a>
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                            <td class="col-3">
+                                {% if completeData.relatedCommunication %}
+                                {{completeData.relatedCommunication}}
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr class="d-flex">
+                            <td class="col-2">
+                                <a href="fillQuestionnaire/{{completeData.clientId}}?name=final" style="color:black;">
+                                    {{completeData.vendorName}}
+                                </a>
+                            </td>
+                            <td class="col-3">
+                                {% if completeData.summary %}
+                                {{completeData.summary}}
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                            <td class="col-1">
+                                {% if completeData.receivedDate %}
+                                {{completeData.receivedDate}}
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                            <td class="col-1">
+                                {% if completeData.submittedDate %}
+                                {{completeData.submittedDate}}
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                            <td class="col-2">
+                                {% if completeData.documentLink %}
+                                {{completeData.submittedDate}}
+                                <a href="{{completeData.documentLink}}" target="_blank"> {{completeData.documentLink}} </a>
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                            <td class="col-3">
+                                {% if completeData.relatedCommunication %}
+                                {{completeData.relatedCommunication}}
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% endblock %}
+</div>
+</body>
+</html>
+
+<style>
+table{
+  width:100%;
+  table-layout: fixed;
+}
+.tbl-header{
+  background-color: #ccccff;
+ }
+.tbl-content{
+  max-height:400px;
+  overflow-x:auto;
+  margin-top: 0px;
+  overflow-y: auto;
+}
+.tbl-header th{
+  text-align: center;
+  font-size: 17px;
+  word-break: break-word;
+  padding: 5px;
+}
+.tbl-content td {
+  padding: 8px 3px;
+  text-align: left;
+  vertical-align:middle;
+  word-break: break-word;
+  background: #EBECED;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+.custom-toggler {
+border-color: white;
+}
+.custom-toggler .navbar-toggler-icon {
+   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+ }
+</style>

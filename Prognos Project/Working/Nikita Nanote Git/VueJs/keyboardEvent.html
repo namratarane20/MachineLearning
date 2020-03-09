@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+      <input type="text" placeholder="Key press.." @keypress="keyPressFun"> 
+      <input type="text" placeholder="Key up" @keyup="keyUpFun">
+      <input type="text" placeholder="key down.." @keydown="keyDownFun">
+  </div>  
+<script>
+new Vue({
+      el:'#app',
+      data:{
+
+      },
+      methods:{
+          keyPressFun:function(event){
+              console.log(event.key)
+          },
+      
+      keyUpFun:function(){
+          console.log("key up...")
+      },
+      keyDownFun:function(event){
+          console.log(event)
+      }
+      }
+  })
+</script>
+  
+</body>
+</html>

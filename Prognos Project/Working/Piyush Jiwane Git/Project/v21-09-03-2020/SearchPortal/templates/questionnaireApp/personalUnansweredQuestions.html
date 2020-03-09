@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Portal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link src="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata:700">
+
+</head>
+<body style="background-color:#040230">
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row col-12">
+        <nav class="navbar navbar-expand-md fixed-top"
+             style="background-color:#040230;border-bottom:solid #2c345e 1px;">
+            <div class="container-fluid col-12 ">
+                <a href="/toHomePage" class="navbar-brand">
+                    <img src="{% static 'images/prognoshealth.png' %}" style="width:200px;"
+                         alt=""
+                         class="d-inline-block align-middle mr-2">
+                </a>
+
+                <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active"><a href="#" class="nav-link">
+                            <strong class="text-warning pt-2"> Welcome {{user.first_name}} </strong>
+                            <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/account/logout" class="nav-link">
+                                {% if user.is_authenticated %}
+                                <strong style="color:white">Log Out</strong>
+                                {% endif %}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <br><br><br><br><br>
+
+    <div>
+        <div class="row">
+            <div class="col-12">
+                <!--            vendors list button and preview button-->
+
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist" style="margin-top: 1%">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#myUnansweredQuestions">My Unanswered
+                            Questions</a>
+                    </li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content" style="background-color: white; ">
+                    <!--                personal unanswered questions-->
+                    <!--                to display unanswered questions-->
+                    <div id="myUnansweredQuestions" class="tab-pane active">
+                        <br>
+                        <div class="jumbotron" style="padding: 0%">
+                            <div class="row">
+                                <div class="col-12">
+                                    <table border="1" width="100%">
+                                        <thead>
+                                        <tr class="d-flex">
+                                            <td class="col-1"><strong>Assigned To</strong></td>
+                                            <td class="col-4" style="text-align: center"><strong>Question</strong></td>
+                                            <td class="col-3" style="text-align: center"><strong>Response</strong></td>
+                                            <td class="col-3" style="text-align: center"><strong>Additional
+                                                Comment</strong>
+                                            </td>
+                                            <td class="col-1" style="text-align: center"><strong>Save</strong></td>
+                                        </tr>
+                                        </thead>
+                                        {% for que in question_user_dict.values %}
+                                        <tr class="d-flex">
+                                            <td class="col-1" style="padding: 8px">{{que.assignTo}}</td>
+                                            <td class="col-4" style="padding: 8px"><a style="color: black"
+                                                                                      href="{{question.queNo}}">{{que.question}}</a>
+                                            </td>
+                                            <td class="col-3" style="padding: 8px" contenteditable="true">
+                                                {{ que.response }}
+                                            </td>
+                                            <td class="col-3" contenteditable="true" style="padding: 8px">
+                                                {{ ques.comment }}
+                                            </td>
+                                            <td class="col-1">
+                                                <button class="btn btn-primary">Save</button>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $('#searchResultTable td').dblclick(function(){
+                col = $(this).parent().children().index($(this));
+                var text = $(this).html()
+                if (col == 3) {
+                    document.getElementById('responseArea').value = text
+                } else if(col == 4) {
+                    document.getElementById('commentArea').value = text
+                }
+            });
+
+
+
+        </script>
+    </div>
+</div>
+{% endblock %}
+
+</body>
+</html>
+
+<!--style for sidenav-->
+<style>
+ .sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 100px;
+  left: 0;
+  background-color: white;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+.sidenav a:hover {
+  color: black;
+}
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+table{
+  width:100%;
+  table-layout: fixed;
+}
+.tbl-header{
+  background-color: #ccccff;
+ }
+.tbl-content{
+  height:360px;
+  overflow-x:auto;
+  margin-top: 0px;
+  overflow-y: auto;
+}
+th{
+  text-align: center;
+  font-size: 17px;
+  padding: 8px;
+}
+.tbl-content td{
+  text-align: left;
+  vertical-align:middle;
+  padding: 3px 8px;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
+<!--search bar-->
+
+
+
+</style>

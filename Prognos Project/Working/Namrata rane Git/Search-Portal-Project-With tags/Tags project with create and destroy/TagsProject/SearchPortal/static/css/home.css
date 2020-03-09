@@ -1,0 +1,35 @@
+.tableFixHead {
+  overflow-y: auto;
+  height: 50%;
+    border: 2px solid;
+}
+
+.tableFixHead table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.tableFixHead th,
+.tableFixHead td {
+  padding: 5px 8px;
+    word-break: break-word;
+    border: 1px solid;
+}
+
+.tableFixHead th {
+  position: sticky;
+  top: 0;
+  background: #ccccff;
+}
+
+.textColor {
+    color: white;
+    font-style: oblique;
+    font-size: 25px;
+}
+
+ .box {
+    box-shadow: 0px 10px 10px grey;
+ }
+
+

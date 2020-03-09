@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+ <div id="app1">
+     <owt></owt>
+ </div>   
+ <div id="app2">
+     <owt></owt>
+ </div>
+ <script>
+     var data={
+        name:'online web tutorial',
+             author:'nikita'
+     }
+ Vue.component("owt",{
+     template:"<div><p>This is the online web tutorial Channel name : {{ name }} author name : {{ author }}</p><p>method name : {{ method1() }}</p><p>computed method : {{ method2 }}</p><button @click='clicking'>click me</button></div>",
+     data:function(){
+        //  return{
+        //      name:'online web tutorial',
+        //      author:'nikita'
+        //  }
+        return data
+     },
+     methods:{
+        method1:function(){
+            return "This is my method"
+        },
+        clicking:function(){
+            return this.author='niki'
+        }
+     },
+     computed:{
+         method2:function(){
+             return "This is my computed method"
+         }
+     }
+ })
+ var instance1 = new Vue({
+     el:'#app1',
+     data:{
+
+     },
+     methods:{
+
+     }
+ })
+ var instance2 = new Vue({
+     el:'#app2',
+     data:{
+
+     },methods:{
+         
+     }
+ })
+ </script>
+</body>
+</html>

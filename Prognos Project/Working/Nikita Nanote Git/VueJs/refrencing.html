@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+      Name : <input type="text" placeholder="Name" ref="textName">
+      Email : <input type="text" placeholder="mail-id" ref="mailId">
+      <button type="button" @click="submitButton">Submit</button>
+      <p ref="para">This is simple paragraph</p>
+  </div>  
+  <script>
+  new Vue({
+      el:'#app',
+      data:{
+
+      },
+      methods:{
+        submitButton:function(){
+            console.log("Name :"+this.$refs.textName.value),
+            console.log("Email-Id :"+this.$refs.mailId.value),
+            console.log("Paragraph : "+this.$refs.para.innerHTML)
+        }
+      }
+  })
+  </script>
+</body>
+</html>

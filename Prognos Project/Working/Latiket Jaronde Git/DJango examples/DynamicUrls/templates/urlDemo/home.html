@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <style>
+        input::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+    </style>
+</head>
+<body>
+<h1>welcome to home page</h1>
+
+{% if name %}
+<h1>{{ msg }} {{ name }} </h1>
+{% endif %}
+
+{% if number %}
+<h1>{{ msg }} {{ number }} </h1>
+{% endif %}
+
+<input type="hidden" value="{{name}}" id="nameid">
+
+<br><br>
+<form action="latiket" method="post" id="rec">
+    {% csrf_token %}
+    choose : <input list="browsers" name="myBrowser" id="myid"/>
+    <datalist id="browsers">
+        <div class="row" style="width: 100%">
+            <option value="N/A" class="col-4">
+            <option value="Chrome" class="col-4">
+            <option value="Firefox" class="col-4">
+        </div>
+
+        <option value="Internet Explorer">
+        <option value="Opera">
+        <option value="Safari">
+        <option value="Microsoft Edge">
+    </datalist>
+    <input type="text" id="comment">
+</form>
+
+{% if data %}
+{% for d in data%}
+<a id="" href="">{{ d }}</a><br>
+{% endfor %}
+{% endif %}
+
+<input type="text" value="{{data}}" id="stringid">
+<input type="file" id="fileid" multiple>
+
+<button onclick="myfun()">submit</button>
+
+<br><br>
+<script>
+    function myfun() {
+        var txt = document.getElementById("myid").value;
+        var comment = document.getElementById("comment").value;
+        console.log("name : ", document.getElementById("nameid").value)
+        console.log(typeof document.getElementById('stringid').value)
+        var x = document.getElementById('stringid').value 
+        console.log(x.includes('latiket'))  // check if particular word exists inn string
+        var f = document.getElementById('fileid').value.replace(/.*[\/\\]/, '')  // get file name by replacing extra things from choosen file name
+        var ff = f.replace(/.*[\/\\]/, '')
+        console.log("file name : " + f)
+        if (txt == 'N/A') {
+            console.log('N?A')
+            if (comment == ""){
+                alert('additional comment can not be empty for na')
+            }
+            else {
+                document.getElementById("rec").submit();
+            }
+        }
+        else {
+            console.log(txt)
+            document.getElementById("rec").submit();
+        }
+    }
+<!--    $('#myid').click(function(){-->
+<!--    var text = $(this).html()-->
+<!--    console.log(text)-->
+<!--     document.location.href = text-->
+<!--    })-->
+
+
+</script>
+<textarea></textarea>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/autosize.js/3.0.15/autosize.min.js'></script>
+<script>
+<!--    // Automatically size all of your <textarea> elements as you type-->
+    autosize(document.querySelectorAll('textarea'));
+
+
+
+
+
+</script>
+
+<br><br>
+
+<textarea name="" id="first" cols="30" rows="2"></textarea>
+<textarea name="" id="second" cols="30" rows="2"></textarea>
+<textarea name="" id="third" cols="30" rows="2"></textarea>
+
+<div>
+    <table id="mytable">
+        {% for l1 in l %}
+        <tr>
+            <td>{{ l1.a }}</td>
+            <td>{{ l1.b }}</td>
+            <td>{{ l1.c }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<br><br>
+<h3>no selectable</h3>
+<div>
+    <table>
+        {% for l1 in l %}
+        <tr>
+            <td>{{ l1.a }}</td>
+            <td>{{ l1.b }}</td>
+            <td>{{ l1.c }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<script>
+$('#mytable td').dblclick(function(){
+    col = $(this).parent().children().index($(this)) + 1;
+    var text = $(this).html()
+    if (col == 1) {
+        document.getElementById('first').value = text
+    } else if(col == 2) {
+        document.getElementById('second').value = text
+    } else {
+        document.getElementById('third').value = text
+    }
+});
+
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>
+          Counter : {{ counter }}
+        </p>
+        <button name="btn1" type="button" @click.once="increment">Click</button>
+        <a href="www.google.com" @click.prevent>google</a>
+        <form class="" action="#" method="post">
+            <button type="button" name="button" @click.prevent>submit</button>
+        </form>
+        <div id="parent" @click="submitClick">
+            <button id="child" type="button" @click.stop="submitClick">submitClick</button> 
+        </div>
+        <div class="parent-class" @click.capture="parentClass">
+            <button type="button" name="button" @click="btnClick">click me again</button>
+        </div>
+    </div>
+    <script>
+    new Vue({
+        el:'#app',
+        data:{
+counter : 0
+        },
+        methods:{
+            increment:function(){
+           this.counter++     
+            },
+            submitClick:function(){
+                console.log("clicking")
+            },
+            btnClick:function(){
+                console.log("btn click...")
+            },parentClass:function(){
+                console.log("parent class")
+            }
+        }
+    })
+    </script>
+</body>
+</html>

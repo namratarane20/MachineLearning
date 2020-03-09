@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Portal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/uploadFile.css' %}">
+</head>
+<body style="background-color:#e8eced">
+
+{% block content %}
+<div>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark" style="height: 80px">
+
+        <!--         Prognos Logo on left side of navbar-->
+        <div class="navbar-collapse">
+            <a href="/toHomePage">
+                <img src="https://www.safeguard.com/wp-content/uploads/2014/06/prognos-reversed.png" width="200px"
+                     alt="" class="d-inline-block align-middle mr-2">
+            </a>
+        </div>
+
+        <div class="navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/account/logout">
+                        <strong style="color:white">Log out</strong>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+{% if messages %}
+        {% for message in messages %}
+         {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+        {% endfor %}
+{% endif %}
+
+<div class="card-deck">
+    <div class="card card-details" style="margin-left:120px;margin-right:80px;">
+        <div class="card-header">
+            <h3><strong> Upload Questionnaire File </strong></h3>
+        </div>
+        <div class="card-body">
+            <form action="indexQuestionnaireFile" method="POST" enctype="multipart/form-data" style="margin-left: 20px">
+                {% csrf_token %}
+                <input type="file" name="questionnaireFile" multiple> <br><br>
+                <input type="submit" class="btn float-center submit_btn">
+            </form>
+        </div>
+    </div>
+
+    <div class="card card-details" style="margin-right:120px; margin-left:80px;">
+        <div class="card-header">
+            <h3><strong> Upload Policies File </strong></h3>
+        </div>
+        <div class="card-body">
+            <form action="indexPoliciesFile" method="POST" enctype="multipart/form-data" style="margin-left: 20px">
+                {% csrf_token %}
+                <input type="file" name="policyFile"> <br><br>
+                <input type="url" name="link" placeholder="enter Url"> <br><br>
+                <input type="submit" value="Submit" class="btn float-center submit_btn">
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--    <div class="row" style="margin-top: 10%">-->
+<!--        <div class="col-5 offset-1 d-flex">-->
+<!--            <div class="card" style="height: 270px; background-color: rgba(50,50,50,0.5) !important;">-->
+<!--                <div class="card-header">-->
+<!--                    <h3>Upload Questionnaire File</h3>-->
+<!--                </div>-->
+<!--                <div class="card-body">-->
+<!--                    <form action="indexfile" method="POST" enctype="multipart/form-data">-->
+<!--                        {% csrf_token %}-->
+<!--                        <input type="file" name="csvfile" multiple>-->
+<!--                        <input type="submit" style="margin-top: 10px">-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="row" style="margin-top: 10%">-->
+<!--        <div class="col-5 offset-1 d-flex">-->
+<!--            <div class="card" style="height: 270px; background-color: rgba(50,50,50,0.5) !important;">-->
+<!--                <div class="card-header">-->
+<!--                    <h3>Upload Policies File</h3>-->
+<!--                </div>-->
+<!--                <div class="card-body">-->
+<!--                    <form action="indexfile" method="POST" enctype="multipart/form-data">-->
+<!--                        {% csrf_token %}-->
+<!--                        <input type="file" name="csvfile" multiple>-->
+<!--                        <input type="submit" style="margin-top: 10px">-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+</div>
+
+
+{% endblock %}
+
+</body>
+</html>

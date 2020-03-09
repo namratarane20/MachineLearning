@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Search Portal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link src="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link src="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+</head>
+
+<body style="background-color:#040230;">
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row col-12">
+        <nav class="navbar navbar-expand-md fixed-top "
+             style="background-color:#040230;border-bottom:solid #2c345e 1px;">
+            <div class="container-fluid col-12 ">
+                <a class="navbar-brand">
+                    <img src="{% static 'images/prognoshealth.png' %}" style="width:200px;" alt=""
+                         class="d-inline-block align-middle mr-2">
+
+                    <!-- <span class="text-uppercase font-weight-bold">Company</span> -->
+                </a>
+                <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                        class="navbar-toggler custom-toggler">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+
+                <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active"><a href="#" class="nav-link">
+                            <strong class="text-warning pt-2"> Welcome {{user.first_name}} &nbsp;
+                                &nbsp;</strong>
+                            <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item"><a href="/adminLogin" class="nav-link">
+                            <strong style="color:white"> Upload File </strong></a>
+                        </li>
+                        <li class="nav-item"><a href="/account/logout" class="nav-link">
+                            {% if user.is_authenticated %}
+                            <strong style="color:white">Log Out</strong>
+                            {% endif %}
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!--    end of row which contains nav and all nav items-->
+
+
+    <br><br><br><br>
+
+    <div class="row" style="width: 100%;">
+        <div class="sidebar" style="width: 14.5%; padding: 0em 1em;">
+            <nav>
+                <ul style="word-break: break-word; padding-left: 0%;">
+                    <li class="active"><a href="#" data-toggle="modal" data-target="#exampleModalCenter">Tags</a></li>
+                    <hr>
+                    <li><a href="#" data-toggle="modal" data-target="#favouriteModel">Best Responses</a></li>
+                    <hr>
+                    <li><a href="#" data-toggle="modal" data-target="#recentModel">Recent Search</a></li>
+                    <hr>
+                    <li><a href="#" data-toggle="modal" data-target="#popularModel">Popular Keywords</a></li>
+                    <hr>
+                </ul>
+            </nav>
+            <style>
+                .sidebar {
+                    width: 100%;
+                    height: 100%;
+                    position: relative;
+                    height: 100vh;
+                    background: #312450;
+                    font-size: 0.85em;
+                }
+                .sidebar nav {
+                  position: relative;
+                  text-align: right;
+                  top: 40%;
+                  transform: translateY(-50%);
+                  font-weight: bold;
+                }
+                .sidebar nav ul {
+                  list-style: none;
+                 }
+                .sidebar nav ul li {
+                    position: relative;
+                }
+                .sidebar nav ul hr {
+                background-image: linear-gradient(to right, #5e42a6, #b74e91);
+                height: 0.2em;
+                margin-bottom: 4em;
+                }
+
+                .sidebar nav ul li a {
+                  text-transform: uppercase;
+                  text-decoration: none;
+                  letter-spacing: 0.1em;
+                  display: block;
+                  transition: all ease-out 300ms;
+                }
+
+                .sidebar nav ul li a:hover {
+                  text-transform: uppercase;
+                  text-decoration: none;
+                  letter-spacing: 0.1em;
+                  color: white;
+                  display: block;
+                  transition: all ease-out 300ms;
+                }
+            </style>
+        </div>
+
+        <div style="width:84%; margin-top: 2%; margin-left: 1.5%; position: relative;">
+            <form action="/searchKeyword" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-12">
+                        <div class="offset-xl-3 col-xl-6 offset-lg-3 col-lg-6 offset-md-2 col-md-8 offset-sm-1 col-sm-10 offset-xs-1 col-xs-10 form-group has-search resultitem">
+                            <span class="fa fa-search form-control-feedback"></span>
+                            <input class="form-control" align="center" type="text" name="keyword"
+                                   style="border-radius:20px;height:40px;" value="{{ keyword }}"
+                                   placeholder="Search with keyword" ondblclick="dbclick()" id="keyword"
+                                   autocomplete="off"/>
+                            <table id="searchResultTable" style="display: none;margin-left:50px;opacity:0.9;"
+                                   class="mt-1">
+
+                                {% if messages %}
+                                {% for message in messages %}
+                                {% if message.tags %}
+                                <script>alert("{{ message }}")</script>
+                                {% endif %}
+                                {% endfor %}
+                                {% endif %}
+
+                                <tr style="background-color: white; border-radius: 10px;padding:4px" class="row">
+                                    <td onclick="singleClick()">
+                                        <div style="border:1px solid black;border-radius:15px;padding-right:7px;padding-left:7px;background-color:#D3D9F9 ">Questionnaire</div>
+                                    </td>
+                                    <td onclick="singleClick()">
+                                        <div style="border:1px solid black;border-radius:15px;padding-right:7px;padding-left:7px;background-color:#D3D9F9 ">Policies</div>
+                                    </td>
+                                    <td onclick="singleClick()">
+                                        <div style="border:1px solid black;border-radius:15px;padding-right:7px;padding-left:7px;background-color:#D3D9F9 ">Tags</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <style>
+                                    .has-search .form-control {
+                                        padding-left: 2.375rem;
+                                    }
+
+                                    .has-search .form-control-feedback {
+                                        position: absolute;
+                                        z-index: 2;
+                                        display: block;
+                                        width: 2.375rem;
+                                        height: 2.375rem;
+                                        line-height: 2.375rem;
+                                        text-align: center;
+                                        pointer-events: none;
+                                        color: #aaa;
+                                    }
+                        </style>
+
+                        <script type="text/javascript">
+                                    function dbclick() {
+                                        document.getElementById('searchResultTable').style.display = 'block'
+                                    }
+                        </script>
+                        <script type="text/javascript">
+                                    function singleClick() {
+                                        document.getElementById('searchResultTable').style.display = 'none'
+                                    }
+                        </script>
+                        <script>
+                                    $('#searchResultTable td div').click(function () {
+                                        col = "in@".concat($(this).html())
+                                        colVal = col.concat(":- ")
+
+                                        document.getElementById('keyword').value = colVal
+                                    });
+                        </script>
+                    </div>
+                </div>
+            </form>
+            <!-- Modal for Tags-->
+            <div class="modal fade bd-example-modal-lg" id="exampleModalCenter" tabindex="-1"
+                 role="dialog"
+                 data-target=".bd-example-modal-lg" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle"><b>Tags </b></h5>
+
+                            {% if imgUsrDict %}
+                                    <ul class="nav nav-tabs" id="myTabT" role="tablist">
+                                        <li>
+                                            <div class="active" id="home-tabT" data-toggle="tab"
+                                                 href="#homeT" role="tab" aria-controls="homeT" aria-selected="true"
+                                                 style="width:40px;height:40px;background-color:black;border-radius: 20px;">
+                                                <a style="width: 40px;height: 40px;display: table-cell;vertical-align:middle;text-align:center;color:white;font-weight:600">All</a>
+                                            </div>
+                                        </li>
+
+
+                                        {% for key,val in imgUsrDict.items %}
+                                        <li>
+                                            <div title="{{key}}" id="{{val.alias}}-tabT"
+                                                 data-toggle="tab" href="#{{val.alias}}" role="tab"
+                                                 aria-controls="{{val.alias}}" aria-selected="true"
+                                                 style="width:40px;height:40px;background-color:{{val.colorCode}};border-radius: 20px;">
+                                                <a style="width: 40px;height: 40px;display: table-cell;vertical-align:middle;text-align:center;color:white;font-weight:600">{{val.alias}}</a>
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif%}
+
+                            <form>
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="offset-2 col-10 form-group has-search resultitem">
+                                            <span class="fa fa-search form-control-feedback"></span>
+                                        <input class="form-control form-control-sm" type="text"
+                                               id="myInputT" onkeyup="myFunctionT()"
+                                               placeholder="Search Your Tag">
+                                    </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-body">
+                            <div class="tab-content" id="myTabContentT">
+                                {% if imgUsrDict %}
+                                        <div class="tab-pane fade show active" id="homeT" role="tabpane"
+                                             aria-labelledby="home-tabT">
+                                            <ul id="myULT" style="display:flex;flex-wrap:wrap;list-style-type:disc">
+
+                                                {% for tagname in tagNameList %}
+                                                <li style="display:inline;">
+                                                    <form action="/tagInfo" method="GET">
+                                                        {% csrf_token %}
+                                                        <button class="btn btn-link cell expand-maximum-on-hover expand-small-on-hover"
+                                                                type="submit" name="tagsData"
+                                                                data-toggle=”button” value="{{ tagname }}"
+                                                                title="{{ tagname }}"
+                                                                style="background-color:transparent;padding:0;margin:0;text-decoration: none;">
+                                                            {{ tagname }}
+                                                        </button>&nbsp; | &nbsp;
+                                                    </form>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+
+                                        </div>
+                                        {% for key,val in imgUsrDict.items %}
+                                        <div class="tab-pane fade" id="{{val.alias}}" role="tabpanel"
+                                             aria-labelledby="{{val.alias}}-tabT">
+                                            <ul id="myULT" style="display:flex;flex-wrap:wrap;list-style:none">
+                                                {% for tagname in val.keyData %}
+                                                <li style="display:inline">
+                                                    <form action="/tagInfo" method="GET">
+                                                        {% csrf_token %}
+                                                        <button class="btn btn-link cell expand-maximum-on-hover expand-small-on-hover"
+                                                                type="submit" name="tagsData"
+                                                                data-toggle=”button” value="{{ tagname }}"
+                                                                title="{{tagname}}"
+                                                                style="background-color:transparent;padding:0;margin:0;text-decoration: none;">
+                                                            {{ tagname }}
+                                                        </button>&nbsp; | &nbsp;
+                                                    </form>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                        {% endfor %}
+                                        {% endif%}
+
+                            </div>
+                        </div>
+                    </div>
+                    <style>
+                                    #myULT {
+                                        list-style-type: none;
+                                        padding: 0;
+                                        margin: 0;
+                                    }
+                                    #myULT li a {
+
+                                        text-decoration: none;
+                                    }
+
+
+
+                    </style>
+                    <script>
+                                    function myFunctionT() {
+                                        var input, filter, ul, li, a, i, txtValue;
+                                        input = document.getElementById("myInputT");
+                                        filter = input.value.toUpperCase();
+                                        ul = document.getElementById("myULT");
+                                        li = ul.getElementsByTagName("li");
+                                        for (i = 0; i < li.length; i++) {
+                                            a = li[i].getElementsByTagName("a")[0];
+                                            txtValue = a.textContent || a.innerText;
+                                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                                li[i].style.display = "inline";
+                                            } else {
+                                                li[i].style.display = "none";
+                                            }
+                                        }
+                                    }
+
+
+
+                    </script>
+                </div>
+            </div>
+            <!-- End Modal for Tags-->
+
+            <!--Model for Best Responses-->
+
+            <div class="modal fade bd-example-modal-lg" id="favouriteModel" tabindex="-1" role="dialog"
+                 data-target=".bd-example-modal-lg" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="favouriteModelLongTitle"><b>Best
+                                Responses</b>
+                            </h5>
+                            {% if globalKeywordList%}
+                                       <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                        <li>
+                                            <div class="active" id="home-tab" data-toggle="tab"
+                                                 href="#home" role="tab" aria-controls="home" aria-selected="true"
+                                                 style="width:40px;height:40px;background-color:black;border-radius: 20px;">
+		                                        <a style="width: 40px;height: 40px;display: table-cell;vertical-align:middle;text-align:center;color:white;font-weight:600">All</a>
+	                                        </div>
+                                        </li>
+
+
+                                        {% for key,value in dict1.items %}
+                                        <li>
+                                            <div title="{{key}}" id="fev-list-{{value.alias}}"
+                                               data-toggle="tab" href="#{{value.alias}}-fev" role="tab"
+                                               aria-controls="{{value.alias}}" aria-selected="true" style="width:40px;height:40px;background-color:{{value.colorCode}};border-radius: 20px;">
+		                                        <a style="width: 40px;height: 40px;display: table-cell;vertical-align:middle;text-align:center;color:white;font-weight:600">{{value.alias}}</a>
+	                                        </div>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                        {% endif%}
+
+                            <form>
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="offset-2 col-10 form-group has-search resultitem">
+    <span class="fa fa-search form-control-feedback"></span>
+                                        <input class="form-control form-control-sm" type="text"
+                                               id="myInput"
+                                               onkeyup="myFunction()"
+                                               placeholder="Search Your Favourite">
+                                    </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-body">
+                            <div class="tab-content" id="myTabContent">
+
+                                {% if globalKeywordList%}
+                                        <div class="tab-pane fade show active" id="home" role="tabpanel"
+                                             aria-labelledby="home-tab">
+                                            <ul id="myUL" style="display:flex;flex-wrap:wrap;list-style-type:disc">
+
+                                                {% for tagname in globalKeywordList%}
+                                                <li style="display:inline;">
+                                                        <form action="/recentSearchKeyword" method="POST">
+                                                            {% csrf_token %}
+                                                            <button class="btn btn-link cell expand-maximum-on-hover expand-small-on-hover" type="submit" name="mostRelevant"
+                                                                    data-toggle=”button” value="{{ tagname }}" title="{{ tagname }}"
+                                                                    style="background-color:transparent;padding:0;margin:0;text-decoration: none;">
+                                                                {{ tagname }}
+                                                            </button>&nbsp; | &nbsp;
+                                                        </form>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                        <style>
+                                            .cell {
+                                                max-width: 50px;
+                                                /* tweak me please */
+                                                white-space: nowrap;
+                                                overflow: hidden;
+                                            }
+
+                                            .expand-small-on-hover{
+                                                max-width: 150px;
+                                                text-overflow: ellipsis;
+                                            }
+
+
+                                        </style>
+                                        {% for key,value in dict1.items %}
+                                        <div class="tab-pane fade" id="{{value.alias}}-fev" role="tabpanel">
+                                            <ul id="myUL" style="display:flex;flex-wrap:wrap;list-style:none">
+                                                {% for tagname in value.keyData %}
+                                                <li style="display:inline">
+                                                    <form action="/recentSearchKeyword" method="POST">
+                                                        {% csrf_token %}
+                                                        <button class="btn btn-link cell expand-maximum-on-hover expand-small-on-hover" type="submit" name="mostRelevant"
+                                                                data-toggle=”button” value="{{ tagname }}" title="{{tagname}}"
+                                                                style="background-color:transparent;padding:0;margin:0;text-decoration: none;">
+                                                            {{ tagname }}
+                                                        </button>&nbsp; | &nbsp;
+                                                    </form>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                        {% endfor %}
+                                        {% endif%}
+
+                            </div>
+                        </div>
+                    </div>
+                    <style>
+                                #myUL {
+                                    list-style-type: none;
+                                    padding: 0;
+                                    margin: 0;
+                                }
+                                #myUL li a {
+
+                                    text-decoration: none;
+                                }
+
+
+
+                    </style>
+                    <script>
+                                function myFunction() {
+                                    var input, filter, ul, li, a, i, txtValue;
+                                    input = document.getElementById("myInput");
+                                    filter = input.value.toUpperCase();
+                                    ul = document.getElementById("myUL");
+                                    li = ul.getElementsByTagName("li");
+                                    for (i = 0; i < li.length; i++) {
+                                        a = li[i].getElementsByTagName("button")[0];
+                                        txtValue = a.textContent || a.innerText;
+                                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                            li[i].style.display = "inline";
+                                        } else {
+                                            li[i].style.display = "none";
+                                        }
+                                    }
+                                }
+
+
+
+                    </script>
+                </div>
+            </div>
+            <!-- End Modal for Best Responses -->
+
+            <!-- Modal for Popular Keywords -->
+            <div class="modal fade bd-example-modal-lg" id="popularModel" tabindex="-1"
+                 role="dialog"
+                 data-target=".bd-example-modal-lg" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="popularModelLongTitle"><b>Popular Keywords</b></h5>
+                            <form>
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="offset-2 col-10 form-group has-search resultitem">
+    <span class="fa fa-search form-control-feedback"></span>
+                                        <input class="form-control form-control-sm" type="text"
+                                               id="myInput2" onkeyup="myFunction2()"
+                                               placeholder="Search Your popular keyword">
+                                    </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-body">
+                            <div class="tab-content" id="myTabContent2">
+                                {% if newSearchTable %}
+                                <div class="tab-pane fade show active" id="home2" role="tabpane"
+                                     aria-labelledby="home-tabT">
+                                    <ul id="myUL2" style="display:flex;flex-wrap:wrap;list-style:none">
+                                        {% for rs in newSearchTable%}
+                                        <li style="display:inline">
+                                            <form action="/recentSearched" method="POST">
+                                                {% csrf_token %}
+                                                <button class="btn btn-link cell expand-maximum-on-hover expand-small-on-hover" title="{{rs.keyword}}" type="submit" name="recentSearchedButton"
+                                                        data-toggle=”button” value="{{ rs.keyword }}"
+                                                        style="background-color:transparent;padding:0;margin:0;text-decoration: none;">
+                                                    {{ rs.keyword }}
+                                                </button>({{rs.count}})&nbsp | &nbsp
+                                            </form>
+                                        </li>
+                                        {% endfor %}
+
+                                    </ul>
+                                </div>
+                                {% endif%}
+                            </div>
+                        </div>
+                    </div>
+                    <style>
+                                    #myUL2 {
+                                        list-style-type: none;
+                                        padding: 0;
+                                        margin: 0;
+                                    }
+                                    #myUL2 li a {
+
+                                        text-decoration: none;
+                                    }
+
+
+
+                    </style>
+                    <script>
+                                    function myFunction2() {
+                                        var input, filter, ul, li, a, i, txtValue;
+                                    input = document.getElementById("myInput2");
+                                    filter = input.value.toUpperCase();
+                                    ul = document.getElementById("myUL2");
+                                    li = ul.getElementsByTagName("li");
+                                    for (i = 0; i < li.length; i++) {
+                                        a = li[i].getElementsByTagName("button")[0];
+                                        txtValue = a.textContent || a.innerText;
+                                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                            li[i].style.display = "inline";
+                                        } else {
+                                            li[i].style.display = "none";
+                                        }
+                                    }
+                                    }
+
+
+
+                    </script>
+                </div>
+            </div>
+            <!--<End Model for Popular Keywords-->
+            <!--<Model for Recent Search-->
+            <div class="modal fade bd-example-modal-lg" id="recentModel" tabindex="-1"
+                 role="dialog"
+                 data-target=".bd-example-modal-lg" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="recentModelLongTitle"><b>Recent Search </b></h5>
+                            <form>
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="offset-2 col-10 form-group has-search resultitem">
+    <span class="fa fa-search form-control-feedback"></span>
+                                        <input class="form-control form-control-sm" type="text"
+                                               id="myInput3" onkeyup="myFunction3()"
+                                               placeholder="Search Your popular keyword">
+                                    </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-body">
+                            <div class="tab-content" id="myTabContent3">
+
+                                {% if order %}
+                                <div class="tab-pane fade show active" id="home3" role="tabpane"
+                                     aria-labelledby="home-tabT">
+                                    <ul id="myUL3" style="display:flex;flex-wrap:wrap;list-style:none">
+                                        {% for rs in order%}
+                                        <li style="display:inline">
+                                            <form action="/recentSearched" method="POST">
+                                                {% csrf_token %}
+                                                <button class="btn btn-link cell expand-maximum-on-hover expand-small-on-hover" type="submit" name="recentSearchedButton"
+                                                        data-toggle=”button” value="{{ rs.keyword }}" title="{{ rs.keyword}}"
+                                                        style="background-color:transparent;padding:0;margin:0;text-decoration: none;">
+                                                    {{ rs.keyword }}
+                                                </button>&nbsp; | &nbsp;
+                                            </form>
+                                        </li>
+                                        {% endfor %}
+
+                                    </ul>
+                                </div>
+                                {% endif%}
+                            </div>
+                        </div>
+                    </div>
+                    <style>
+                                    #myUL3 {
+                                        list-style-type: none;
+                                        padding: 0;
+                                        margin: 0;
+                                    }
+
+                                    #myUL3 li a {
+
+                                        text-decoration: none;
+                                    }
+
+
+
+
+                    </style>
+
+
+                    <script>
+                                    function myFunction3() {
+                                        var input, filter, ul, li, a, i, txtValue;
+                                        input = document.getElementById("myInput3");
+                                        filter = input.value.toUpperCase();
+
+                                        ul = document.getElementById("myUL3");
+                                        li = ul.getElementsByTagName("li");
+                                        for (i = 0; i < li.length; i++) {
+                                            a = li[i].getElementsByTagName("button")[0];
+                                            txtValue = a.textContent || a.innerText;
+                                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                                li[i].style.display = "inline";
+                                            } else {
+                                                li[i].style.display = "none";
+                                            }
+                                        }
+                                    }
+
+
+
+                    </script>
+                </div>
+            </div>
+            <!--End Model of Recent Search-->
+            <!--        </div>-->
+
+            <div style="position: relative">
+                <nav style="width: 100%;">
+                    <div class="nav nav-tabs"
+                         style="display: -webkit-box; overflow-x: scroll; flex-wrap: unset; border-bottom:0px; margin-bottom: -2.2rem;"
+                         id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="all-tab" data-toggle="tab" href="#all"
+                           role="tab">All</a>
+                        {% for vendorName, data in vendorNameDictionary.items %}
+                        <a class="nav-item nav-link" id="{{vendorName}}-tab" data-toggle="tab" href="#{{data.link}}"
+                           role="tab">{{vendorName}} ({{data.counter}})</a>
+                        {% endfor %}
+                    </div>
+                </nav>
+            </div>
+
+            <div class="tab-content" id="nav-tabContent" style="padding-top: 1rem;">
+                <div class="tab-pane show active" id="all">
+                    <div class="jumbotron tableFixHead table-responsive"
+                         style="padding: 0.5em; margin-bottom: 0rem; background: white;">
+                        <div class="tbl-header">
+                            <table class="table-hover" cellpadding="0" cellspacing="0" style="border: 1px solid black;" width="100%;">
+                                <thead>
+                                <tr style="width: 100%;">
+                                    <th style="width: 9%;">Vendor</th>
+                                    <th style="width: 15%;">Summary</th>
+                                    <th style="width: 9%;">Received Date</th>
+                                    <th style="width: 9%; padding: 0px; padding-top: 3px;">Submitted Date</th>
+                                    <th style="width: 26%;">Documents</th>
+                                    <th style="width: 22%;">Related Communication</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="tbl-content">
+                            <table class="table-hover" cellpadding="0" cellspacing="0" style="border: 1px solid black;" width="100%;">
+                                <tbody style="border: 1px solid black;">
+                                {% for data in adminDbDataList %}
+                                {% if data.status == 0 %}
+                                <tr >
+                                    <td width="9%;" >
+                                        <a href="questionnaireDetails/{{data.clientId}}?name=new" style="color:black;">
+                                            {{data.vendorName}}
+                                        </a>
+                                        <span class="blink">new</span>
+                                        <style>
+                                           .blink {
+                                            animation: blinker 1.4s linear infinite;
+                                            color: red;
+                                            font-family: sans-serif;
+                                            }
+                                             @keyframes blinker {
+                                            50% { opacity: 0; }
+                                            }
+                                        </style>
+                                    </td>
+                                    <td width="15%;">
+                                        {% if data.summary %}
+                                        {{data.summary}}
+                                        {% else %}
+                                        &nbsp;
+                                        {% endif %}
+                                    </td>
+                                    <td width="9%;">
+                                        {% if data.receivedDate %}
+                                        {{data.receivedDate}}
+                                        {% else %}
+                                        &nbsp;;
+                                        {% endif %}
+                                    </td>
+                                    <td width="9%;">
+                                        {% if data.submittedDate %}
+                                        {{data.submittedDate}}
+                                        {% else %}
+                                        &nbsp;
+                                        {% endif %}
+                                    </td>
+                                    <td width="26%;">
+                                        {% if data.documentLink %}
+                                        <a href="{{data.documentLink}}" target="_blank">{{data.documentLink}}</a>
+                                        {% else %}
+                                        &nbsp;
+                                        {% endif %}
+                                    </td>
+                                    <td width="22%;">
+                                        {% if data.relatedCommunication %}
+                                        {{data.relatedCommunication}}
+                                        {% else %}
+                                        &nbsp;
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td width="9%;">
+                                        <a href="questionnaireDetails/{{data.clientId}}?name=final"
+                                           style="color:black;">
+                                            {{data.vendorName}}
+                                        </a>
+                                    </td>
+                                    <td width="15%;">
+                                        {% if data.summary %}
+                                        {{data.summary}}
+                                        {% else %}
+                                        &nbsp;
+                                        {% endif %}
+                                    </td>
+                                    <td width="9%;">
+                                        {% if data.receivedDate %}
+                                        {{data.receivedDate}}
+                                        {% else %}
+                                        &nbsp;
+                                        {% endif %}
+                                    </td>
+                                    <td width="9%;">
+                                        {% if data.submittedDate %}
+                                        {{data.submittedDate}}
+                                        {% else %}
+                                        &nbsp;
+                                        {% endif %}
+                                    </td>
+                                    <td width="26%;">
+                                        {% if data.documentLink %}
+                                        <a href="{{data.documentLink}}" target="_blank">{{data.documentLink}}</a>
+                                        {% else %}
+                                        &nbsp;
+                                        {% endif %}
+                                    </td>
+                                    <td width="22%;">
+                                        {% if data.relatedCommunication %}
+                                        {{data.relatedCommunication}}
+                                        {% else %}
+                                        &nbsp;
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--                </table>-->
+                    </div>
+                </div>
+
+                {% for vendorName, data in vendorNameDictionary.items %}
+                <div id="{{data.link}}" class="tab-pane">
+                    <div class="jumbotron tableFixHead table-responsive"
+                         style="padding: 0.5em; margin-bottom: 0rem; background: white;">
+                        <div class="tbl-header">
+                            <table class="table-hover" cellpadding="0" cellspacing="0" border="1">
+                                <thead>
+                                <tr >
+                                    <th width="9%;">Vendor</th>
+                                    <th width="15%;">Summary</th>
+                                    <th width="9%;">Received Date</th>
+                                    <th width="9%;">Submitted Date</th>
+                                    <th width="26%;">Documents</th>
+                                    <th width="22%;">Related Communication</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="tbl-content">
+                            <table class="table-hover" cellpadding="0" cellspacing="0" border="1">
+                                <tbody>
+                                {% for completeData in data.vendorData %}
+                                {% if completeData.status == 0 %}
+                                <tr>
+                                    <td width="9%;">
+                                        <a href="questionnaireDetails/{{completeData.clientId}}?name=new"
+                                           style="color:black;">
+                                            {{completeData.vendorName}}
+                                        </a>
+                                        <span class="blink">new</span>
+                                        <style>
+                                    .blink {
+                                    animation: blinker 0.6s linear infinite;
+                                    color: red;
+                                    font-family: sans-serif;
+                                    }
+                                     @keyframes blinker {
+                                    50% { opacity: 0; }
+                                    }
+                                        </style>
+                                    </td>
+                                    <td width="15%;">
+                                        {% if completeData.summary %}
+                                        {{completeData.summary}}
+                                        {% else %}
+                                        &nbsp;
+                                        {% endif %}
+                                    </td>
+                                    <td width="9%;">
+                                        {% if completeData.receivedDate %}
+                                        {{completeData.receivedDate}}
+                                        {% else %}
+                                        &nbsp;
+                                        {% endif %}
+                                    </td>
+                                    <td width="9%;">
+                                        {% if completeData.submittedDate %}
+                                        {{completeData.submittedDate}}
+                                        {% else %}
+                                        &nbsp;
+                                        {% endif %}
+                                    </td>
+                                    <td width="26%;">
+                                        {% if completeData.documentLink %}
+                                        <a href="{{completeData.documentLink}}" target="_blank">{{completeData.documentLink}}</a>
+                                        {% else %}
+                                        &nbsp;
+                                        {% endif %}
+                                    </td>
+                                    <td width="22%;">
+                                        {% if completeData.relatedCommunication %}
+                                        {{completeData.relatedCommunication}}
+                                        {% else %}
+                                        &nbsp;
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td width="9%;">
+                                        <a href="questionnaireDetails/{{completeData.clientId}}?name=final"
+                                           style="color:black;">
+                                            {{completeData.vendorName}}
+                                        </a>
+                                    </td>
+                                    <td width="15%;">
+                                        {% if completeData.summary %}
+                                        {{completeData.summary}}
+                                        {% else %}
+                                        &nbsp;
+                                        {% endif %}
+                                    </td>
+                                    <td width="9%;">
+                                        {% if completeData.receivedDate %}
+                                        {{completeData.receivedDate}}
+                                        {% else %}
+                                        &nbsp;
+                                        {% endif %}
+                                    </td>
+                                    <td width="9%;">
+                                        {% if completeData.submittedDate %}
+                                        {{completeData.submittedDate}}
+                                        {% else %}
+                                        &nbsp;
+                                        {% endif %}
+                                    </td>
+                                    <td width="26%;">
+                                        {% if completeData.documentLink %}
+                                        <a href="{{completeData.documentLink}}" target="_blank">
+                                            {{completeData.documentLink}} </a>
+                                        {% else %}
+                                        &nbsp;
+                                        {% endif %}
+                                    </td>
+                                    <td width="22%;">
+                                        {% if completeData.relatedCommunication %}
+                                        {{completeData.relatedCommunication}}
+                                        {% else %}
+                                        &nbsp;
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+        $(document).ready(function () {
+
+            $("#agreebutton").on("click", function (e) {
+
+                if ($("#checkedId").is(':checked')) {
+                    $('.showIfcheked').show();
+                } else {
+                    $('.showIfcheked').hide();
+                    alert('please select at least one row');
+                    e.preventDefault();
+                }
+
+            });
+
+        });
+</script>
+
+
+<script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+</script>
+
+<style>
+        .resultitem {
+            -webkit-transition: 0.5s;
+            transition: 0.5s;
+        }
+
+        .resultitem:hover {
+            -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+        }
+.custom-toggler {
+border-color: white;
+}
+.custom-toggler .navbar-toggler-icon {
+   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+ }
+table{
+  width:100%;
+  table-layout: fixed;
+}
+.tbl-header{
+  background-color: #ccccff;
+ }
+.tbl-content{
+  max-height:360px;
+  overflow-x:auto;
+  margin-top: 0px;
+  overflow-y: auto;
+}
+.tbl-header th{
+  text-align: center;
+  font-size: 17px;
+  word-break: break-word;
+  padding: 3px;
+  border: 2px solid;
+}
+.tbl-content td {
+  padding: 3px;
+  text-align: left;
+  vertical-align:middle;
+  word-break: break-word;
+  background: #EBECED;
+  border: 2px solid;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+</style>
+
+{% endblock %}
+
+</body>
+
+</html>

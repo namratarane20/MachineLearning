@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+        <!-- event handling -->
+        <button v-on:click="counter++">Add 1</button>
+        <p>The button above has been clicked {{ counter }} times.</p>
+
+
+        <!-- modifiers -->
+        <button @click.once="counter++">Add 1</button>
+        <p>The button above has been clicked {{ counter }} times.</p>
+
+        <!-- prevent -->
+        <a href="http://www.google.com" @click.prevent>Google</a>
+
+        <div id="parent-div" @click="submitClick">
+            <button id="child-div" @click.stop="submitClick">click</button>
+        </div>
+
+        <br><br>
+        <div @click.capture="outercls">
+            <div @click.capture="parentClass">
+                <button @click="btncls">click </button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            counter: 0
+        },
+        methods: {
+            submitClick() {
+                console.log("click")
+            },
+            parentClass() {
+                console.log("parent class")
+            },
+            btncls() {
+                console.log("btn class")
+            },
+            outercls(){
+                console.log("outer  ")
+            }
+        }
+    })
+</script>
